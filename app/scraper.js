@@ -2,29 +2,35 @@ import got from 'got';
 import { JSDOM } from 'jsdom';
 import puppeteer from 'puppeteer';
 
-const url = 'https://www.tradera.com/';
+const name = 'arkham%20horror'
+const actionType = 'Auction'
 
-async function firstTry() {
-	const response = await got(url);
-	const dom = new JSDOM(response.body);
-	console.log(dom);
-}
+const url = `https://www.tradera.com/search?q=${name}&itemType=${actionType}`;
 
-// await firstTry()
-
-async function headlessBrowser(){
-	const browser = await puppeteer.launch();
+async function headlessBrowser() {
+	const browser = await puppeteer.launch({ headless: false });
 	const page = await browser.newPage();
-  
+
 	await page.goto(url);
-  
-	const links = await page.$$eval('a', elements => elements.filter(element => {
-	  const parensRegex = /^((?!\().)*$/;
-	  return parensRegex.test(element.textContent);
-	}).map(element => element.href));
-  
-	links.forEach(link => console.log(link));
-  
+
+	// await page.focus('#site-header-search-input-')
+	// await page.keyboard.type('Arkham Horror')
+	// await page.keyboard.press('Enter');
+
+	await page.waitForSelector('.site-pagename-SearchResults ');
+
+	// await page.focus('#filter-itemType-Auction')
+
+	// await page.waitForSelector('#btn d-flex align-items-center py-2 text-left px-1 cursor-pointer unbutton')
+
+	const divs = await page.$$eval('a', a => a.filter(element => {
+		if (element.title !== '') {
+			return element
+		}
+	}).map(ahref => ahref.title));
+
+	console.log(divs)
+
 	await browser.close();
 }
 
