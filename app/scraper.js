@@ -1,18 +1,58 @@
 import got from 'got';
 import { JSDOM } from 'jsdom';
 import puppeteer from 'puppeteer';
+import datas from './data.json';
 
-const name = 'arkham%20horror'
 const actionType = 'Auction'
+const sortBy = 'sortBy=TimeLeft'
 
-const url = `https://www.tradera.com/search?q=${name}&itemType=${actionType}`;
+// function getCurrentURL(index){
+// 	data.list.forEach(element => {
+// 		console.log(element);
+// 	});
+// }
+
 
 async function headlessBrowser() {
-	const browser = await puppeteer.launch({ headless: false });
+	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
+	let keywords = '';
 
-	await page.goto(url);
+	for (const data of datas.list) {
+		let url = getURL(data.searchterm, actionType);
+		console.log(url)
 
+		await page.goto(url);
+		await page.waitForSelector('.site-pagename-SearchResults ');
+
+		keywords = data.keywords
+		const divs = await page.$$eval('a', a => a.filter(element => {
+			if (element.title !== '') {
+				//TODO. make title lowercase
+				lowerCaseTitle = element.title.toLowerCase()
+
+				//for (const word of keywords) {
+				//	if (lowerCaseTitle.includes(word)) {
+				return element
+				//	}
+				//}
+			}
+		}).map(ahref => ahref.title));
+
+		console.log(divs)
+	}
+
+	await browser.close();
+}
+
+function getURL(name, actionType) {
+	return `https://www.tradera.com/search?q=${name}&itemType=${actionType}&${sortBy}`;
+}
+
+
+
+
+async function searchPage(page, data) {
 	// await page.focus('#site-header-search-input-')
 	// await page.keyboard.type('Arkham Horror')
 	// await page.keyboard.press('Enter');
@@ -30,8 +70,6 @@ async function headlessBrowser() {
 	}).map(ahref => ahref.title));
 
 	console.log(divs)
-
-	await browser.close();
 }
 
-await headlessBrowser();
+await headlessBrowser()
