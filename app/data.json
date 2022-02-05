@@ -2,11 +2,40 @@
     "list": [
         {
             "searchterm": "arkham%20horror",
-            "keywords": ["arkham", "horror", "horor"]
+            "keywords": [
+                "arkham horror",
+                "arkham horor"
+            ]
         },
         {
             "searchterm": "Betrayal%20at",
-            "keywords":["betrayal", "at", "hill", "baldur"]
+            "keywords": [
+                "betrayal at"
+            ]
+        },
+        {
+            "searchterm": "Shadows%20of%20Brimstone",
+            "keywords": [
+                "shadows of brimstone"
+            ]
+        },
+        {
+            "searchterm": "Mansions%20of%20Madness",
+            "keywords": [
+                "mansions of madness"
+            ]
+        },
+        {
+            "searchterm": "Eldritch%20Horror",
+            "keywords": [
+                "eldritch horror"
+            ]
+        },
+        {
+            "searchterm": "Aftermath",
+            "keywords": [
+                "aftermath"
+            ]
         }
     ]
 }

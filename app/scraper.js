@@ -28,17 +28,17 @@ async function headlessBrowser() {
 		}
 
 		let list = await page.$$('.item-card-container');
-		
+
 		let htmlList = list.map(async element => {
 			return await (await element.getProperty('outerHTML')).jsonValue()
 		});
-		
+
 		let newList = []
 		for (const element of htmlList) {
 			let e = await element
 			newList.push(e)
 		}
-		
+
 		//convert to jsdom elements
 		let jsdoms = []
 		newList.forEach(element => {
@@ -56,10 +56,21 @@ async function headlessBrowser() {
 				oPrice: price
 			};
 		});
-		
+
 		console.log("--infos--")
 		console.log(`Total: ${infos.length}`)
-		// console.log(infos)
+
+		let filteredList = []
+		infos.forEach(info => {
+			for (let i = 0; i < data.keywords.length; i++) {
+				const element = data.keywords[i];
+				if (info.oTitle.toLowerCase().includes(element)) {
+					filteredList.push(info)
+				}
+			}
+		})
+		console.log(filteredList)
+
 	}
 	await browser.close();
 }
