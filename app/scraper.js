@@ -21,16 +21,36 @@ async function headlessBrowser() {
 
 		//get all links
 		const htmlList = await page.$$eval('a', (links) => {
-			return links.map(link => link.outerHTML)
+			let filteredLinks = links.filter(element => {
+				if (element.title !== '') {
+					return element
+				}
+			})
+
+			return filteredLinks.map(link => link.outerHTML)
 		});
 
-		console.log(htmlList)
+		// console.log(htmlList)
 
 		//convert to jsdom elements
 		let jsdoms = []
 		htmlList.forEach(element => {
 			jsdoms.push(new JSDOM(element))
 		});
+
+		//remove none data cards
+		jsdoms = jsdoms.filter(element => {
+			let itemcard = element.window.document.querySelector(".item-card-image")
+			if(itemcard !== undefined && itemcard !== null){
+				return element
+			}
+		})
+		console.log("jsdoms")
+		console.log(jsdoms.map(element => {
+			return element.window.document.activeElement.innerHTML
+		}))
+		
+
 	}
 
 	await browser.close();
