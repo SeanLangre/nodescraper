@@ -54,6 +54,18 @@
             "keywords": [
                 "a6000"
             ]
+        },
+        {
+            "searchterm": "rode",
+            "keywords": [
+                "rode", "røde"
+            ]
+        },
+        {
+            "searchterm": "shure",
+            "keywords": [
+                "shure"
+            ]
         }
     ]
 }
