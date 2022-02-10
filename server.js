@@ -19,12 +19,23 @@ app.get("/", (req, res) => {
 // simple route
 app.get("/extra", (req, res) => {
   let scraper = new Scraper()
-  extra(res, scraper)
+  extra(req, res, scraper)
 });
 
-async function extra(res, scraper) {
+async function extra(req, res, scraper) {
   let result = await scraper.onlyOne()
-  res.json({ message: result });
+  res.json(result);
+
+  // for (const iterator of result) {
+  //   // res.send(iterator)
+  //   req.body += iterator
+  // }
+
+  // result.forEach(element => {
+  //   res.send(element)
+  // });
+  //res.send(result)
+  console.log("-DONE-");
 }
 
 // set port, listen for requests

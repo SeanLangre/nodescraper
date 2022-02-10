@@ -163,11 +163,15 @@ export class Scraper {
 			}
 		})
 		// console.log(filteredList)
-		result = filteredList.toString()
+		// result = filteredList.map((element)=>{
+		// 	// return element.toString();
+		// 	return element.oTitle + ' ' + element.oPrice + ' ' + element.oLink + ' ';
+		// 	// return element.oTitle + '\\n' + element.oPrice + '//n' + element.oLink + '\n\n';
+		// })
 
 		await browser.close();
 
-		return result
+		return filteredList
 	}
 
 }
