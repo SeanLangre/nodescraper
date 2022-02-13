@@ -1,5 +1,5 @@
 // import fetch from 'node-fetch'
-// import { Scraper } from "./scraper.js"
+import { Scraper } from "./scraper.js"
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -39,6 +39,8 @@ customElements.define('main-template-scraper',
 
     test() {
       console.log("asiugfakjsbfkjabsdgkjasdbg");
+
+
     }
   }
 )
