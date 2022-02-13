@@ -1,5 +1,5 @@
 // import got from 'got';
-import { JSDOM } from 'jsdom';
+const jsdom = require("jsdom");
 import puppeteer from 'puppeteer';
 // import json from './data.json' assert {type: 'json'};
 // import("data.json", { assert: { type: "json" } });
