@@ -27,7 +27,7 @@ template.innerHTML = `
   </main>
 `
 
-customElements.define('mainTemplateScraper',
+customElements.define('main-template-scraper',
   class extends HTMLElement {
     constructor() {
       super()
