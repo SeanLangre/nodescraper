@@ -9,7 +9,7 @@ const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
 const linkPrefix = 'www.tradera.com'
 
-export class Scraper {
+class Scraper {
 
 	constructor() {
 	}
@@ -96,5 +96,6 @@ export class Scraper {
 
 		return result
 	}
-
 }
+
+export default Scraper

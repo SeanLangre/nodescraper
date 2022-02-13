@@ -5,7 +5,10 @@
   "browser": "/public/index.js",
   "type": "module",
   "scripts": {
-    "start": "npm run ./public/index.js",
+    "start": "snowpack dev --polyfill-node",
+    "init": "snowpack init",
+    "build": "snowpack build --polyfill-node",
+    "startIndex": "npm run ./public/index.cjs",
     "myserv": "node --experimental-json-modules ./server.js",
     "scarper": "node --experimental-json-modules ./src/scraper.js",
     "newindex": "node --experimental-json-modules ./src/index.js",
@@ -15,11 +18,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.1",
-    "express": "^4.17.2",
-    "got": "^11.0.2",
     "jsdom": "^19.0.0",
-    "puppeteer": "^13.1.3"
+    "puppeteer": "^13.1.3",
+    "vite": "^2.8.1"
   },
   "description": ""
 }

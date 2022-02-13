@@ -1,13 +1,13 @@
 
-console.log("asdasdasd")
+// console.log("asdasdasd")
 
-import { createServer } from 'http'
-import { createReadStream } from 'fs'
+// import { createServer } from 'http'
+// import { createReadStream } from 'fs'
 
 
-const server = createServer((req, res) => {
-    res.writeHead(200, { 'content-type': 'text/html' })
-    createReadStream('public/index.html').pipe(res)
-})
+// const server = createServer((req, res) => {
+//     res.writeHead(200, { 'content-type': 'text/html' })
+//     createReadStream('public/index.html').pipe(res)
+// })
 
-server.listen(process.env.PORT || 3000)
+// server.listen(process.env.PORT || 3000)

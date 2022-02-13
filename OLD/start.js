@@ -1,6 +1,6 @@
-import { Scraper } from './scraper.js'
+// import { Scraper } from './scraper.js'
 
-const scraper = new Scraper()
-let output = await scraper.onlyOne()
-let asd = await output
+// const scraper = new Scraper()
+// let output = await scraper.onlyOne()
+// let asd = await output
 
