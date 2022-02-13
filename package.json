@@ -1,13 +1,14 @@
 {
   "name": "scraper",
   "version": "1.0.0",
-  "main": "src/index.js",
-  "browser": "src/index.js",
+  "main": "server.js",
+  "browser": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-json-modules ./src/scraper.js",
+    "start": "npm run ./public/index.html",
     "myserv": "node --experimental-json-modules ./server.js",
-    "index": "node --experimental-json-modules ./src/index.js",
+    "scarper": "node --experimental-json-modules ./src/scraper.js",
+    "newindex": "node --experimental-json-modules ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
