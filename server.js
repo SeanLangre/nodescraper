@@ -11,6 +11,8 @@ app.use(bodyParser.json());
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+console.log('http://localhost:3000/extra')
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my web server!" });
@@ -23,7 +25,8 @@ app.get("/extra", (req, res) => {
 });
 
 async function extra(req, res, scraper) {
-  let result = await scraper.onlyOne()
+  let result = await scraper.headlessBrowser()
+  // let result = await scraper.onlyOne()
   res.json(result);
 
   // for (const iterator of result) {

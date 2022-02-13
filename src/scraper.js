@@ -86,7 +86,7 @@ export class Scraper {
 					}
 				}
 			})
-			// console.log(filteredList)
+			console.log(filteredList)
 			result += filteredList.toString()
 
 		}
