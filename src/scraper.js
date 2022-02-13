@@ -1,7 +1,8 @@
 import got from 'got';
 import { JSDOM } from 'jsdom';
 import puppeteer from 'puppeteer';
-import datas from './data.json';
+// import json from './data.json' assert {type: 'json'};
+// import("data.json", { assert: { type: "json" } });
 
 const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
@@ -31,7 +32,7 @@ export class Scraper {
 
 		let result = ''
 
-		for (const data of datas.list) {
+		for (const data of json.list) {
 			let url = this.getURL(data.searchterm, actionType);
 			console.log(url)
 
@@ -106,7 +107,7 @@ export class Scraper {
 
 		let result = ''
 
-		let data = datas.list[0]
+		let data = json.list[0]
 
 		let url = this.getURL(data.searchterm, actionType);
 		console.log(url)
