@@ -1,7 +1,7 @@
 
 import express from "express";
 import bodyParser from "body-parser";
-import { Scraper } from './src/scraper.js';
+import { Scraper } from './public/scraper.js';
 
 const app = express();
 

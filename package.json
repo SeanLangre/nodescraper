@@ -1,11 +1,11 @@
 {
   "name": "scraper",
   "version": "1.0.0",
-  "main": "server.js",
-  "browser": "server.js",
+  "main": "/public/index.js",
+  "browser": "/public/index.js",
   "type": "module",
   "scripts": {
-    "start": "npm run ./public/index.html",
+    "start": "npm run ./public/index.js",
     "myserv": "node --experimental-json-modules ./server.js",
     "scarper": "node --experimental-json-modules ./src/scraper.js",
     "newindex": "node --experimental-json-modules ./src/index.js",

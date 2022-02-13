@@ -1,6 +1,6 @@
-// import './components/scraperComponent.js';
+import './scraper.js';
 
-// const scraper = document.querySelector('#scraper')
+const scraper = document.querySelector('#scraper')
 
 
 // console.log("asdasdasd")
