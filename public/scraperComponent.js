@@ -1,8 +1,8 @@
 // import fetch from 'node-fetch'
 // import { Scraper } from "./scraper.js"
 
-const mainTemplate = document.createElement('mainTemplate')
-mainTemplate.innerHTML = `
+const template = document.createElement('template')
+template.innerHTML = `
   <style>
     main {
       height:20px;        
@@ -27,12 +27,12 @@ mainTemplate.innerHTML = `
   </main>
 `
 
-customElements.define('mainTemplate-scraper',
+customElements.define('mainTemplateScraper',
   class extends HTMLElement {
     constructor() {
       super()
       this.attachShadow({ mode: 'open' })
-        .appendChild(mainTemplate.content.cloneNode(true))
+        .appendChild(template.content.cloneNode(true))
       this.welcomeMessage = this.shadowRoot.querySelector('#welcomeMessage')
       this.welcomeMessage.textContent = "ASIUFBGASUIBFASBHUIO"
     }
