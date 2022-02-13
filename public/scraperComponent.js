@@ -21,6 +21,9 @@ mainTemplate.innerHTML = `
     <div>
       component: asdasdasdasd
     </div>
+
+    <p id=welcomeMessage> </p>
+
   </main>
 `
 
@@ -30,6 +33,12 @@ customElements.define('mainTemplate-scraper',
       super()
       this.attachShadow({ mode: 'open' })
         .appendChild(mainTemplate.content.cloneNode(true))
+      this.welcomeMessage = this.shadowRoot.querySelector('#welcomeMessage')
+      this.welcomeMessage.textContent = "ASIUFBGASUIBFASBHUIO"
+    }
+
+    test() {
+      console.log("asiugfakjsbfkjabsdgkjasdbg");
     }
   }
 )
