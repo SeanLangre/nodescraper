@@ -1,5 +1,7 @@
 // import fetch from 'node-fetch'
 // import scraper from "./scraper.js"
+import puppeteer from 'puppeteer';
+
 
 const template = document.createElement('template')
 template.innerHTML = `

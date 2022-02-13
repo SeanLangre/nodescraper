@@ -8,4 +8,4 @@ document.querySelector('#app').innerHTML = `
 
 
 const scraper = document.querySelector('#scraper')
-console.log("index.js")
+// console.log("index.js")
