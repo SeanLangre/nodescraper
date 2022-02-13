@@ -1,4 +1,4 @@
-import './style.css'
+// import './style.css'
 import './scraperComponent.js';
 
 document.querySelector('#app').innerHTML = `
