@@ -1,6 +1,7 @@
 // import got from 'got';
 const { JSDOM } = jsdom;
-import puppeteer from 'puppeteer';
+const { puppeteer } = puppeteer;
+// import puppeteer from 'puppeteer';
 // import json from './data.json' assert {type: 'json'};
 // import("data.json", { assert: { type: "json" } });
 
