@@ -1,5 +1,5 @@
 // import './style.css'
-// import './scraperComponent.js';
+import './scraperComponent.js';
 
 document.querySelector('#app').innerHTML = `
 <h1>Hello Vite!</h1>
@@ -8,5 +8,4 @@ document.querySelector('#app').innerHTML = `
 
 
 const scraper = document.querySelector('#scraper')
-scraper.test();
 console.log("index.js")
