@@ -6,9 +6,10 @@
   "browser": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "node --experimental-modules ./vite-project/scraper.js",
+    "vite-dev": "vite",
+    "vite-build": "vite build",
+    "vite-preview": "vite preview"
   },
   "devDependencies": {
     "jsdom": "^19.0.0",
