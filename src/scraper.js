@@ -1,3 +1,4 @@
+import fs from 'fs';
 import got from 'got';
 import { JSDOM } from 'jsdom';
 import puppeteer from 'puppeteer';
@@ -67,11 +68,9 @@ export class Scraper {
 				let title = element.window.document.body.querySelector('a').title
 				let link = linkPrefix + element.window.document.body.querySelector('a').href
 				let price = element.window.document.body.querySelector('.item-card-details-price').textContent
-				return {
-					oTitle: title,
-					oLink: link,
-					oPrice: price
-				};
+
+				return new InfoElement(title, link, price)
+
 			});
 
 			console.log("--infos--")
@@ -81,16 +80,29 @@ export class Scraper {
 			infos.forEach(info => {
 				for (let i = 0; i < data.keywords.length; i++) {
 					const element = data.keywords[i];
-					if (info.oTitle.toLowerCase().includes(element)) {
+					if (info.title.toLowerCase().includes(element)) {
 						filteredList.push(info)
 					}
 				}
 			})
 			console.log(filteredList)
-			result += filteredList.toString()
+			// result += filteredList
 
+			for (let i = 0; i < filteredList.length; i++) {
+				result += "\n" + filteredList[i].toString();
+			}
+
+			// result += filteredList
 		}
+		console.log("--DONE--")
+
 		await browser.close();
+
+		// fs.writeFile("newData.txt", result, function (err) {
+		// 	if (err) {
+		// 		console.log(err);
+		// 	}
+		// });
 
 		return result
 	}
@@ -175,3 +187,18 @@ export class Scraper {
 	}
 
 }
+
+export class InfoElement {
+	constructor(title, link, price) {
+		this.title = title
+		this.link = link
+		this.price = price
+	}
+
+	toString() {
+		return this.title + this.link + this.price
+	}
+}
+
+var scraper = new Scraper()
+scraper.headlessBrowser()

@@ -8,6 +8,7 @@
     "start": "node --experimental-json-modules ./src/scraper.js",
     "myserv": "node --experimental-json-modules ./server.js",
     "index": "node --experimental-json-modules ./src/index.js",
+    "debug": "node --experimental-json-modules ./src/scraper.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
