@@ -65,6 +65,15 @@ export class Scraper {
 
 			let infos = jsdoms.map(element => {
 				//get info
+
+				let contentInnerHtml = element.window.document.body.querySelector('.mb-1').innerHTML
+				if(contentInnerHtml.includes("Sparad i minneslistan")){
+					console.log("sparad")
+					return;
+				} else if (contentInnerHtml.includes("Spara i minneslistan")) {
+					console.log("inte sparad")
+				}
+
 				let title = element.window.document.body.querySelector('a').title
 				let link = linkPrefix + element.window.document.body.querySelector('a').href
 				let price = element.window.document.body.querySelector('.item-card-details-price').textContent
