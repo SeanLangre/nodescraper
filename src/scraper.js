@@ -86,106 +86,99 @@ export class Scraper {
 				}
 			})
 			console.log(filteredList)
-			// result += filteredList
-
 			for (let i = 0; i < filteredList.length; i++) {
-				result += "\n" + filteredList[i].toString();
+				result += filteredList[i].toString();
 			}
-
-			// result += filteredList
 		}
 		console.log("--DONE--")
 
 		await browser.close();
 
-		// fs.writeFile("newData.txt", result, function (err) {
-		// 	if (err) {
-		// 		console.log(err);
-		// 	}
-		// });
+		fs.writeFile("newData.txt", result, function (err) {
+			if (err) {
+				console.log(err);
+			}
+		});
 
 		return result
 	}
+	// async onlyOne() {
 
+	// 	const browser = await puppeteer.launch({
+	// 		// headless: false
+	// 	});
 
-	async onlyOne() {
+	// 	const page = await browser.newPage();
 
-		const browser = await puppeteer.launch({
-			// headless: false
-		});
+	// 	let result = ''
 
-		const page = await browser.newPage();
+	// 	let data = datas.list[0]
 
-		let result = ''
+	// 	let url = this.getURL(data.searchterm, actionType);
+	// 	console.log(url)
 
-		let data = datas.list[0]
+	// 	await page.goto(url);
+	// 	await page.waitForSelector('.site-pagename-SearchResults ');
 
-		let url = this.getURL(data.searchterm, actionType);
-		console.log(url)
+	// 	//page down
+	// 	for (let i = 0; i < 20; i++) {
+	// 		await page.keyboard.press("PageDown");
+	// 		await page.waitForTimeout(100)
+	// 	}
 
-		await page.goto(url);
-		await page.waitForSelector('.site-pagename-SearchResults ');
+	// 	let list = await page.$$('.item-card-container');
 
-		//page down
-		for (let i = 0; i < 20; i++) {
-			await page.keyboard.press("PageDown");
-			await page.waitForTimeout(100)
-		}
+	// 	let htmlList = list.map(async element => {
+	// 		return await (await element.getProperty('outerHTML')).jsonValue()
+	// 	});
 
-		let list = await page.$$('.item-card-container');
+	// 	let newList = []
+	// 	for (const element of htmlList) {
+	// 		let e = await element
+	// 		newList.push(e)
+	// 	}
 
-		let htmlList = list.map(async element => {
-			return await (await element.getProperty('outerHTML')).jsonValue()
-		});
+	// 	//convert to jsdom elements
+	// 	let jsdoms = []
+	// 	newList.forEach(element => {
+	// 		jsdoms.push(new JSDOM(element))
+	// 	});
 
-		let newList = []
-		for (const element of htmlList) {
-			let e = await element
-			newList.push(e)
-		}
+	// 	let infos = jsdoms.map(element => {
+	// 		//get info
+	// 		let title = element.window.document.body.querySelector('a').title
+	// 		let link = linkPrefix + element.window.document.body.querySelector('a').href
+	// 		let price = element.window.document.body.querySelector('.item-card-details-price').textContent
+	// 		return {
+	// 			oTitle: title,
+	// 			oLink: link,
+	// 			oPrice: price
+	// 		};
+	// 	});
 
-		//convert to jsdom elements
-		let jsdoms = []
-		newList.forEach(element => {
-			jsdoms.push(new JSDOM(element))
-		});
+	// 	console.log("--infos--")
+	// 	console.log(`Total: ${infos.length}`)
 
-		let infos = jsdoms.map(element => {
-			//get info
-			let title = element.window.document.body.querySelector('a').title
-			let link = linkPrefix + element.window.document.body.querySelector('a').href
-			let price = element.window.document.body.querySelector('.item-card-details-price').textContent
-			return {
-				oTitle: title,
-				oLink: link,
-				oPrice: price
-			};
-		});
+	// 	let filteredList = []
+	// 	infos.forEach(info => {
+	// 		for (let i = 0; i < data.keywords.length; i++) {
+	// 			const element = data.keywords[i];
+	// 			if (info.oTitle.toLowerCase().includes(element)) {
+	// 				filteredList.push(info)
+	// 			}
+	// 		}
+	// 	})
+	// 	// console.log(filteredList)
+	// 	// result = filteredList.map((element)=>{
+	// 	// 	// return element.toString();
+	// 	// 	return element.oTitle + ' ' + element.oPrice + ' ' + element.oLink + ' ';
+	// 	// 	// return element.oTitle + '\\n' + element.oPrice + '//n' + element.oLink + '\n\n';
+	// 	// })
 
-		console.log("--infos--")
-		console.log(`Total: ${infos.length}`)
+	// 	await browser.close();
 
-		let filteredList = []
-		infos.forEach(info => {
-			for (let i = 0; i < data.keywords.length; i++) {
-				const element = data.keywords[i];
-				if (info.oTitle.toLowerCase().includes(element)) {
-					filteredList.push(info)
-				}
-			}
-		})
-		// console.log(filteredList)
-		// result = filteredList.map((element)=>{
-		// 	// return element.toString();
-		// 	return element.oTitle + ' ' + element.oPrice + ' ' + element.oLink + ' ';
-		// 	// return element.oTitle + '\\n' + element.oPrice + '//n' + element.oLink + '\n\n';
-		// })
-
-		await browser.close();
-
-		return filteredList
-	}
-
+	// 	return filteredList
+	// }
 }
 
 export class InfoElement {
@@ -196,7 +189,7 @@ export class InfoElement {
 	}
 
 	toString() {
-		return this.title + this.link + this.price
+		return this.title + "\n" + this.link + "\n" + this.price + "\n"
 	}
 }
 
