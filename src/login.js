@@ -1,48 +1,51 @@
 
 import puppeteer from 'puppeteer';
 
-export default class Login {
+export default class ScraperLogin {
 
-	constructor() {
+	constructor(page) {
+		this.page = page
 	}
 
 	getURL() {
 		return `https://www.tradera.com/login`;
 	}
 
-	async headlessBrowser() {
+	async Login() {
 		console.log("")
 		console.log("")
 		console.log("")
-		console.log("############################### START ####################################")
+		console.log("##############################  START  ###################################")
 		console.log("#                                                                        #")
 		console.log("#                                                                        #")
 		console.log("#                                                                        #")
-		console.log("############################# LOGIN          #############################")
+		console.log("#############################     LOGIN      #############################")
 		console.log("#                                                                        #")
 		console.log("#                                                                        #")
 		console.log("#                                                                        #")
-		console.log("################################# END ####################################")
+		console.log("################################  END  ###################################")
 		console.log("")
 		console.log("")
 		console.log("")
 
-		const browser = await puppeteer.launch({
-			headless: false
-		});
+		// const browser = await puppeteer.launch({
+		// 	headless: false
+		// });
 
-		const page = await browser.newPage();
+		// const page = await browser.newPage();
+
+		var page = this.page
 
 		let url = this.getURL();
 		console.log(url)
-
 		await page.goto(url);
-
 		await page.waitForTimeout(100)
-		console.log("waitForTimeout ")
 		await this.removeGDPRPopup(page)
 
-		await page.authenticate({ 'username': 'conk3r_xd@hotmail.com', 'password': '47dkhw2dDba746' })
+		// await page.authenticate({ 'username': 'conk3r_xd@hotmail.com', 'password': '47dkhw2dDba746' })
+		await page.type("input[type=text]", "conk3r_xd@hotmail.com");
+		await page.type("input[type=password]", "47dkhw2dDba746");
+		await page.click("button[type=submit]");
 	}
 
 	async removeGDPRPopup(page) {

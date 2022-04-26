@@ -1,9 +1,9 @@
 import fs from 'fs';
 import got from 'got';
 import { JSDOM } from 'jsdom';
-import puppeteer from 'puppeteer';
 import datas from './data.json';
-import Login from './login.js';
+import ScraperLogin from './login.js';
+import ScraperPage from './page.js';
 
 const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
@@ -11,7 +11,8 @@ const linkPrefix = 'www.tradera.com'
 
 export class Scraper {
 
-	constructor() {
+	constructor(page) {
+		this.page = page
 	}
 
 	getURL(name, actionType) {
@@ -23,8 +24,7 @@ export class Scraper {
 		return "nfkjbngfnjbkjbn"
 	}
 
-	async headlessBrowser() {
-
+	async Scrape() {
 		console.log("")
 		console.log("")
 		console.log("")
@@ -41,11 +41,11 @@ export class Scraper {
 		console.log("")
 		console.log("")
 
-		const browser = await puppeteer.launch({
-			// headless: false
-		});
+		// const browser = await puppeteer.launch({
+		// 	// headless: false
+		// });
 
-		const page = await browser.newPage();
+		var page = this.page
 
 		let result = ''
 
@@ -55,6 +55,8 @@ export class Scraper {
 
 			await page.goto(url);
 			await page.waitForSelector('.site-pagename-SearchResults ');
+
+			this.removeGDPRPopup(page)
 
 			//page down
 			for (let i = 0; i < 20; i++) {
@@ -128,83 +130,17 @@ export class Scraper {
 
 		return result
 	}
-	// async onlyOne() {
 
-	// 	const browser = await puppeteer.launch({
-	// 		// headless: false
-	// 	});
-
-	// 	const page = await browser.newPage();
-
-	// 	let result = ''
-
-	// 	let data = datas.list[0]
-
-	// 	let url = this.getURL(data.searchterm, actionType);
-	// 	console.log(url)
-
-	// 	await page.goto(url);
-	// 	await page.waitForSelector('.site-pagename-SearchResults ');
-
-	// 	//page down
-	// 	for (let i = 0; i < 20; i++) {
-	// 		await page.keyboard.press("PageDown");
-	// 		await page.waitForTimeout(100)
-	// 	}
-
-	// 	let list = await page.$$('.item-card-container');
-
-	// 	let htmlList = list.map(async element => {
-	// 		return await (await element.getProperty('outerHTML')).jsonValue()
-	// 	});
-
-	// 	let newList = []
-	// 	for (const element of htmlList) {
-	// 		let e = await element
-	// 		newList.push(e)
-	// 	}
-
-	// 	//convert to jsdom elements
-	// 	let jsdoms = []
-	// 	newList.forEach(element => {
-	// 		jsdoms.push(new JSDOM(element))
-	// 	});
-
-	// 	let infos = jsdoms.map(element => {
-	// 		//get info
-	// 		let title = element.window.document.body.querySelector('a').title
-	// 		let link = linkPrefix + element.window.document.body.querySelector('a').href
-	// 		let price = element.window.document.body.querySelector('.item-card-details-price').textContent
-	// 		return {
-	// 			oTitle: title,
-	// 			oLink: link,
-	// 			oPrice: price
-	// 		};
-	// 	});
-
-	// 	console.log("--infos--")
-	// 	console.log(`Total: ${infos.length}`)
-
-	// 	let filteredList = []
-	// 	infos.forEach(info => {
-	// 		for (let i = 0; i < data.keywords.length; i++) {
-	// 			const element = data.keywords[i];
-	// 			if (info.oTitle.toLowerCase().includes(element)) {
-	// 				filteredList.push(info)
-	// 			}
-	// 		}
-	// 	})
-	// 	// console.log(filteredList)
-	// 	// result = filteredList.map((element)=>{
-	// 	// 	// return element.toString();
-	// 	// 	return element.oTitle + ' ' + element.oPrice + ' ' + element.oLink + ' ';
-	// 	// 	// return element.oTitle + '\\n' + element.oPrice + '//n' + element.oLink + '\n\n';
-	// 	// })
-
-	// 	await browser.close();
-
-	// 	return filteredList
-	// }
+	async removeGDPRPopup(page) {
+		let div_selector_to_remove = ".qc-cmp2-container";
+		return await page.evaluate((sel) => {
+			var elements = document.querySelectorAll(sel);
+			for (var i = 0; i < elements.length; i++) {
+				elements[i].parentNode.removeChild(elements[i]);
+			}
+		}, div_selector_to_remove)
+	}
+	
 }
 
 export class InfoElement {
@@ -219,8 +155,11 @@ export class InfoElement {
 	}
 }
 
-// var scraper = new Scraper()
-// scraper.headlessBrowser()
+var scraperPage = new ScraperPage()
+var page = await scraperPage.GeneratePage()
 
-var login = new Login()
-await login.headlessBrowser()
+var loginScraper = new ScraperLogin(page)
+await loginScraper.Login()
+
+var scraper = new Scraper(page)
+await scraper.Scrape()
