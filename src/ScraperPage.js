@@ -13,4 +13,9 @@ export default class ScraperPage {
 		});
 		return await browser.newPage();
 	}
+
+	async CloseBrowser() {
+		return await browser.close();
+	}
+
 }

@@ -17,7 +17,7 @@ export default class Scraper {
 	getURL(name, actionType) {
 		return `https://www.tradera.com/search?q=${name}&itemType=${actionType}&${sortBy}`;
 	}
-	
+
 	async Scrape() {
 		console.log("")
 		console.log("")
@@ -74,20 +74,20 @@ export default class Scraper {
 
 			let infos = jsdoms.map(element => {
 				//get info
-
+				let wish = ""
 				let contentInnerHtml = element.window.document.body.querySelector('.mb-1').innerHTML
-				if(contentInnerHtml.includes("Sparad i minneslistan")){
-					// console.log("sparad")
-					return;
+				if (contentInnerHtml.includes("Sparad i minneslistan")) {
+					wish = "yes"
 				} else if (contentInnerHtml.includes("Spara i minneslistan")) {
-					// console.log("inte sparad")
+					wish = "no"
 				}
 
 				let title = element.window.document.body.querySelector('a').title
 				let link = linkPrefix + element.window.document.body.querySelector('a').href
 				let price = element.window.document.body.querySelector('.item-card-details-price').textContent
+				let date = element.window.document.body.querySelector('.item-card-animate-time').textContent
 
-				return new InfoElement(title, link, price)
+				return new InfoElement(title, link, price, wish, date)
 
 			});
 
@@ -110,8 +110,6 @@ export default class Scraper {
 		}
 		console.log("--DONE--")
 
-		await browser.close();
-
 		fs.writeFile("newData.txt", result, function (err) {
 			if (err) {
 				console.log(err);
@@ -123,13 +121,15 @@ export default class Scraper {
 }
 
 export class InfoElement {
-	constructor(title, link, price) {
+	constructor(title, link, price, wish, date) {
 		this.title = title
 		this.link = link
 		this.price = price
+		this.wish = wish
+		this.date = date
 	}
 
 	toString() {
-		return this.title + "\n" + this.link + "\n" + this.price + "\n"
+		return this.title + "\n" + this.link + "\n" + this.price + "\n" + this.date + "\n" + this.wish + "\n"
 	}
 }
