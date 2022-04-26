@@ -78,6 +78,36 @@
             "keywords": [
                 "destinies"
             ]
+        },
+        {
+            "searchterm": "Dungeons%20&%20Dragons",
+            "keywords": [
+                "dungeons & dragons 5e","dungeons and dragons 5e","d&d 5e","dnd 5e"
+            ]
+        },
+        {
+            "searchterm": "Logitech%20mx%20master",
+            "keywords": [
+                "logitech mx master"
+            ]
+        },
+        {
+            "searchterm": "SM58%20Shure",
+            "keywords": [
+                "sm58 shure", "shure sm58" 
+            ]
+        },
+        {
+            "searchterm": "pandemic",
+            "keywords": [
+                "pandemic"
+            ]
+        },
+        {
+            "searchterm": "RØDE%20Mikrofon",
+            "keywords": [
+            	"nt-usb", "nt usb"
+            ]
         }
     ],
     "comments": [

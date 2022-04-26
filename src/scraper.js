@@ -3,6 +3,7 @@ import got from 'got';
 import { JSDOM } from 'jsdom';
 import puppeteer from 'puppeteer';
 import datas from './data.json';
+import Login from './login.js';
 
 const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
@@ -23,6 +24,22 @@ export class Scraper {
 	}
 
 	async headlessBrowser() {
+
+		console.log("")
+		console.log("")
+		console.log("")
+		console.log("############################### START ####################################")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("############################# START SCRAPING #############################")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("################################# END ####################################")
+		console.log("")
+		console.log("")
+		console.log("")
 
 		const browser = await puppeteer.launch({
 			// headless: false
@@ -68,10 +85,10 @@ export class Scraper {
 
 				let contentInnerHtml = element.window.document.body.querySelector('.mb-1').innerHTML
 				if(contentInnerHtml.includes("Sparad i minneslistan")){
-					console.log("sparad")
+					// console.log("sparad")
 					return;
 				} else if (contentInnerHtml.includes("Spara i minneslistan")) {
-					console.log("inte sparad")
+					// console.log("inte sparad")
 				}
 
 				let title = element.window.document.body.querySelector('a').title
@@ -202,5 +219,8 @@ export class InfoElement {
 	}
 }
 
-var scraper = new Scraper()
-scraper.headlessBrowser()
+// var scraper = new Scraper()
+// scraper.headlessBrowser()
+
+var login = new Login()
+await login.headlessBrowser()
