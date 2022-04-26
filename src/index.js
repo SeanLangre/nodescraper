@@ -3,7 +3,7 @@ import './components/scraperComponent.js';
 const scraper = document.querySelector('#scraper')
 
 
-// console.log("asdasdasd")
+console.log("asdasdasd")
 
 // import { createServer } from 'http'
 // import { createReadStream } from 'fs'

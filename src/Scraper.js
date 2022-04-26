@@ -2,14 +2,13 @@ import fs from 'fs';
 import got from 'got';
 import { JSDOM } from 'jsdom';
 import datas from './data.json';
-import ScraperLogin from './login.js';
-import ScraperPage from './page.js';
+import ScraperUtils from './ScraperUtils.js';
 
 const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
 const linkPrefix = 'www.tradera.com'
 
-export class Scraper {
+export default class Scraper {
 
 	constructor(page) {
 		this.page = page
@@ -18,12 +17,7 @@ export class Scraper {
 	getURL(name, actionType) {
 		return `https://www.tradera.com/search?q=${name}&itemType=${actionType}&${sortBy}`;
 	}
-
-
-	async stuff() {
-		return "nfkjbngfnjbkjbn"
-	}
-
+	
 	async Scrape() {
 		console.log("")
 		console.log("")
@@ -41,22 +35,18 @@ export class Scraper {
 		console.log("")
 		console.log("")
 
-		// const browser = await puppeteer.launch({
-		// 	// headless: false
-		// });
-
 		var page = this.page
-
 		let result = ''
 
 		for (const data of datas.list) {
 			let url = this.getURL(data.searchterm, actionType);
 			console.log(url)
 
+			await ScraperUtils.readCredentialsFile(page)
 			await page.goto(url);
 			await page.waitForSelector('.site-pagename-SearchResults ');
 
-			this.removeGDPRPopup(page)
+			await ScraperUtils.removeGDPRPopup(page)
 
 			//page down
 			for (let i = 0; i < 20; i++) {
@@ -130,17 +120,6 @@ export class Scraper {
 
 		return result
 	}
-
-	async removeGDPRPopup(page) {
-		let div_selector_to_remove = ".qc-cmp2-container";
-		return await page.evaluate((sel) => {
-			var elements = document.querySelectorAll(sel);
-			for (var i = 0; i < elements.length; i++) {
-				elements[i].parentNode.removeChild(elements[i]);
-			}
-		}, div_selector_to_remove)
-	}
-	
 }
 
 export class InfoElement {
@@ -154,12 +133,3 @@ export class InfoElement {
 		return this.title + "\n" + this.link + "\n" + this.price + "\n"
 	}
 }
-
-var scraperPage = new ScraperPage()
-var page = await scraperPage.GeneratePage()
-
-var loginScraper = new ScraperLogin(page)
-await loginScraper.Login()
-
-var scraper = new Scraper(page)
-await scraper.Scrape()

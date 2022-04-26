@@ -5,7 +5,7 @@
   "browser": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-json-modules ./src/scraper.js",
+    "start": "node --experimental-json-modules ./src/app.js",
     "myserv": "node --experimental-json-modules ./server.js",
     "index": "node --experimental-json-modules ./src/index.js",
     "debug": "node --experimental-json-modules ./src/scraper.js",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "got": "^11.0.2",
     "jsdom": "^19.0.0",
