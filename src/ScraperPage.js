@@ -8,7 +8,8 @@ export default class ScraperPage {
 
 	async GeneratePage() {
 		const browser = await puppeteer.launch({
-			headless: false
+			headless: true,
+			userDataDir: './src/localStorage'
 		});
 		return await browser.newPage();
 	}

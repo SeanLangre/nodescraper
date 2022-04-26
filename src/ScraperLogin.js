@@ -30,7 +30,6 @@ export default class ScraperLogin {
 		console.log("")
 
 		var page = this.page
-
 		let url = this.getURL();
 		console.log(url)
 		await page.goto(url);
@@ -41,6 +40,7 @@ export default class ScraperLogin {
 		await page.type("input[type=password]", process.env.TRADERA_PASS);
 		await page.click("button[type=submit]");
 
-		await ScraperUtils.saveCredentialsToFile(page)
+		await ScraperUtils.saveCookiesToFile(page)
+		// await ScraperUtils.saveLocalStorageToFile(page)
 	}
 }

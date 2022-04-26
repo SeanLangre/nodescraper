@@ -2,3 +2,4 @@
 /vite-project/node_modules
 .env
 cookies.txt
+/src/localStorage

@@ -1,5 +1,6 @@
 import fs from 'fs';
 const cookiesPath = 'cookies.txt'
+const localStoragePath = 'localstorage.txt'
 
 class ScraperUtils {
 
@@ -13,26 +14,57 @@ class ScraperUtils {
 		}, div_selector_to_remove)
 	}
 
-	static async saveCredentialsToFile(page) {
-		// Write Cookies
+	// Write Cookies
+	static async saveCookiesToFile(page) {
 		const cookiesObject = await page.cookies()
 		return await fs.writeFileSync(cookiesPath, JSON.stringify(cookiesObject));
-		// console.log('Session has been saved to ' + cookiesPath);
 	}
 
-	static async readCredentialsFile(page) {
-		// If the cookies file exists, read the cookies.
-		const previousSession = fs.existsSync(cookiesPath)
+	// If the cookies file exists, read the cookies.
+	static async setCookiesInBrowser(page) {
+		const previousSession = await fs.existsSync(cookiesPath)
 		if (previousSession) {
-			const content = fs.readFileSync(cookiesPath);
+			const content = await fs.readFileSync(cookiesPath);
 			const cookiesArr = JSON.parse(content);
 			if (cookiesArr.length !== 0) {
 				for (let cookie of cookiesArr) {
 					await page.setCookie(cookie)
 				}
 				console.log('Session has been loaded in the browser')
+				return true;
 			}
 		}
+		return false;
+	}
+
+	static async saveLocalStorageToFile(page) {
+		// var localStorageData = await page.evaluate(() => {
+		// 	var localStorage = window.localStorage
+		// 	let textFile = {};
+		// 	for (let i = 0; i < localStorage.length; i++) {
+		// 		const key = localStorage.key(i);
+		// 		textFile[key] = localStorage.getItem(key);
+		// 	}
+		// 	return textFile;
+		// });
+		var localStorageData = await page.evaluate(() =>  Object.assign({}, window.localStorage));
+		return await fs.writeFileSync(localStoragePath, JSON.stringify(localStorageData));
+	}
+
+	static async setLocalStorageInBrowser(page) {
+		var previousSession = await fs.existsSync(localStoragePath)
+		if (previousSession) {
+			const content = await fs.readFileSync(localStoragePath);
+			const cookiesArr = JSON.parse(content);
+			if (cookiesArr.length !== 0) {
+				for (let cookie of cookiesArr) {
+					await page.setCookie(cookie)
+				}
+				console.log('Session has been loaded in the browser')
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

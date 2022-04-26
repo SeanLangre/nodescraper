@@ -42,7 +42,7 @@ export default class Scraper {
 			let url = this.getURL(data.searchterm, actionType);
 			console.log(url)
 
-			await ScraperUtils.readCredentialsFile(page)
+			await ScraperUtils.setCookiesInBrowser(page)
 			await page.goto(url);
 			await page.waitForSelector('.site-pagename-SearchResults ');
 
