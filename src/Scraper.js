@@ -72,14 +72,34 @@ export default class Scraper {
 				jsdoms.push(new JSDOM(element))
 			});
 
-			let infos = jsdoms.map(element => {
+			var wishButtons = []
+
+			let infos = await jsdoms.map(element => {
 				//get info
 				let wish = ""
-				let contentInnerHtml = element.window.document.body.querySelector('.mb-1').innerHTML
+
+				let contentButton = element.window.document.body.querySelector('.mb-1')
+				let contentInnerHtml = contentButton.innerHTML
 				if (contentInnerHtml.includes("Sparad i minneslistan")) {
 					wish = "yes"
 				} else if (contentInnerHtml.includes("Spara i minneslistan")) {
 					wish = "no"
+
+					let buttonJSDOMElement = new JSDOM(contentInnerHtml)
+					// let button = buttonJSDOMElement.window.document.body.querySelector('[class^="item-card-buttons d-flex flex-column"]')
+					// let button = buttonJSDOMElement.window.document.body.querySelector('[class^="btn btn-round item-card-wishlist-button btn-md-sm mb-1"]')
+					// let button = buttonJSDOMElement.window.document.body.querySelector('[class*="item-card-wishlist-button"]')
+					let button = buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
+
+					//buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
+
+					console.log("button.outerHTML")
+					console.log(button.outerHTML)
+
+					// button.click()
+
+					
+					wishButtons.push(button)
 				}
 
 				let title = element.window.document.body.querySelector('a').title
@@ -88,8 +108,12 @@ export default class Scraper {
 				let date = element.window.document.body.querySelector('.item-card-animate-time').textContent
 
 				return new InfoElement(title, link, price, wish, date)
-
 			});
+
+			for (let i = 0; i < wishButtons.length; i++) {
+				await page.waitForTimeout(200)
+				wishButtons[i].click()
+			}
 
 			console.log("--infos--")
 			console.log(`Total: ${infos.length}`)
