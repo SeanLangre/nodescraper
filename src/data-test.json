@@ -1,0 +1,32 @@
+{
+    "list": [
+        {
+            "searchterm": "arkham%20horror",
+            "keywords": [
+                "arkham horror",
+                "arkham horor"
+            ]
+        },
+        {
+            "searchterm": "pandemic",
+            "keywords": [
+                "pandemic"
+            ]
+        }
+    ],
+    "comments": [
+        {
+            "searchterm": "rode",
+            "keywords": [
+                "rode",
+                "røde"
+            ]
+        },
+        {
+            "searchterm": "shure",
+            "keywords": [
+                "shure"
+            ]
+        }
+    ]
+}

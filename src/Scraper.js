@@ -18,7 +18,7 @@ export default class Scraper {
 		return `https://www.tradera.com/search?q=${name}&itemType=${actionType}&${sortBy}`;
 	}
 
-	async Scrape() {
+	printStart() {
 		console.log("")
 		console.log("")
 		console.log("")
@@ -34,7 +34,10 @@ export default class Scraper {
 		console.log("")
 		console.log("")
 		console.log("")
+	}
 
+	async Scrape() {
+		this.printStart()
 		var page = this.page
 		let result = ''
 
@@ -76,6 +79,17 @@ export default class Scraper {
 
 			let infos = await jsdoms.map(element => {
 				//get info
+				let title = element.window.document.body.querySelector('a').title
+
+				if (this.filter(data, title)) {
+
+				} else {
+					return
+				}
+
+				let link = linkPrefix + element.window.document.body.querySelector('a').href
+				let price = element.window.document.body.querySelector('.item-card-details-price').textContent
+				let date = element.window.document.body.querySelector('.item-card-animate-time').textContent
 				let wish = ""
 
 				let contentButton = element.window.document.body.querySelector('.mb-1')
@@ -84,52 +98,56 @@ export default class Scraper {
 					wish = "yes"
 				} else if (contentInnerHtml.includes("Spara i minneslistan")) {
 					wish = "no"
-
 					let buttonJSDOMElement = new JSDOM(contentInnerHtml)
-					// let button = buttonJSDOMElement.window.document.body.querySelector('[class^="item-card-buttons d-flex flex-column"]')
-					// let button = buttonJSDOMElement.window.document.body.querySelector('[class^="btn btn-round item-card-wishlist-button btn-md-sm mb-1"]')
-					// let button = buttonJSDOMElement.window.document.body.querySelector('[class*="item-card-wishlist-button"]')
 					let button = buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
 
-					//buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
-
-					console.log("button.outerHTML")
-					console.log(button.outerHTML)
-
-					// button.click()
-
-					
 					wishButtons.push(button)
 				}
-
-				let title = element.window.document.body.querySelector('a').title
-				let link = linkPrefix + element.window.document.body.querySelector('a').href
-				let price = element.window.document.body.querySelector('.item-card-details-price').textContent
-				let date = element.window.document.body.querySelector('.item-card-animate-time').textContent
 
 				return new InfoElement(title, link, price, wish, date)
 			});
 
-			for (let i = 0; i < wishButtons.length; i++) {
-				await page.waitForTimeout(200)
-				wishButtons[i].click()
-			}
+			infos = infos.filter(x => x !== undefined);
+
+			 let newdata = data
+			await page.evaluate((newdata) => {
+				const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
+				for (let i = 0; i < newdata.keywords.length; i++) {
+					const query = newdata.keywords[i];
+					const targetElement = elements.find(e => e.parentElement.parentElement.innerHTML.toLowerCase().includes(query));
+					targetElement && targetElement.click();
+				}
+			}, newdata)
+
+			// let buttons = await page.evaluate(newdata => {
+			// 	const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
+			// 	let array = []
+			// 	for (let i = 0; i < newdata.keywords.length; i++) {
+			// 		// debugger
+			// 		const query = newdata.keywords[i];
+			// 		// debugger
+			// 		const targetElement = elements.find(e => e.parentElement.parentElement.innerHTML.toLowerCase().includes(query));
+			// 		// debugger
+			// 		array.push(targetElement)
+			// 	}
+			// 	return array
+			// }, newdata)
+
+			// for (const button in buttons) {
+			// 	await page.waitForTimeout(200)
+			// 	await button.click()
+			// };
+			// for (let element of elements) {
+			// 	await page.waitForTimeout(200)
+			// 	await element.click()
+			// }
 
 			console.log("--infos--")
 			console.log(`Total: ${infos.length}`)
 
-			let filteredList = []
-			infos.forEach(info => {
-				for (let i = 0; i < data.keywords.length; i++) {
-					const element = data.keywords[i];
-					if (info.title.toLowerCase().includes(element)) {
-						filteredList.push(info)
-					}
-				}
-			})
-			console.log(filteredList)
-			for (let i = 0; i < filteredList.length; i++) {
-				result += filteredList[i].toString();
+			console.log(infos)
+			for (let i = 0; i < infos.length; i++) {
+				result += infos[i].toString();
 			}
 		}
 		console.log("--DONE--")
@@ -142,7 +160,21 @@ export default class Scraper {
 
 		return result
 	}
+
+	filter(data, title) {
+		let lowercaseTitle = title.toLowerCase()
+		for (let i = 0; i < data.keywords.length; i++) {
+			const element = data.keywords[i];
+			if (lowercaseTitle.includes(element)) {
+				return true
+			}
+		}
+		return false
+	}
+
 }
+
+
 
 export class InfoElement {
 	constructor(title, link, price, wish, date) {

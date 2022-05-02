@@ -32,12 +32,6 @@
             ]
         },
         {
-            "searchterm": "Aftermath",
-            "keywords": [
-                "aftermath"
-            ]
-        },
-        {
             "searchterm": "Elder%20Sign",
             "keywords": [
                 "elder sign"
@@ -122,6 +116,12 @@
             "searchterm": "shure",
             "keywords": [
                 "shure"
+            ]
+        },
+        {
+            "searchterm": "Aftermath",
+            "keywords": [
+                "aftermath"
             ]
         }
     ]

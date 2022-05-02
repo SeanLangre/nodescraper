@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --experimental-json-modules ./src/app.js",
+    "login": "node --experimental-json-modules ./src/app-login.js",
     "myserv": "node --experimental-json-modules ./server.js",
     "index": "node --experimental-json-modules ./src/index.js",
     "debug": "node --experimental-json-modules ./src/scraper.js",

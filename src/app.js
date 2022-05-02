@@ -1,16 +1,11 @@
 
-import ScraperLogin from './ScraperLogin.js';
 import ScraperPage from './ScraperPage.js';
 import Scraper from './Scraper.js';
-import ScraperUtils from './ScraperUtils.js';
 
 //Scraper
 
 var scraperPage = new ScraperPage()
-var page = await scraperPage.GeneratePage()
-
-// var loginScraper = new ScraperLogin(page)
-// await loginScraper.Login()
+var page = await scraperPage.GeneratePage(false, true)
 
 //TODO: add wishlist for each item in scraper
 
