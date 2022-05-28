@@ -5,103 +5,162 @@
             "keywords": [
                 "arkham horror",
                 "arkham horor"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Betrayal%20at",
             "keywords": [
                 "betrayal at"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Shadows%20of%20Brimstone",
             "keywords": [
                 "shadows of brimstone"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Mansions%20of%20Madness",
             "keywords": [
                 "mansions of madness"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Eldritch%20Horror",
             "keywords": [
                 "eldritch horror"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Elder%20Sign",
             "keywords": [
                 "elder sign"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Wingspan",
             "keywords": [
                 "wingspan"
+            ],
+            "blacklist": [
+                "mccartney"
             ]
         },
         {
             "searchterm": "Gloomhaven",
             "keywords": [
                 "gloomhaven"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "a6000",
             "keywords": [
                 "a6000"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "The%20Crew",
             "keywords": [
-                "the crew: the quest for planet nine", "the crew the quest for planet nine"
-            ]
+                "the crew: the quest for planet nine",
+                "the crew the quest for planet nine"
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "The%20Crew",
             "keywords": [
-                "the crew: mission deep sea", "the crew mission deep sea"
-            ]
+                "the crew: mission deep sea",
+                "the crew mission deep sea"
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Destinies",
             "keywords": [
                 "destinies"
+            ],
+            "blacklist": [
+                "next destinies"
             ]
         },
         {
             "searchterm": "Dungeons%20&%20Dragons",
             "keywords": [
-                "dungeons & dragons 5e","dungeons and dragons 5e","d&d 5e","dnd 5e"
+                "dungeons & dragons 5e",
+                "dungeons and dragons 5e",
+                "d&d 5e",
+                "dnd 5e",
+                "tomb of annihilation",
+                "odysseys of theros",
+                "Descent into Avernus",
+                "Monster Manual",
+                "Curse of Strahd",
+                "Waterdeep Dragon Heist",
+                "Icewind Dale",
+                "dungeon of the Mad Mage",
+                "out of the Abyss"
+            ],
+            "blacklist": [
+                "advanced",
+                "screen"
             ]
         },
         {
             "searchterm": "Logitech%20mx%20master",
             "keywords": [
                 "logitech mx master"
-            ]
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "SM58%20Shure",
             "keywords": [
-                "sm58 shure", "shure sm58" 
-            ]
+                "sm58 shure",
+                "shure sm58"
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "pandemic",
             "keywords": [
                 "pandemic"
+            ],
+            "blacklist": [
+                "covid",
+                "sundström"
             ]
         },
         {
             "searchterm": "RØDE%20Mikrofon",
             "keywords": [
-            	"nt-usb", "nt usb"
-            ]
+                "nt-usb",
+                "nt usb",
+                "podmic"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Too%20Many%20Bones",
+            "keywords": [
+                "too many bones"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Google%20nest",
+            "keywords": [
+                "google nest mini",
+                "nest mini"
+            ],
+            "blacklist": []
         }
     ],
     "comments": [
@@ -122,6 +181,12 @@
             "searchterm": "Aftermath",
             "keywords": [
                 "aftermath"
+            ]
+        },
+        {
+            "searchterm": "Descent",
+            "keywords": [
+                "descent"
             ]
         }
     ]

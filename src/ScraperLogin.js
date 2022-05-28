@@ -33,8 +33,10 @@ export default class ScraperLogin {
 		let url = this.getURL();
 		console.log(url)
 		await page.goto(url);
-		await page.waitForTimeout(100)
+		await page.waitForTimeout(2000)
 		await ScraperUtils.removeGDPRPopup(page)
+		await page.waitForTimeout(2000)
+
 
 		await page.type("input[type=text]", process.env.TRADERA_USERNAME);
 		await page.type("input[type=password]", process.env.TRADERA_PASS);

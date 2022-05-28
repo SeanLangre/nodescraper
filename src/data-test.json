@@ -1,16 +1,17 @@
 {
     "list": [
         {
-            "searchterm": "arkham%20horror",
+            "searchterm": "Dungeons%20&%20Dragons",
             "keywords": [
-                "arkham horror",
-                "arkham horor"
-            ]
-        },
-        {
-            "searchterm": "pandemic",
-            "keywords": [
-                "pandemic"
+                "dungeons & dragons 5e",
+                "dungeons and dragons 5e",
+                "d&d 5e",
+                "dnd 5e",
+                "tomb of annihilation"
+            ],
+            "blacklist": [
+                "advanced",
+                "screen"
             ]
         }
     ],
@@ -20,12 +21,6 @@
             "keywords": [
                 "rode",
                 "røde"
-            ]
-        },
-        {
-            "searchterm": "shure",
-            "keywords": [
-                "shure"
             ]
         }
     ]

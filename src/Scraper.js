@@ -54,9 +54,26 @@ export default class Scraper {
 			//page down
 			for (let i = 0; i < 20; i++) {
 				await page.keyboard.press("PageDown");
-				await page.waitForTimeout(100)
+				await page.waitForTimeout(50)
 			}
 
+			//#region click wishbutton
+			let newdata = data
+			await page.evaluate((newdata) => {
+				const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
+				for (let i = 0; i < newdata.keywords.length; i++) {
+					const whitelist = newdata.keywords[i]?.toLowerCase();
+					const blacklist = newdata.blacklist[i]?.toLowerCase();
+					const targetElement = elements.find(e => {
+						let lowercase = e.parentElement.parentElement.innerHTML.toLowerCase()
+						return lowercase.includes(whitelist) && !lowercase.includes(blacklist)
+					});
+					targetElement && targetElement.click();
+				}
+			}, newdata)
+			//#endregion
+
+			//#region Gather and print elements
 			let list = await page.$$('.item-card-container');
 
 			let htmlList = list.map(async element => {
@@ -81,7 +98,7 @@ export default class Scraper {
 				//get info
 				let title = element.window.document.body.querySelector('a').title
 
-				if (this.filter(data, title)) {
+				if (ScraperFilter(data, title)) {
 
 				} else {
 					return
@@ -95,9 +112,9 @@ export default class Scraper {
 				let contentButton = element.window.document.body.querySelector('.mb-1')
 				let contentInnerHtml = contentButton.innerHTML
 				if (contentInnerHtml.includes("Sparad i minneslistan")) {
-					wish = "yes"
+					wish = "YES"
 				} else if (contentInnerHtml.includes("Spara i minneslistan")) {
-					wish = "no"
+					wish = "NO"
 					let buttonJSDOMElement = new JSDOM(contentInnerHtml)
 					let button = buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
 
@@ -108,39 +125,7 @@ export default class Scraper {
 			});
 
 			infos = infos.filter(x => x !== undefined);
-
-			 let newdata = data
-			await page.evaluate((newdata) => {
-				const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
-				for (let i = 0; i < newdata.keywords.length; i++) {
-					const query = newdata.keywords[i];
-					const targetElement = elements.find(e => e.parentElement.parentElement.innerHTML.toLowerCase().includes(query));
-					targetElement && targetElement.click();
-				}
-			}, newdata)
-
-			// let buttons = await page.evaluate(newdata => {
-			// 	const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
-			// 	let array = []
-			// 	for (let i = 0; i < newdata.keywords.length; i++) {
-			// 		// debugger
-			// 		const query = newdata.keywords[i];
-			// 		// debugger
-			// 		const targetElement = elements.find(e => e.parentElement.parentElement.innerHTML.toLowerCase().includes(query));
-			// 		// debugger
-			// 		array.push(targetElement)
-			// 	}
-			// 	return array
-			// }, newdata)
-
-			// for (const button in buttons) {
-			// 	await page.waitForTimeout(200)
-			// 	await button.click()
-			// };
-			// for (let element of elements) {
-			// 	await page.waitForTimeout(200)
-			// 	await element.click()
-			// }
+			//#endregion
 
 			console.log("--infos--")
 			console.log(`Total: ${infos.length}`)
@@ -152,29 +137,30 @@ export default class Scraper {
 		}
 		console.log("--DONE--")
 
-		fs.writeFile("newData.txt", result, function (err) {
-			if (err) {
-				console.log(err);
-			}
-		});
+		// fs.writeFile("newData.txt", result, function (err) {
+		// 	if (err) {
+		// 		console.log(err);
+		// 	}
+		// });
 
 		return result
 	}
 
-	filter(data, title) {
-		let lowercaseTitle = title.toLowerCase()
-		for (let i = 0; i < data.keywords.length; i++) {
-			const element = data.keywords[i];
-			if (lowercaseTitle.includes(element)) {
-				return true
-			}
-		}
-		return false
-	}
 
 }
 
 
+export function ScraperFilter(data, title) {
+	let lowercaseTitle = title.toLowerCase()
+	for (let i = 0; i < data.keywords.length; i++) {
+		const whitelist = data.keywords[i]?.toLowerCase();
+		const blacklist = data.blacklist[i]?.toLowerCase();
+		if (lowercaseTitle.includes(whitelist) && !lowercaseTitle.includes(blacklist)) {
+			return true
+		}
+	}
+	return false
+}
 
 export class InfoElement {
 	constructor(title, link, price, wish, date) {
