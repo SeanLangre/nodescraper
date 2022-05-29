@@ -57,18 +57,29 @@ export default class Scraper {
 				await page.waitForTimeout(50)
 			}
 
+			await page.waitForTimeout(10000)
+
+
 			//#region click wishbutton
 			let newdata = data
 			await page.evaluate((newdata) => {
 				const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
 				for (let i = 0; i < newdata.keywords.length; i++) {
-					const whitelist = newdata.keywords[i]?.toLowerCase();
-					const blacklist = newdata.blacklist[i]?.toLowerCase();
-					const targetElement = elements.find(e => {
-						let lowercase = e.parentElement.parentElement.innerHTML.toLowerCase()
-						return lowercase.includes(whitelist) && !lowercase.includes(blacklist)
+					const whitelist = newdata.keywords[i]?.toLowerCase(); //TODO: for each word
+					const blacklist = newdata.blacklist[i]?.toLowerCase(); //TODO: for each word
+
+					elements.forEach(element => {
+						let lowercase = element.parentElement.parentElement.innerHTML.toLowerCase()
+						if(lowercase.includes(whitelist) && !lowercase.includes(blacklist)){
+							element && element.click();
+						}
 					});
-					targetElement && targetElement.click();
+
+					//const targetElement = elements.find(e => {
+					// 	let lowercase = e.parentElement.parentElement.innerHTML.toLowerCase()
+					// 	return lowercase.includes(whitelist) && !lowercase.includes(blacklist)
+					// });
+					// targetElement && targetElement.click();
 				}
 			}, newdata)
 			//#endregion
@@ -153,8 +164,8 @@ export default class Scraper {
 export function ScraperFilter(data, title) {
 	let lowercaseTitle = title.toLowerCase()
 	for (let i = 0; i < data.keywords.length; i++) {
-		const whitelist = data.keywords[i]?.toLowerCase();
-		const blacklist = data.blacklist[i]?.toLowerCase();
+		const whitelist = data.keywords[i]?.toLowerCase(); //TODO: for each word
+		const blacklist = data.blacklist[i]?.toLowerCase(); //TODO: for each word
 		if (lowercaseTitle.includes(whitelist) && !lowercaseTitle.includes(blacklist)) {
 			return true
 		}

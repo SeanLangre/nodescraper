@@ -21,9 +21,9 @@ await scraperPage.CloseBrowser()
 
 //2nd time
 
-var page = await scraperPage.GeneratePage(false, false)
+// var page = await scraperPage.GeneratePage(false, false)
 
-var scraper = new Scraper(page)
-await scraper.Scrape()
+// var scraper = new Scraper(page)
+// await scraper.Scrape()
 
-await scraperPage.CloseBrowser()
+// await scraperPage.CloseBrowser()
