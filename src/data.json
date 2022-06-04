@@ -106,7 +106,20 @@
                 "Waterdeep Dragon Heist",
                 "Icewind Dale",
                 "dungeon of the Mad Mage",
-                "out of the Abyss"
+                "out of the Abyss",
+                "Princes of the Apocalypse",
+                "Hoard of the Dragon Queen",
+                "The Rise of Tiamat",
+                "Storm Kings Thunder",
+                "Tales from the Yawning Portal",
+                "Ghosts of Saltmarsh",
+                "Guide to Monsters",
+                "Tome of Foes",
+                "Sword Coast Adventurers Guide",
+                "Candlekeep Mysteries",
+                "Xanathar",
+                "witchlight",
+                "Ravenloft"
             ],
             "blacklist": [
                 "advanced",

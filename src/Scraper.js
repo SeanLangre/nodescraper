@@ -1,7 +1,5 @@
-import fs from 'fs';
-import got from 'got';
 import { JSDOM } from 'jsdom';
-import datas from './data.json';
+import datas from './data-test.json';
 import ScraperUtils from './ScraperUtils.js';
 
 const actionType = 'Auction'
@@ -38,7 +36,7 @@ export default class Scraper {
 
 	async Scrape() {
 		this.printStart()
-		var page = this.page
+		let page = this.page
 		let result = ''
 
 		for (const data of datas.list) {
@@ -49,6 +47,8 @@ export default class Scraper {
 			await page.goto(url);
 			await page.waitForSelector('.site-pagename-SearchResults ');
 
+			//await page.waitForTimeout(50000)
+			
 			await ScraperUtils.removeGDPRPopup(page)
 
 			//page down
@@ -57,32 +57,40 @@ export default class Scraper {
 				await page.waitForTimeout(50)
 			}
 
-			await page.waitForTimeout(10000)
-
-
 			//#region click wishbutton
-			let newdata = data
-			await page.evaluate((newdata) => {
-				const elements = [...document.querySelectorAll('[aria-label="Spara i minneslistan"]')];
-				for (let i = 0; i < newdata.keywords.length; i++) {
-					const whitelist = newdata.keywords[i]?.toLowerCase(); //TODO: for each word
-					const blacklist = newdata.blacklist[i]?.toLowerCase(); //TODO: for each word
+			let result = await page.$$('[aria-label="Spara i minneslistan"]');
 
-					elements.forEach(element => {
-						let lowercase = element.parentElement.parentElement.innerHTML.toLowerCase()
-						if(lowercase.includes(whitelist) && !lowercase.includes(blacklist)){
-							element && element.click();
-						}
-					});
+			for (const element of result) {
+				let shouldClick = false
+				// let parent = (await element.$x('..'))[0]; // get parent
+				// let parentParent = (await parent.$x('..'))[0]; // get parent
+				let grandParent = (await element.$x('../..'))[0]; // get grandparent
+				let innerHTML = await (await grandParent.getProperty('innerText')).jsonValue() //get property like innerhtml from puppeteer elementHandle
+				let elementLC = innerHTML.toLowerCase()
+				// console.log(`element ${element}`)
+				data.keywords.forEach(wish => {
+					wish = wish.toLowerCase()
+					if (elementLC.includes(wish)) {
+						shouldClick = true
+						return
+					}
+				});
+				data.blacklist.forEach(deny => {
+					deny = deny.toLowerCase()
+					if (deny && deny.length != 0 && elementLC.includes(deny)) {
+						shouldClick = false
+						return
+					}
+				});
 
-					//const targetElement = elements.find(e => {
-					// 	let lowercase = e.parentElement.parentElement.innerHTML.toLowerCase()
-					// 	return lowercase.includes(whitelist) && !lowercase.includes(blacklist)
-					// });
-					// targetElement && targetElement.click();
+				if (shouldClick) {
+					element && element?.click();
 				}
-			}, newdata)
+			}
+
 			//#endregion
+
+			// await page.waitForTimeout(50000)
 
 			//#region Gather and print elements
 			let list = await page.$$('.item-card-container');
@@ -103,7 +111,7 @@ export default class Scraper {
 				jsdoms.push(new JSDOM(element))
 			});
 
-			var wishButtons = []
+			let wishButtons = []
 
 			let infos = await jsdoms.map(element => {
 				//get info
@@ -143,7 +151,7 @@ export default class Scraper {
 
 			console.log(infos)
 			for (let i = 0; i < infos.length; i++) {
-				result += infos[i].toString();
+				result += infos[i]?.toString();
 			}
 		}
 		console.log("--DONE--")
@@ -163,14 +171,21 @@ export default class Scraper {
 
 export function ScraperFilter(data, title) {
 	let lowercaseTitle = title.toLowerCase()
-	for (let i = 0; i < data.keywords.length; i++) {
-		const whitelist = data.keywords[i]?.toLowerCase(); //TODO: for each word
-		const blacklist = data.blacklist[i]?.toLowerCase(); //TODO: for each word
-		if (lowercaseTitle.includes(whitelist) && !lowercaseTitle.includes(blacklist)) {
-			return true
+	let shouldInclude = false
+
+	data.keywords.forEach(wish => {
+		wish = wish.toLowerCase()
+		if (lowercaseTitle.includes(wish)) {
+			shouldInclude = true
 		}
-	}
-	return false
+	});
+	data.blacklist.forEach(deny => {
+		deny = deny.toLowerCase()
+		if (deny && deny.length != 0 && lowercaseTitle.includes(deny)) {
+			shouldInclude = false
+		}
+	});
+	return shouldInclude
 }
 
 export class InfoElement {

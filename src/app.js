@@ -11,13 +11,20 @@ import ScraperLogin from './ScraperLogin.js';
 
 //Scraper
 
-var scraperPage = new ScraperPage()
-var page = await scraperPage.GeneratePage(false, false)
+async function runScraper() {
+    var scraperPage = new ScraperPage()
+    // var page = await scraperPage.GeneratePage(false, false)
+    var page = await scraperPage.GeneratePage(true, false)
+    
+    // page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 
-var scraper = new Scraper(page)
-await scraper.Scrape()
+    var scraper = new Scraper(page)
+    await scraper.Scrape()
+    
+    await scraperPage.CloseBrowser()
+}
 
-await scraperPage.CloseBrowser()
+runScraper()
 
 //2nd time
 
