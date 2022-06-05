@@ -41,7 +41,7 @@ export default class Scraper {
 		await ScraperUtils.setCookiesInBrowser(page)
 
 		PrintTime("goto(url)")
-		await page.goto(url, { waitUntil: 'load', timeout: 0 });
+		await page.goto(url, { waitUntil: 'load', timeout: 120000 });
 		//page down
 		PrintTime("Page down")
 
@@ -64,7 +64,7 @@ export default class Scraper {
 		let wishedList = await page.$$('[aria-label="Sparad i minneslistan"]');
 		let infoElements = []
 
-		for (const handle of notWishedList) {
+		for await (const handle of notWishedList) {
 			let shouldClick = false
 			let grandParent = (await handle.$x('../..'))[0]; // get grandparent
 			let innerHTML = await (await grandParent.getProperty('innerText')).jsonValue() //get property like innerhtml from puppeteer elementHandle
@@ -74,7 +74,7 @@ export default class Scraper {
 			// console.log(`element ${element}`)
 			// PrintTime("Start wish")
 
-			for (let wish of data.keywords) {
+			for await (let wish of data.keywords) {
 				let wishLC = wish.toLowerCase()
 				if (elementLC.includes(wishLC)) {
 					shouldClick = true
@@ -86,7 +86,7 @@ export default class Scraper {
 			// });
 			// PrintTime("Start blacklist")
 
-			for (let deny of data.blacklist) {
+			for await (let deny of data.blacklist) {
 				let denyLC = deny.toLowerCase()
 				if (denyLC && denyLC.length != 0 && elementLC.includes(denyLC)) {
 					shouldClick = false
@@ -135,7 +135,7 @@ export default class Scraper {
 		// // 		console.log(err);
 		// // 	}
 		// // });
-
+		await page.waitForTimeout(200)
 		return "DONE: " + url
 	}
 }

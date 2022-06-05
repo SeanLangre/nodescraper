@@ -41,6 +41,24 @@
                 "logitech mx master"
             ],
             "blacklist": []
+        },
+        {
+            "searchterm": "Samsung%20Galaxy%20Watch",
+            "keywords": [
+                "samsung galaxy watch"
+            ],
+            "blacklist": [
+                "skyddsfodral",
+                "skärmskydd",
+                "nylonrem"
+            ]
+        },
+        {
+            "searchterm": "Logitech%20mx%20master",
+            "keywords": [
+                "logitech mx master"
+            ],
+            "blacklist": []
         }
     ],
     "comments": [
