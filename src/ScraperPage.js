@@ -7,8 +7,7 @@ export default class ScraperPage {
 		this.browser
 	}
 
-	async GeneratePage(headless = true, devtools = false) {
-		
+	async GetBrowser(headless = true, devtools = false) {
 		this.browser = await puppeteer.launch({
 			headless: headless,
 			// userDataDir: './src/localStorage',
@@ -17,11 +16,7 @@ export default class ScraperPage {
 			args: ['--no-sandbox'],
 			product: "firefox"
 		});
-		return await this.browser.newPage();
-	}
-
-	async CloseBrowser() {
-		return await this.browser.close();
+		return this.browser
 	}
 
 }

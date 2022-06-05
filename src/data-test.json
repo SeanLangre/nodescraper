@@ -25,12 +25,22 @@
                 "Guide to Monsters",
                 "Tome of Foes",
                 "Sword Coast Adventurers Guide",
-                "Candlekeep Mysteries"
+                "Candlekeep Mysteries",
+                "Xanathar",
+                "witchlight",
+                "Ravenloft"
             ],
             "blacklist": [
                 "advanced",
                 "screen"
             ]
+        },
+        {
+            "searchterm": "Logitech%20mx%20master",
+            "keywords": [
+                "logitech mx master"
+            ],
+            "blacklist": []
         }
     ],
     "comments": [

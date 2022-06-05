@@ -43,6 +43,9 @@ export default class ScraperLogin {
 		await page.click("button[type=submit]");
 
 		await ScraperUtils.saveCookiesToFile(page)
+
+		await page.waitForTimeout(2000)
+
 		// await ScraperUtils.saveLocalStorageToFile(page)
 	}
 }

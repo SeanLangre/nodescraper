@@ -30,7 +30,7 @@ class ScraperUtils {
 				for (let cookie of cookiesArr) {
 					await page.setCookie(cookie)
 				}
-				console.log('Session has been loaded in the browser')
+				// console.log('Session has been loaded in the browser')
 				return true;
 			}
 		}
