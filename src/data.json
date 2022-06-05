@@ -119,7 +119,8 @@
                 "Candlekeep Mysteries",
                 "Xanathar",
                 "witchlight",
-                "Ravenloft"
+                "Ravenloft",
+                "City of Mezro"
             ],
             "blacklist": [
                 "advanced",
@@ -174,6 +175,17 @@
                 "nest mini"
             ],
             "blacklist": []
+        },
+        {
+            "searchterm": "Samsung%20Galaxy%20Watch",
+            "keywords": [
+                "samsung galaxy watch"
+            ],
+            "blacklist": [
+                "skyddsfodral",
+                "skärmskydd",
+                "nylonrem"
+            ]
         }
     ],
     "comments": [

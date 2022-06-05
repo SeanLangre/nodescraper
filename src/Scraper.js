@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import datas from './data-test.json';
+import datas from './data.json';
 import ScraperUtils from './ScraperUtils.js';
 
 const actionType = 'Auction'
