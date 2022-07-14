@@ -20,7 +20,10 @@
             "keywords": [
                 "shadows of brimstone"
             ],
-            "blacklist": []
+            "blacklist": [
+                "enemy pack",
+                "dicefest"
+            ]
         },
         {
             "searchterm": "Mansions%20of%20Madness",
@@ -88,7 +91,8 @@
                 "destinies"
             ],
             "blacklist": [
-                "next destinies"
+                "next destinies",
+                "nine destinies"
             ]
         },
         {
@@ -140,7 +144,9 @@
                 "sm58 shure",
                 "shure sm58"
             ],
-            "blacklist": []
+            "blacklist": [
+                "kartong"
+            ]
         },
         {
             "searchterm": "pandemic",
@@ -169,6 +175,13 @@
             "blacklist": []
         },
         {
+            "searchterm": "Descent%20Legends%20of%20the%20Dark",
+            "keywords": [
+                "descent legends of the dark"
+            ],
+            "blacklist": []
+        },
+        {
             "searchterm": "Google%20nest",
             "keywords": [
                 "google nest mini",
@@ -184,8 +197,107 @@
             "blacklist": [
                 "skyddsfodral",
                 "skärmskydd",
-                "nylonrem"
+                "nylonrem",
+                "hållare"
             ]
+        },
+        {
+            "searchterm": "fitbit",
+            "keywords": [
+                "fitbit charge",
+                "fitbit inspire",
+                "fitbit versa",
+                "fitbit charge 4",
+                "fitbit inspire 2",
+                "fitbit versa 3",
+                "fitbit sense",
+                "fitbit luxe"
+            ],
+            "blacklist": [
+                "ersättningsband",
+                "2-pack",
+                "laddningsbox",
+                " band",
+                "skärmskydd",
+                "2x",
+                "hängsmycke",
+                "silikonklämma"
+            ]
+        },
+        {
+            "searchterm": "garmin",
+            "keywords": [
+                "garmin vivo",
+                "garmin venu",
+                "garmin forerunner",
+                "garmin fenix",
+                "garmin lily"
+            ],
+            "blacklist": [
+                "ersättningsband",
+                "2-pack",
+                "laddningsbox",
+                " band",
+                "skärmskydd",
+                "2x",
+                "hängsmycke"
+            ]
+        },
+        {
+            "searchterm": "trådfri",
+            "keywords": [
+                "trådfri"
+            ],
+            "blacklist": [
+                "retroknappen"
+            ]
+        },
+        {
+            "searchterm": "codenames",
+            "keywords": [
+                "codenames"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "blood%20rage",
+            "keywords": [
+                "blood rage"
+            ],
+            "blacklist": [
+                "blu-ray"
+            ]
+        },
+        {
+            "searchterm": "azul",
+            "keywords": [
+                "azul"
+            ],
+            "blacklist": [
+                "linser",
+                "byxor"
+            ]
+        },
+        {
+            "searchterm": "horrified",
+            "keywords": [
+                "horrified"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "unfathomable",
+            "keywords": [
+                "unfathomable"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Kult%20Divinity%20Lost",
+            "keywords": [
+                "Kult Divinity Lost"
+            ],
+            "blacklist": []
         }
     ],
     "comments": [
@@ -206,12 +318,6 @@
             "searchterm": "Aftermath",
             "keywords": [
                 "aftermath"
-            ]
-        },
-        {
-            "searchterm": "Descent",
-            "keywords": [
-                "descent"
             ]
         }
     ]

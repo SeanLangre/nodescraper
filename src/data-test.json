@@ -1,62 +1,9 @@
 {
     "list": [
         {
-            "searchterm": "Dungeons%20&%20Dragons",
+            "searchterm": "Kult%20Divinity%20Lost",
             "keywords": [
-                "dungeons & dragons 5e",
-                "dungeons and dragons 5e",
-                "d&d 5e",
-                "dnd 5e",
-                "tomb of annihilation",
-                "odysseys of theros",
-                "Descent into Avernus",
-                "Monster Manual",
-                "Curse of Strahd",
-                "Waterdeep Dragon Heist",
-                "Icewind Dale",
-                "dungeon of the Mad Mage",
-                "out of the Abyss",
-                "Princes of the Apocalypse",
-                "Hoard of the Dragon Queen",
-                "The Rise of Tiamat",
-                "Storm Kings Thunder",
-                "Tales from the Yawning Portal",
-                "Ghosts of Saltmarsh",
-                "Guide to Monsters",
-                "Tome of Foes",
-                "Sword Coast Adventurers Guide",
-                "Candlekeep Mysteries",
-                "Xanathar",
-                "witchlight",
-                "Ravenloft"
-            ],
-            "blacklist": [
-                "advanced",
-                "screen"
-            ]
-        },
-        {
-            "searchterm": "Logitech%20mx%20master",
-            "keywords": [
-                "logitech mx master"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Samsung%20Galaxy%20Watch",
-            "keywords": [
-                "samsung galaxy watch"
-            ],
-            "blacklist": [
-                "skyddsfodral",
-                "skärmskydd",
-                "nylonrem"
-            ]
-        },
-        {
-            "searchterm": "Logitech%20mx%20master",
-            "keywords": [
-                "logitech mx master"
+                "Kult Divinity Lost"
             ],
             "blacklist": []
         }
