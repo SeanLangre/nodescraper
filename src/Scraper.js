@@ -40,6 +40,11 @@ export default class Scraper {
 		let result = ''
 
 		for (const data of datas.list) {
+
+			if(data.ignore === "true"){
+				continue;
+			}
+
 			let url = this.getURL(data.searchterm, actionType);
 			console.log(url)
 

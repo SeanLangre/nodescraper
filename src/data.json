@@ -191,6 +191,7 @@
         },
         {
             "searchterm": "Samsung%20Galaxy%20Watch",
+            "ignore": "true",
             "keywords": [
                 "samsung galaxy watch"
             ],
@@ -203,6 +204,7 @@
         },
         {
             "searchterm": "fitbit",
+            "ignore": "true",
             "keywords": [
                 "fitbit charge",
                 "fitbit inspire",
@@ -226,6 +228,7 @@
         },
         {
             "searchterm": "garmin",
+            "ignore": "true",
             "keywords": [
                 "garmin vivo",
                 "garmin venu",
@@ -275,7 +278,8 @@
             ],
             "blacklist": [
                 "linser",
-                "byxor"
+                "byxor",
+                "tomat"
             ]
         },
         {
@@ -298,6 +302,15 @@
                 "Kult Divinity Lost"
             ],
             "blacklist": []
+        },
+        {
+            "searchterm": "mutant%20year%20zero",
+            "keywords": [
+                "mutant year zero"
+            ],
+            "blacklist": [
+                "xbox"
+            ]
         }
     ],
     "comments": [
