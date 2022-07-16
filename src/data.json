@@ -64,6 +64,7 @@
         },
         {
             "searchterm": "a6000",
+            "maxPrice":"2000",
             "keywords": [
                 "a6000"
             ],
@@ -97,6 +98,7 @@
         },
         {
             "searchterm": "Dungeons%20&%20Dragons",
+            "maxPrice":"1100",
             "keywords": [
                 "dungeons & dragons 5e",
                 "dungeons and dragons 5e",
@@ -124,12 +126,199 @@
                 "Xanathar",
                 "witchlight",
                 "Ravenloft",
-                "City of Mezro"
+                "City of Mezro",
+                "Treasury of Dragons",
+                "Strixhaven",
+                "Monsters of the Multiverse"
             ],
             "blacklist": [
-                "advanced",
-                "screen"
+                "advanced"
             ]
+        },
+        {
+            "searchterm": "tomb%20of%20annihilation",
+            "maxPrice":"600",
+            "keywords": [
+                "tomb of annihilation"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "odysseys%20of%20theros",
+            "maxPrice":"600",
+            "keywords": [
+                "odysseys of theros"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Descent%20into%20Avernus",
+            "maxPrice":"600",
+            "keywords": [
+                "Descent into Avernus"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Curse%20of%20Strahd",
+            "maxPrice":"600",
+            "keywords": [
+                "Curse of Strahd"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Waterdeep%20Dragon%20Heist",
+            "maxPrice":"600",
+            "keywords": [
+                "Waterdeep Dragon Heist"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Icewind%20Dale",
+            "maxPrice":"600",
+            "keywords": [
+                "Icewind Dale"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "dungeon%20of%20the%20Mad%20Mage",
+            "maxPrice":"600",
+            "keywords": [
+                "dungeon of the Mad Mage"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "out%20of%20the%20Abyss",
+            "maxPrice":"600",
+            "keywords": [
+                "out of the Abyss"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Princes%20of%20the%20Apocalypse",
+            "maxPrice":"600",
+            "keywords": [
+                "Princes of the Apocalypse"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Hoard%20of%20the%20Dragon%20Queen",
+            "maxPrice":"600",
+            "keywords": [
+                "Hoard of the Dragon Queen",
+                "The Rise of Tiamat",
+                "Storm Kings Thunder",
+                "Tales from the Yawning Portal",
+                "Ghosts of Saltmarsh",
+                "Guide to Monsters",
+                "Tome of Foes",
+                "Sword Coast Adventurers Guide",
+                "Candlekeep Mysteries",
+                "Xanathar",
+                "witchlight",
+                "Ravenloft",
+                "City of Mezro",
+                "Treasury of Dragons",
+                "Strixhaven",
+                "Monsters of the Multiverse"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "The%20Rise%20of%20Tiamat",
+            "maxPrice":"600",
+            "keywords": [
+                "The Rise of Tiamat"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Storm%20Kings%20Thunder",
+            "maxPrice":"600",
+            "keywords": [
+                "Storm Kings Thunder"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Tales%20from%20the%20Yawning%20Portal",
+            "maxPrice":"600",
+            "keywords": [
+                "Tales from the Yawning Portal"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Ghosts of Saltmarsh",
+            "maxPrice":"600",
+            "keywords": [
+                "Ghosts of Saltmarsh"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Volo's Guide to Monsters",
+            "maxPrice":"600",
+            "keywords": [
+                "Guide to Monsters",
+                "Volo's Guide to Monsters"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Tome of Foes",
+            "maxPrice":"600",
+            "keywords": [
+                "Tome of Foes"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Sword Coast Adventurers Guide",
+            "maxPrice":"600",
+            "keywords": [
+                "Sword Coast Adventurers Guide"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Candlekeep Mysteries",
+            "maxPrice":"600",
+            "keywords": [
+                "Candlekeep Mysteries"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Xanathar's Guide to Everything",
+            "maxPrice":"600",
+            "keywords": [
+                "Xanathar's Guide to Everything",
+                "Xanathars Guide to Everything"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "The Wild Beyond the Witchlight",
+            "maxPrice":"600",
+            "keywords": [
+                "The Wild Beyond the Witchlight"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Mordenkainen Presents Monsters of the Multiverse",
+            "maxPrice":"600",
+            "keywords": [
+                "Mordenkainen Presents Monsters of the Multiverse"
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Logitech%20mx%20master",
@@ -140,6 +329,7 @@
         },
         {
             "searchterm": "SM58%20Shure",
+            "maxPrice":"800",
             "keywords": [
                 "sm58 shure",
                 "shure sm58"
@@ -150,12 +340,14 @@
         },
         {
             "searchterm": "pandemic",
+            "maxPrice":"800",
             "keywords": [
                 "pandemic"
             ],
             "blacklist": [
                 "covid",
-                "sundström"
+                "sundström",
+                "Bulgaria"
             ]
         },
         {
@@ -191,6 +383,7 @@
         },
         {
             "searchterm": "Samsung%20Galaxy%20Watch",
+            "maxPrice":"800",
             "ignore": "true",
             "keywords": [
                 "samsung galaxy watch"
@@ -204,6 +397,7 @@
         },
         {
             "searchterm": "fitbit",
+            "maxPrice":"800",
             "ignore": "true",
             "keywords": [
                 "fitbit charge",
@@ -228,6 +422,7 @@
         },
         {
             "searchterm": "garmin",
+            "maxPrice":"800",
             "ignore": "true",
             "keywords": [
                 "garmin vivo",

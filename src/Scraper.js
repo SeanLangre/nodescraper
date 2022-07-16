@@ -12,8 +12,9 @@ export default class Scraper {
 		this.page = page
 	}
 
-	getURL(name, actionType) {
-		return `https://www.tradera.com/search?q=${name}&itemType=${actionType}&${sortBy}`;
+	getURL(name, auctionType) {
+		name = name.replaceAll(" ", "%20");
+		return `https://www.tradera.com/search?q=${name}&itemType=${auctionType}&${sortBy}`;
 	}
 
 	printStart() {
@@ -41,7 +42,7 @@ export default class Scraper {
 
 		for (const data of datas.list) {
 
-			if(data.ignore === "true"){
+			if (data.ignore === "true") {
 				continue;
 			}
 
@@ -53,7 +54,7 @@ export default class Scraper {
 			await page.waitForSelector('.site-pagename-SearchResults ');
 
 			//await page.waitForTimeout(50000)
-			
+
 			await ScraperUtils.removeGDPRPopup(page)
 
 			//page down
@@ -72,7 +73,34 @@ export default class Scraper {
 				let grandParent = (await element.$x('../..'))[0]; // get grandparent
 				let innerHTML = await (await grandParent.getProperty('innerText')).jsonValue() //get property like innerhtml from puppeteer elementHandle
 				let elementLC = innerHTML.toLowerCase()
-				// console.log(`element ${element}`)
+
+				const splitText = elementLC.split("\n");
+				let currentPrice = (() => {
+					let result = undefined;
+					let match = 'kr';
+					for (const e of splitText) {
+						let eString = e.toString();
+						if (eString.includes(match)) {
+							let regex = /\D/g;
+							let price = eString.replace(regex, "");
+							if (data.maxPrice !== undefined) {
+								if (parseInt(price) < parseInt(data.maxPrice)) {
+									result = price;
+								}
+							} else if (data.maxPrice === undefined) {
+								result = price;
+							}
+							// break;
+						}
+					}
+
+					return result;
+				})();
+
+				if (currentPrice === undefined) {
+					continue;
+				}
+
 				data.keywords.forEach(wish => {
 					wish = wish.toLowerCase()
 					if (elementLC.includes(wish)) {
