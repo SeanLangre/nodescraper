@@ -104,6 +104,8 @@
                 "dungeons and dragons 5e",
                 "d&d 5e",
                 "dnd 5e",
+                "dungeons & dragons 5th",
+                "dungeons and dragons 5th",
                 "tomb of annihilation",
                 "odysseys of theros",
                 "Descent into Avernus",
@@ -129,7 +131,8 @@
                 "City of Mezro",
                 "Treasury of Dragons",
                 "Strixhaven",
-                "Monsters of the Multiverse"
+                "Monsters of the Multiverse",
+                "Call of the Netherdeep"
             ],
             "blacklist": [
                 "advanced"
@@ -176,12 +179,15 @@
             "blacklist": []
         },
         {
-            "searchterm": "Icewind%20Dale",
+            "searchterm": "Icewind Dale Rime of the Frostmaiden",
             "maxPrice":"600",
             "keywords": [
-                "Icewind Dale"
+                "Icewind Dale",
+                "Rime of the Frostmaiden"
             ],
-            "blacklist": []
+            "blacklist": [
+                "nintendo"
+            ]
         },
         {
             "searchterm": "dungeon%20of%20the%20Mad%20Mage",
@@ -212,21 +218,10 @@
             "maxPrice":"600",
             "keywords": [
                 "Hoard of the Dragon Queen",
-                "The Rise of Tiamat",
-                "Storm Kings Thunder",
-                "Tales from the Yawning Portal",
-                "Ghosts of Saltmarsh",
-                "Guide to Monsters",
-                "Tome of Foes",
-                "Sword Coast Adventurers Guide",
-                "Candlekeep Mysteries",
-                "Xanathar",
-                "witchlight",
                 "Ravenloft",
                 "City of Mezro",
                 "Treasury of Dragons",
-                "Strixhaven",
-                "Monsters of the Multiverse"
+                "Strixhaven"
             ],
             "blacklist": []
         },
@@ -506,6 +501,35 @@
             "blacklist": [
                 "xbox"
             ]
+        },
+        {
+            "searchterm": "Tales from the Loop",
+            "keywords": [
+                "Tales from the Loop"
+            ],
+            "blacklist": [
+                "Fenix"
+            ]
+        },
+        {
+            "searchterm": "mutant år noll",
+            "keywords": [
+                "mutant år noll"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Symbaroum",
+            "keywords": [
+                "Symbaroum",
+                "Monsterkodex",
+                "Ruins of Symbaroum",
+                "Spelarens handbok",
+                "players guide",
+                "gamemaster",
+                "Härjat Hemland"
+            ],
+            "blacklist": []
         }
     ],
     "comments": [

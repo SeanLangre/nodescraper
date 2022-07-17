@@ -1,21 +1,15 @@
 {
     "list": [
         {
-            "searchterm": "Ghosts of Saltmarsh",
-            "maxPrice":"600",
+            "searchterm": "Symbaroum",
             "keywords": [
-                "Ghosts of Saltmarsh",
-                "Guide to Monsters",
-                "Tome of Foes",
-                "Sword Coast Adventurers Guide",
-                "Candlekeep Mysteries",
-                "Xanathar",
-                "witchlight",
-                "Ravenloft",
-                "City of Mezro",
-                "Treasury of Dragons",
-                "Strixhaven",
-                "Monsters of the Multiverse"
+                "Symbaroum",
+                "Monsterkodex",
+                "Ruins of Symbaroum",
+                "Spelarens handbok",
+                "players guide",
+                "gamemaster",
+                "Härjat Hemland"
             ],
             "blacklist": []
         }

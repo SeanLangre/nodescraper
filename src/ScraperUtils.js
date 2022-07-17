@@ -25,13 +25,18 @@ class ScraperUtils {
 		const previousSession = await fs.existsSync(cookiesPath)
 		if (previousSession) {
 			const content = await fs.readFileSync(cookiesPath);
-			const cookiesArr = JSON.parse(content);
-			if (cookiesArr.length !== 0) {
-				for (let cookie of cookiesArr) {
-					await page.setCookie(cookie)
+			try {
+				const cookiesArr = JSON.parse(content);
+				if (cookiesArr.length !== 0) {
+					for (let cookie of cookiesArr) {
+						await page.setCookie(cookie)
+					}
+					console.log('Session has been loaded in the browser')
+					return true;
 				}
-				console.log('Session has been loaded in the browser')
-				return true;
+			} catch (error) {
+				console.log('ERROR! COULD NOT USE COOKIES FILE')
+				return false;
 			}
 		}
 		return false;
@@ -51,21 +56,21 @@ class ScraperUtils {
 		return await fs.writeFileSync(localStoragePath, JSON.stringify(localStorageData));
 	}
 
-	static async setLocalStorageInBrowser(page) {
-		var previousSession = await fs.existsSync(localStoragePath)
-		if (previousSession) {
-			const content = await fs.readFileSync(localStoragePath);
-			const cookiesArr = JSON.parse(content);
-			if (cookiesArr.length !== 0) {
-				for (let cookie of cookiesArr) {
-					await page.setCookie(cookie)
-				}
-				console.log('Session has been loaded in the browser')
-				return true;
-			}
-		}
-		return false;
-	}
+	// static async setLocalStorageInBrowser(page) {
+	// 	var previousSession = await fs.existsSync(localStoragePath)
+	// 	if (previousSession) {
+	// 		const content = await fs.readFileSync(localStoragePath);
+	// 		const cookiesArr = JSON.parse(content);
+	// 		if (cookiesArr.length !== 0) {
+	// 			for (let cookie of cookiesArr) {
+	// 				await page.setCookie(cookie)
+	// 			}
+	// 			console.log('Session has been loaded in the browser')
+	// 			return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// }
 
 }
 

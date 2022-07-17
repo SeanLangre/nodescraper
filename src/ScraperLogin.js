@@ -37,12 +37,15 @@ export default class ScraperLogin {
 		await ScraperUtils.removeGDPRPopup(page)
 		await page.waitForTimeout(2000)
 
+		try {
+			await page.type("input[type=text]", process.env.TRADERA_USERNAME);
+			await page.type("input[type=password]", process.env.TRADERA_PASS);
+			await page.click("button[type=submit]");
+		} catch (error) {
 
-		await page.type("input[type=text]", process.env.TRADERA_USERNAME);
-		await page.type("input[type=password]", process.env.TRADERA_PASS);
-		await page.click("button[type=submit]");
-
-		await ScraperUtils.saveCookiesToFile(page)
-		// await ScraperUtils.saveLocalStorageToFile(page)
+		} finally {
+			await ScraperUtils.saveCookiesToFile(page)
+			// await ScraperUtils.saveLocalStorageToFile(page)
+		}
 	}
 }
