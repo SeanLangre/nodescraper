@@ -4,6 +4,8 @@ import Scraper from './Scraper.js';
 import ScraperLogin from './ScraperLogin.js';
 import datas from './data/data-test.json' assert {type: 'json'};
 import ScraperBrowser from './ScraperBrowser.js';
+import rxjs, { mergeMap, toArray } from 'rxjs';
+// import bluebird from 'bluebird';
 
 // -- Browser --
 // var scrapeBrowser = new ScraperBrowser();
@@ -66,6 +68,8 @@ const withBrowser = async (fn) => {
 
 const withPage = (browser) => async (fn) => {
     const page = await browser.newPage();
+    // page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+
     try {
         return await fn(page);
     } finally {
@@ -73,16 +77,47 @@ const withPage = (browser) => async (fn) => {
     }
 }
 
-const results = [];
+var results = ""
+try {
+    results = await withBrowser(async (browser) => {
+        return rxjs.from(datas.list).pipe(
+            mergeMap(async (data) => {
 
-await withBrowser(async (browser) => {
-    for (const data of datas.list) {
-        const result = await withPage(browser)(async (page) => {
-            var scraper = new Scraper()
-            let result = await scraper.Scrape(data, page)
-            return result
-        });
+                try {                    
+                    return withPage(browser)(async (page) => {
+                        var scraper = new Scraper()
+                        let result = await scraper.Scrape(data, page)
+                        return result
+                    }).then((r) => ({ 
+                        result: r 
+                    }), (e) => ({ 
+                        error: e 
+                    }));
+                } catch (error) {
+                    console.log("ERROR");
+                    console.log(error);
+                    throw error
+                }
 
-        results.push(result);
-    }
-});
+            }, 1),
+            toArray(),
+        ).toPromise();
+    });
+} catch (error) {
+    console.log("ERROR");
+    console.log(error);
+    console.log(results);
+    throw error
+} finally {
+    console.log("FINALLY");
+    console.log(results);
+}
+
+
+// for (const data of datas.list) {
+//     const result = await withPage(browser)(async (page) => {
+//         var scraper = new Scraper()
+//         let result = await scraper.Scrape(data, page)
+//         return result
+//     });
+// }

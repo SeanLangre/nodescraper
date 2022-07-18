@@ -16,7 +16,7 @@ export default class Scraper {
 
 	async Scrape(data, page){
 		if (data.ignore === "true") {
-			return;
+			return ""
 		}
 
 		let url = this.getURL(data.searchterm, actionType);
@@ -78,14 +78,14 @@ export default class Scraper {
 				wish = wish.toLowerCase()
 				if (elementLC.includes(wish)) {
 					shouldClick = true
-					return
+					return ""
 				}
 			});
 			data.blacklist.forEach(deny => {
 				deny = deny.toLowerCase()
 				if (deny && deny.length != 0 && elementLC.includes(deny)) {
 					shouldClick = false
-					return
+					return ""
 				}
 			});
 
@@ -126,7 +126,7 @@ export default class Scraper {
 			if (ScraperFilter(data, title)) {
 
 			} else {
-				return
+				return ""
 			}
 
 			let link = linkPrefix + element.window.document.body.querySelector('a').href
