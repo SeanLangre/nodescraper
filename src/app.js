@@ -5,8 +5,9 @@ import ScraperLogin from './ScraperLogin.js';
 import ScraperBrowser from './ScraperBrowser.js';
 import rxjs, { mergeMap, toArray } from 'rxjs';
 import ScraperUtils from './ScraperUtils.js';
-import datas from './data/data.json' assert {type: 'json'};
 import ScraperTimer from './ScraperTimer.js';
+//JSON
+import datas from './data/data-test.json' assert {type: 'json'};
 
 //time
 let timer = new ScraperTimer();
@@ -22,8 +23,8 @@ async function login(browser) {
 
     } finally {
         await ScraperUtils.setCookiesInBrowser(page)
-
-        await page.waitForTimeout(50)
+        // await page.waitForTimeout(50)
+        await page.waitForSelector('.startpage-hero__content');
         await page.close()
     }
 }
@@ -52,7 +53,7 @@ const withPage = (browser) => async (fn) => {
         return await fn(page);
     } finally {
         // console.log("PAGE page.close();");
-        await page.waitForTimeout(50)
+        await page.waitForTimeout(10)
         await page.close();
     }
 }
@@ -63,12 +64,10 @@ try {
     results = await withBrowser(async (browser) => {
         let promise = rxjs.from(datas.list).pipe(
             mergeMap(async (data) => {
-
                 try {
                     return await withPage(browser)(async (page) => {
-                        counter = counter + 1
                         var scraper = new Scraper()
-                        let result = await scraper.ScrapeWrapper(data, page, counter)
+                        let result = await scraper.ScrapeWrapper(data, page, counter++)
                         return result
                     })
                 } catch (error) {
@@ -76,7 +75,6 @@ try {
                     console.log(error);
                     throw error
                 }
-
             }, 3),
             toArray(),
         )
@@ -98,4 +96,5 @@ try {
 } finally {
     timer.EndTimer();
     console.log("-DONE-");
+    console.log(results);
 }

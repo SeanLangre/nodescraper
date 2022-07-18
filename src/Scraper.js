@@ -30,7 +30,7 @@ export default class Scraper {
 		return `https://www.tradera.com/search?q=${name}&itemType=${auctionType}&${sortBy}`;
 	}
 
-	async ScrapeWrapper(data, page, id){
+	async ScrapeWrapper(data, page, id) {
 		let response = await this.Scrape(data, page, id)
 		console.log(`End Scrape Status: ${response?.status} Id: (${id}): [ ${data.searchterm} ] ${response?.url}`)
 		return response?.result;
@@ -42,7 +42,6 @@ export default class Scraper {
 			console.log(`Scrape IGNORE (${id}) ${url}`)
 			return { status: "Ignore", url: url, result: "" }
 		}
-		await page.waitForTimeout(50)
 		console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
 
 		await page.goto(url);
@@ -50,29 +49,12 @@ export default class Scraper {
 
 		await ScraperUtils.removeGDPRPopup(page)
 
-
-		let syncScroll = false;
-
-		if (syncScroll) {
-			await page.keyboard.press("PageDown")
-			await page.waitForTimeout(50)
-			await page.keyboard.press("PageDown")
-			await page.waitForTimeout(50)
-			await page.keyboard.press("PageDown")
-			await page.waitForTimeout(50)
-			await page.keyboard.press("PageDown")
-			await page.waitForTimeout(50)
-		} else {
-			await page.waitForTimeout(50)
-			await this.ScrollDown(page);
-			await page.waitForTimeout(50)
-		}
-
+		await page.waitForTimeout(10)
+		await this.ScrollDown(page);
+		await page.waitForTimeout(10)
 
 		//#region click wishbutton
 		let result = await page.$$('[aria-label="Spara i minneslistan"]');
-
-		await page.waitForTimeout(50)
 
 		for (const element of result) {
 			let shouldClick = false
@@ -86,43 +68,48 @@ export default class Scraper {
 			let currentPrice = await (() => {
 				let result = undefined;
 				let match = 'kr';
-				for (const e of splitText) {
-					let eString = e.toString();
-					if (eString.includes(match)) {
-						let regex = /\D/g;
-						let price = eString.replace(regex, "");
-						if (data.maxPrice !== undefined) {
-							if (parseInt(price) < parseInt(data.maxPrice)) {
+
+				return (() => {
+					for (const e of splitText) {
+						let eString = e.toString();
+						if (eString.includes(match)) {
+							let regex = /\D/g;
+							let price = eString.replace(regex, "");
+							if (data.maxPrice !== undefined) {
+								if (parseInt(price) < parseInt(data.maxPrice)) {
+									result = price;
+								}
+							} else if (data.maxPrice === undefined) {
 								result = price;
 							}
-						} else if (data.maxPrice === undefined) {
-							result = price;
+							return result;
 						}
-						// break;
 					}
-				}
-
-				return result;
+					return result;
+				})();
 			})();
 
 			if (currentPrice === undefined) {
 				continue;
 			}
 
-			for (let wish of data.keywords) {
-				wish = wish.toLowerCase()
-				if (elementLC.includes(wish)) {
-					shouldClick = true
-					break
+			shouldClick = await (()=>{
+				for (let wish of data.keywords) {
+					wish = wish.toLowerCase()
+					if (elementLC.includes(wish)) {
+						shouldClick = true
+						return shouldClick
+					}
 				}
-			}
-			for (let deny of data.blacklist) {
-				deny = deny.toLowerCase()
-				if (deny && deny.length != 0 && elementLC.includes(deny)) {
-					shouldClick = false
-					break
+				for (let deny of data.blacklist) {
+					deny = deny.toLowerCase()
+					if (deny && deny.length != 0 && elementLC.includes(deny)) {
+						shouldClick = false
+						return shouldClick
+					}
 				}
-			}
+				return shouldClick
+			})()
 
 			if (shouldClick) {
 				element && await element?.click();
@@ -187,14 +174,6 @@ export default class Scraper {
 		infos = await infos.filter(x => x !== undefined);
 		//#endregion
 
-		// console.log("--infos--")
-		// console.log(`End    SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
-		if (infos.length > 0) {
-			console.log(infos)
-		}
-		await page.waitForTimeout(50)
-
-		// await infos;
 		return await { status: "Success", url: url, result: infos }
 	}
 
