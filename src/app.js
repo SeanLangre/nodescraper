@@ -6,10 +6,10 @@ import ScraperBrowser from './ScraperBrowser.js';
 import rxjs, { mergeMap, toArray } from 'rxjs';
 import ScraperUtils from './ScraperUtils.js';
 import datas from './data/data.json' assert {type: 'json'};
+import ScraperTimer from './ScraperTimer.js';
 
-// -- Browser --
-// var scrapeBrowser = new ScraperBrowser();
-// var browser = await scrapeBrowser.GenerateBrowser(true, false);
+//time
+let timer = new ScraperTimer();
 
 // -- LOGIN --
 async function login(browser) {
@@ -34,6 +34,7 @@ const withBrowser = async (fn) => {
     const browser = await scrapeBrowser.GenerateBrowser(true, false);
     await login(browser)
     await Scraper.PrintScrapeStart();
+    timer.StartTimer();
 
     try {
         return await fn(browser);
@@ -80,8 +81,8 @@ try {
             toArray(),
         )
 
-        return await rxjs.lastValueFrom(promise);
-        // return await rxjs.firstValueFrom(promise, { defaultValue: 0 });
+        //return await rxjs.lastValueFrom(promise);
+        return await rxjs.firstValueFrom(promise, { defaultValue: 0 });
         // ).toPromise();
     })
         .catch((e) => {
@@ -95,8 +96,6 @@ try {
     console.log(results);
     throw error
 } finally {
-    console.log("FINALLY");
-    // console.log(results);
-    // console.log(results.map((e) => { return e?.result }));
+    timer.EndTimer();
     console.log("-DONE-");
 }
