@@ -21,9 +21,9 @@ async function login(browser) {
     } catch (error) {
 
     } finally {
-		await ScraperUtils.setCookiesInBrowser(page)
+        await ScraperUtils.setCookiesInBrowser(page)
 
-		await page.waitForTimeout(50)
+        await page.waitForTimeout(50)
         await page.close()
     }
 }
@@ -67,7 +67,7 @@ try {
                     return await withPage(browser)(async (page) => {
                         counter = counter + 1
                         var scraper = new Scraper()
-                        let result = await scraper.Scrape(data, page, counter)
+                        let result = await scraper.ScrapeWrapper(data, page, counter)
                         return result
                     })
                 } catch (error) {

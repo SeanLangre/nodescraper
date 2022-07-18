@@ -30,22 +30,23 @@ export default class Scraper {
 		return `https://www.tradera.com/search?q=${name}&itemType=${auctionType}&${sortBy}`;
 	}
 
-	async Scrape(data, page, id) {
+	async ScrapeWrapper(data, page, id){
+		let response = await this.Scrape(data, page, id)
+		console.log(`End Scrape Status: ${response?.status} Id: (${id}): [ ${data.searchterm} ] ${response?.url}`)
+		return response?.result;
+	}
 
+	async Scrape(data, page, id) {
 		let url = this.getURL(data.searchterm, actionType);
 		if (data.ignore === "true") {
-			console.log("Scrape IGNORE" + url)
-			return
+			console.log(`Scrape IGNORE (${id}) ${url}`)
+			return { status: "Ignore", url: url, result: "" }
 		}
 		await page.waitForTimeout(50)
-
 		console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
 
-		// await ScraperUtils.setCookiesInBrowser(page)
 		await page.goto(url);
 		await page.waitForSelector('.site-pagename-SearchResults ');
-
-		//await page.waitForTimeout(50000)
 
 		await ScraperUtils.removeGDPRPopup(page)
 
@@ -112,14 +113,14 @@ export default class Scraper {
 				wish = wish.toLowerCase()
 				if (elementLC.includes(wish)) {
 					shouldClick = true
-					return
+					break
 				}
 			}
 			for (let deny of data.blacklist) {
 				deny = deny.toLowerCase()
 				if (deny && deny.length != 0 && elementLC.includes(deny)) {
 					shouldClick = false
-					return
+					break
 				}
 			}
 
@@ -187,12 +188,14 @@ export default class Scraper {
 		//#endregion
 
 		// console.log("--infos--")
-		console.log(`End    SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
+		// console.log(`End    SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
 		if (infos.length > 0) {
 			console.log(infos)
 		}
 		await page.waitForTimeout(50)
-		return await infos;
+
+		// await infos;
+		return await { status: "Success", url: url, result: infos }
 	}
 
 	static PrintScrapeStart() {
