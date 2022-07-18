@@ -1,6 +1,52 @@
 {
     "list": [
         {
+            "searchterm": "horrified",
+            "keywords": [
+                "horrified"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "unfathomable",
+            "keywords": [
+                "unfathomable"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Kult%20Divinity%20Lost",
+            "keywords": [
+                "Kult Divinity Lost"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "mutant%20year%20zero",
+            "keywords": [
+                "mutant year zero"
+            ],
+            "blacklist": [
+                "xbox"
+            ]
+        },
+        {
+            "searchterm": "Tales from the Loop",
+            "keywords": [
+                "Tales from the Loop"
+            ],
+            "blacklist": [
+                "Fenix"
+            ]
+        },
+        {
+            "searchterm": "mutant år noll",
+            "keywords": [
+                "mutant år noll"
+            ],
+            "blacklist": []
+        },
+        {
             "searchterm": "Symbaroum",
             "keywords": [
                 "Symbaroum",
