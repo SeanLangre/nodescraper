@@ -1,5 +1,5 @@
 import fs from 'fs';
-const cookiesPath = 'cookies.txt'
+const cookiesPath = './src/cookies.txt'
 const localStoragePath = 'localstorage.txt'
 
 class ScraperUtils {
