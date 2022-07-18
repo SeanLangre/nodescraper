@@ -2,10 +2,10 @@
 import ScraperPage from './ScraperPage.js';
 import Scraper from './Scraper.js';
 import ScraperLogin from './ScraperLogin.js';
-import datas from './data/data-test.json' assert {type: 'json'};
 import ScraperBrowser from './ScraperBrowser.js';
 import rxjs, { mergeMap, toArray } from 'rxjs';
-// import bluebird from 'bluebird';
+import ScraperUtils from './ScraperUtils.js';
+import datas from './data/data.json' assert {type: 'json'};
 
 // -- Browser --
 // var scrapeBrowser = new ScraperBrowser();
@@ -17,40 +17,16 @@ async function login(browser) {
     var page = await scraperPage.GeneratePage(browser)
     try {
         var slogin = new ScraperLogin(page)
-        await slogin.Login()
+        return await slogin.Login()
     } catch (error) {
 
     } finally {
-        // await page.close();
-        // await scraperPage.CloseBrowser()
+		await ScraperUtils.setCookiesInBrowser(page)
+
+		await page.waitForTimeout(50)
+        await page.close()
     }
 }
-
-// //Scraper
-// async function runScraper(inputData, inputPage) {
-//     var scraper = new Scraper()
-//     await scraper.Scrape(inputData, inputPage)
-// }
-
-// async function StartScraper() {
-//     Scraper.PrintScrapeStart();
-//     // page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
-
-//     var scraperPage = new ScraperPage()
-//     var inputPage = await scraperPage.GeneratePage(browser)
-//     for (const data of datas.list) {
-//         let result = await runScraper(data, inputPage);
-//     }
-//     // await scraperPage.CloseBrowser()
-
-//     console.log("--DONE--")
-//     return true
-// }
-
-
-// await login()
-// await StartScraper()
-// await scrapeBrowser.CloseBrowser();
 
 const withBrowser = async (fn) => {
     var scrapeBrowser = new ScraperBrowser();
@@ -62,47 +38,57 @@ const withBrowser = async (fn) => {
     try {
         return await fn(browser);
     } finally {
+        console.log("BROWSER browser.close();");
         await browser.close();
     }
 }
 
 const withPage = (browser) => async (fn) => {
-    const page = await browser.newPage();
+    const page = await browser.newPage().catch(err => { console.log(err); throw err; });
     // page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 
     try {
         return await fn(page);
     } finally {
+        // console.log("PAGE page.close();");
+        await page.waitForTimeout(50)
         await page.close();
     }
 }
 
+var counter = 0;
 var results = []
 try {
     results = await withBrowser(async (browser) => {
-        return rxjs.from(datas.list).pipe(
+        let promise = rxjs.from(datas.list).pipe(
             mergeMap(async (data) => {
 
                 try {
-                    return withPage(browser)(async (page) => {
+                    return await withPage(browser)(async (page) => {
+                        counter = counter + 1
                         var scraper = new Scraper()
-                        let result = await scraper.Scrape(data, page)
+                        let result = await scraper.Scrape(data, page, counter)
                         return result
-                    }).then((r) => ({
-                        result: r
-                    }), (e) => ({
-                        error: e
-                    }));
+                    })
                 } catch (error) {
                     console.log("ERROR");
                     console.log(error);
                     throw error
                 }
 
-            }, 1),
+            }, 3),
             toArray(),
-        ).toPromise();
-    });
+        )
+
+        return await rxjs.lastValueFrom(promise);
+        // return await rxjs.firstValueFrom(promise, { defaultValue: 0 });
+        // ).toPromise();
+    })
+        .catch((e) => {
+            console.log("ERROR");
+            console.log(e);
+            throw e;
+        });
 } catch (error) {
     console.log("ERROR");
     console.log(error);
@@ -110,7 +96,7 @@ try {
     throw error
 } finally {
     console.log("FINALLY");
-    console.log(results);
-    console.log(results.map((e) => { return e?.result }));
+    // console.log(results);
+    // console.log(results.map((e) => { return e?.result }));
     console.log("-DONE-");
 }

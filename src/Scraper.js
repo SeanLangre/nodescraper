@@ -9,20 +9,39 @@ export default class Scraper {
 	constructor() {
 	}
 
+	async ScrollDown(page) {
+		await page.evaluate(async () => {
+			let scrollPosition = 0
+			let documentHeight = document.body.scrollHeight
+
+			while (documentHeight > scrollPosition) {
+				window.scrollBy(0, documentHeight)
+				await new Promise(resolve => {
+					setTimeout(resolve, 1000)
+				})
+				scrollPosition = documentHeight
+				documentHeight = document.body.scrollHeight
+			}
+		})
+	}
+
 	getURL(name, auctionType) {
 		name = name.replaceAll(" ", "%20");
 		return `https://www.tradera.com/search?q=${name}&itemType=${auctionType}&${sortBy}`;
 	}
 
-	async Scrape(data, page) {
-		if (data.ignore === "true") {
-			return ""
-		}
+	async Scrape(data, page, id) {
 
 		let url = this.getURL(data.searchterm, actionType);
-		console.log(url)
+		if (data.ignore === "true") {
+			console.log("Scrape IGNORE" + url)
+			return
+		}
+		await page.waitForTimeout(50)
 
-		await ScraperUtils.setCookiesInBrowser(page)
+		console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
+
+		// await ScraperUtils.setCookiesInBrowser(page)
 		await page.goto(url);
 		await page.waitForSelector('.site-pagename-SearchResults ');
 
@@ -30,32 +49,29 @@ export default class Scraper {
 
 		await ScraperUtils.removeGDPRPopup(page)
 
-		//page down
-		// for (let i = 0; i < 20; i++) {
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		await page.keyboard.press("PageDown");
-		await page.waitForTimeout(50)
-		// }
+
+		let syncScroll = false;
+
+		if (syncScroll) {
+			await page.keyboard.press("PageDown")
+			await page.waitForTimeout(50)
+			await page.keyboard.press("PageDown")
+			await page.waitForTimeout(50)
+			await page.keyboard.press("PageDown")
+			await page.waitForTimeout(50)
+			await page.keyboard.press("PageDown")
+			await page.waitForTimeout(50)
+		} else {
+			await page.waitForTimeout(50)
+			await this.ScrollDown(page);
+			await page.waitForTimeout(50)
+		}
+
 
 		//#region click wishbutton
 		let result = await page.$$('[aria-label="Spara i minneslistan"]');
+
+		await page.waitForTimeout(50)
 
 		for (const element of result) {
 			let shouldClick = false
@@ -96,14 +112,14 @@ export default class Scraper {
 				wish = wish.toLowerCase()
 				if (elementLC.includes(wish)) {
 					shouldClick = true
-					return ""
+					return
 				}
 			}
 			for (let deny of data.blacklist) {
 				deny = deny.toLowerCase()
 				if (deny && deny.length != 0 && elementLC.includes(deny)) {
 					shouldClick = false
-					return ""
+					return
 				}
 			}
 
@@ -113,8 +129,6 @@ export default class Scraper {
 		}
 
 		//#endregion
-
-		// await page.waitForTimeout(50000)
 
 		//#region Gather and print elements
 		let list = await page.$$('.item-card-container');
@@ -131,36 +145,35 @@ export default class Scraper {
 
 		//convert to jsdom elements
 		let jsdoms = []
-
 		for (const element of newList) {
 			jsdoms.push(new JSDOM(element))
 		}
 
 		let wishButtons = []
 
-		let infos = await jsdoms.map(element => {
+		let infoPromises = await jsdoms.map(async element => {
 			//get info
-			let title = element.window.document.body.querySelector('a')?.title
+			let title = await element.window.document.body.querySelector('a')?.title
 
 			if (ScraperFilter(data, title)) {
 
 			} else {
-				return ""
+				return
 			}
 
-			let link = linkPrefix + element.window.document.body.querySelector('a')?.href
-			let price = element.window.document.body.querySelector('.item-card-details-price')?.textContent
-			let date = element.window.document.body.querySelector('.item-card-animate-time')?.textContent
+			let link = linkPrefix + await element.window.document.body.querySelector('a')?.href
+			let price = await element.window.document.body.querySelector('.item-card-details-price')?.textContent
+			let date = await element.window.document.body.querySelector('.item-card-animate-time')?.textContent
 			let wish = ""
 
-			let contentButton = element.window.document.body.querySelector('.mb-1')
+			let contentButton = await element.window.document.body.querySelector('.mb-1')
 			let contentInnerHtml = contentButton?.innerHTML
 			if (contentInnerHtml?.includes("Sparad i minneslistan")) {
 				wish = "YES"
 			} else if (contentInnerHtml?.includes("Spara i minneslistan")) {
 				wish = "NO"
 				let buttonJSDOMElement = new JSDOM(contentInnerHtml)
-				let button = buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
+				let button = await buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
 
 				wishButtons.push(button)
 			}
@@ -168,13 +181,18 @@ export default class Scraper {
 			return new InfoElement(title, link, price, wish, date)
 		});
 
-		infos = infos.filter(x => x !== undefined);
+		let infos = await Promise.all(infoPromises);
+
+		infos = await infos.filter(x => x !== undefined);
 		//#endregion
 
-		console.log("--infos--")
-		console.log(`Total: ${infos.length}`)
-		console.log(infos)
-		return infos;
+		// console.log("--infos--")
+		console.log(`End    SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
+		if (infos.length > 0) {
+			console.log(infos)
+		}
+		await page.waitForTimeout(50)
+		return await infos;
 	}
 
 	static PrintScrapeStart() {

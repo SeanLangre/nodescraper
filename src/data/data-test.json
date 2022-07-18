@@ -1,61 +1,16 @@
 {
     "list": [
         {
-            "searchterm": "horrified",
+            "searchterm": "Elder%20Sign",
             "keywords": [
-                "horrified"
+                "elder sign"
             ],
             "blacklist": []
         },
         {
-            "searchterm": "unfathomable",
+            "searchterm": "Logitech%20mx%20master",
             "keywords": [
-                "unfathomable"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Kult%20Divinity%20Lost",
-            "keywords": [
-                "Kult Divinity Lost"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "mutant%20year%20zero",
-            "keywords": [
-                "mutant year zero"
-            ],
-            "blacklist": [
-                "xbox"
-            ]
-        },
-        {
-            "searchterm": "Tales from the Loop",
-            "keywords": [
-                "Tales from the Loop"
-            ],
-            "blacklist": [
-                "Fenix"
-            ]
-        },
-        {
-            "searchterm": "mutant år noll",
-            "keywords": [
-                "mutant år noll"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Symbaroum",
-            "keywords": [
-                "Symbaroum",
-                "Monsterkodex",
-                "Ruins of Symbaroum",
-                "Spelarens handbok",
-                "players guide",
-                "gamemaster",
-                "Härjat Hemland"
+                "logitech mx master"
             ],
             "blacklist": []
         }
