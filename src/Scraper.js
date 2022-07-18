@@ -14,7 +14,7 @@ export default class Scraper {
 		return `https://www.tradera.com/search?q=${name}&itemType=${auctionType}&${sortBy}`;
 	}
 
-	async Scrape(data, page){
+	async Scrape(data, page) {
 		if (data.ignore === "true") {
 			return ""
 		}
@@ -31,10 +31,28 @@ export default class Scraper {
 		await ScraperUtils.removeGDPRPopup(page)
 
 		//page down
-		for (let i = 0; i < 20; i++) {
-			await page.keyboard.press("PageDown");
-			await page.waitForTimeout(50)
-		}
+		// for (let i = 0; i < 20; i++) {
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		await page.keyboard.press("PageDown");
+		await page.waitForTimeout(50)
+		// }
 
 		//#region click wishbutton
 		let result = await page.$$('[aria-label="Spara i minneslistan"]');
@@ -48,7 +66,7 @@ export default class Scraper {
 			let elementLC = innerHTML.toLowerCase()
 
 			const splitText = elementLC.split("\n");
-			let currentPrice = (() => {
+			let currentPrice = await (() => {
 				let result = undefined;
 				let match = 'kr';
 				for (const e of splitText) {
@@ -74,23 +92,23 @@ export default class Scraper {
 				continue;
 			}
 
-			data.keywords.forEach(wish => {
+			for (let wish of data.keywords) {
 				wish = wish.toLowerCase()
 				if (elementLC.includes(wish)) {
 					shouldClick = true
 					return ""
 				}
-			});
-			data.blacklist.forEach(deny => {
+			}
+			for (let deny of data.blacklist) {
 				deny = deny.toLowerCase()
 				if (deny && deny.length != 0 && elementLC.includes(deny)) {
 					shouldClick = false
 					return ""
 				}
-			});
+			}
 
 			if (shouldClick) {
-				element && element?.click();
+				element && await element?.click();
 			}
 		}
 
@@ -101,7 +119,7 @@ export default class Scraper {
 		//#region Gather and print elements
 		let list = await page.$$('.item-card-container');
 
-		let htmlList = list.map(async element => {
+		let htmlList = await list.map(async element => {
 			return await (await element.getProperty('outerHTML')).jsonValue()
 		});
 
@@ -113,15 +131,16 @@ export default class Scraper {
 
 		//convert to jsdom elements
 		let jsdoms = []
-		newList.forEach(element => {
+
+		for (const element of newList) {
 			jsdoms.push(new JSDOM(element))
-		});
+		}
 
 		let wishButtons = []
 
 		let infos = await jsdoms.map(element => {
 			//get info
-			let title = element.window.document.body.querySelector('a').title
+			let title = element.window.document.body.querySelector('a')?.title
 
 			if (ScraperFilter(data, title)) {
 
@@ -129,16 +148,16 @@ export default class Scraper {
 				return ""
 			}
 
-			let link = linkPrefix + element.window.document.body.querySelector('a').href
-			let price = element.window.document.body.querySelector('.item-card-details-price').textContent
-			let date = element.window.document.body.querySelector('.item-card-animate-time').textContent
+			let link = linkPrefix + element.window.document.body.querySelector('a')?.href
+			let price = element.window.document.body.querySelector('.item-card-details-price')?.textContent
+			let date = element.window.document.body.querySelector('.item-card-animate-time')?.textContent
 			let wish = ""
 
 			let contentButton = element.window.document.body.querySelector('.mb-1')
-			let contentInnerHtml = contentButton.innerHTML
-			if (contentInnerHtml.includes("Sparad i minneslistan")) {
+			let contentInnerHtml = contentButton?.innerHTML
+			if (contentInnerHtml?.includes("Sparad i minneslistan")) {
 				wish = "YES"
-			} else if (contentInnerHtml.includes("Spara i minneslistan")) {
+			} else if (contentInnerHtml?.includes("Spara i minneslistan")) {
 				wish = "NO"
 				let buttonJSDOMElement = new JSDOM(contentInnerHtml)
 				let button = buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
@@ -154,12 +173,7 @@ export default class Scraper {
 
 		console.log("--infos--")
 		console.log(`Total: ${infos.length}`)
-
 		console.log(infos)
-		for (let i = 0; i < infos.length; i++) {
-			result += infos[i]?.toString();
-		}
-
 		return infos;
 	}
 

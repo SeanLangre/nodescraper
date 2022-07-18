@@ -77,21 +77,21 @@ const withPage = (browser) => async (fn) => {
     }
 }
 
-var results = ""
+var results = []
 try {
     results = await withBrowser(async (browser) => {
         return rxjs.from(datas.list).pipe(
             mergeMap(async (data) => {
 
-                try {                    
+                try {
                     return withPage(browser)(async (page) => {
                         var scraper = new Scraper()
                         let result = await scraper.Scrape(data, page)
                         return result
-                    }).then((r) => ({ 
-                        result: r 
-                    }), (e) => ({ 
-                        error: e 
+                    }).then((r) => ({
+                        result: r
+                    }), (e) => ({
+                        error: e
                     }));
                 } catch (error) {
                     console.log("ERROR");
@@ -111,13 +111,6 @@ try {
 } finally {
     console.log("FINALLY");
     console.log(results);
+    console.log(results.map((e) => { return e?.result }));
+    console.log("-DONE-");
 }
-
-
-// for (const data of datas.list) {
-//     const result = await withPage(browser)(async (page) => {
-//         var scraper = new Scraper()
-//         let result = await scraper.Scrape(data, page)
-//         return result
-//     });
-// }
