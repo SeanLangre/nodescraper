@@ -3,11 +3,20 @@ import ScraperPage from './ScraperPage.js';
 import Scraper from './Scraper.js';
 import ScraperLogin from './ScraperLogin.js';
 import ScraperBrowser from './ScraperBrowser.js';
-import rxjs, { mergeMap, toArray } from 'rxjs';
+import rxjs, { catchError, finalize, identity, mergeMap, of, takeUntil, timeout, toArray } from 'rxjs';
 import ScraperUtils from './ScraperUtils.js';
 import ScraperTimer from './ScraperTimer.js';
-//JSON
-import datas from './data/data-test.json' assert {type: 'json'};
+import * as fs from 'fs';
+
+// import datas from './data/data-test.json' assert {type: 'json'};
+
+//read JSON
+var dataList = ""
+await fs.readFile(process.env.DATA_PATH, (err, data) => {
+    if (err) throw err;
+  
+    dataList = JSON.parse(data).list;
+})
 
 //time
 let timer = new ScraperTimer();
@@ -46,14 +55,18 @@ const withBrowser = async (fn) => {
 }
 
 const withPage = (browser) => async (fn) => {
-    const page = await browser.newPage().catch(err => { console.log(err); throw err; });
+    const page = await browser.newPage()//.catch(err => { console.log(err); throw err; });
     // page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 
     try {
         return await fn(page);
+    } catch (error) {
+        console.log("ERROR");
+        console.log(error);
+        throw error
     } finally {
         // console.log("PAGE page.close();");
-        await page.waitForTimeout(10)
+        // await page.waitForTimeout(10)
         await page.close();
     }
 }
@@ -62,25 +75,49 @@ var counter = 0;
 var results = []
 try {
     results = await withBrowser(async (browser) => {
-        let promise = rxjs.from(datas.list).pipe(
-            mergeMap(async (data) => {
+        let observable = await rxjs.from(dataList).pipe(
+            await mergeMap(async (data) => {
                 try {
-                    return await withPage(browser)(async (page) => {
+                    let pagePromise = await withPage(browser)(async (page) => {
                         var scraper = new Scraper()
                         let result = await scraper.ScrapeWrapper(data, page, counter++)
-                        return result
+                        console.log(`ScrapeWrapper done id (${result?.id})`);
+                        return await result
                     })
+                    let result = await pagePromise;
+                    console.log(`pagePromise done`);
+                    return await result
                 } catch (error) {
                     console.log("ERROR");
                     console.log(error);
                     throw error
+                } finally {
+                    console.log("mergmap finally");
                 }
-            }, 3),
+            }, 4),
             toArray(),
+            timeout(5 * 60 * 1000),
+            catchError(error => of(`Request timed out`)),
+            // takeUntil(() => { return counter > dataList.length }),
+            finalize(() => console.log('Sequence complete')) // Execute when the observable completes
         )
 
+        // let firstRxjsVal
+        // let sub = await observable.subscribe(async () => {
+        //     if(counter >= dataList.length){
+        //         sub.unsubscribe()
+        //         firstRxjsVal = await rxjs.firstValueFrom(observable, { defaultValue: "" });
+        //     }
+        // })
+        // return await firstRxjsVal;
+
+        console.log("pipe done");
+        let firstRxjsVal = await rxjs.firstValueFrom(observable, { defaultValue: "" });
+        console.log("firstRxjsVal done");
+        return await firstRxjsVal;
+
         //return await rxjs.lastValueFrom(promise);
-        return await rxjs.firstValueFrom(promise, { defaultValue: 0 });
+        // return await rxjs.firstValueFrom(promise, { defaultValue: 0 });
         // ).toPromise();
     })
         .catch((e) => {

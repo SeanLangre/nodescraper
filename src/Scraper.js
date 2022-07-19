@@ -32,15 +32,15 @@ export default class Scraper {
 
 	async ScrapeWrapper(data, page, id) {
 		let response = await this.Scrape(data, page, id)
-		console.log(`End Scrape Status: ${response?.status} Id: (${id}): [ ${data.searchterm} ] ${response?.url}`)
-		return response?.result;
+		console.log(`End Scrape Status: ${response?.status} Id: (${response?.id}): [ ${data.searchterm} ] ${response?.url}`)
+		return await response;
 	}
 
 	async Scrape(data, page, id) {
 		let url = this.getURL(data.searchterm, actionType);
 		if (data.ignore === "true") {
 			console.log(`Scrape IGNORE (${id}) ${url}`)
-			return { status: "Ignore", url: url, result: "" }
+			return { status: "Ignore", id:id, url: url, result: "" }
 		}
 		console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
 
@@ -49,9 +49,9 @@ export default class Scraper {
 
 		await ScraperUtils.removeGDPRPopup(page)
 
-		await page.waitForTimeout(10)
+		// await page.waitForTimeout(10)
 		await this.ScrollDown(page);
-		await page.waitForTimeout(10)
+		// await page.waitForTimeout(10)
 
 		//#region click wishbutton
 		let result = await page.$$('[aria-label="Spara i minneslistan"]');
@@ -174,7 +174,7 @@ export default class Scraper {
 		infos = await infos.filter(x => x !== undefined);
 		//#endregion
 
-		return await { status: "Success", url: url, result: infos }
+		return { status: "Success", id: id, url: url, result: infos }
 	}
 
 	static PrintScrapeStart() {
