@@ -3,18 +3,20 @@ import ScraperPage from './ScraperPage.js';
 import Scraper from './Scraper.js';
 import ScraperLogin from './ScraperLogin.js';
 import ScraperBrowser from './ScraperBrowser.js';
-import rxjs, { catchError, finalize, identity, mergeMap, of, takeUntil, timeout, toArray } from 'rxjs';
 import ScraperUtils from './ScraperUtils.js';
 import ScraperTimer from './ScraperTimer.js';
 import * as fs from 'fs';
+import bluebird from 'bluebird';
 
+// import rxjs, { catchError, finalize, identity, mergeMap, of, takeUntil, timeout, toArray } from 'rxjs';
 // import datas from './data/data-test.json' assert {type: 'json'};
 
 //read JSON
 var dataList = ""
-await fs.readFile(process.env.DATA_PATH, (err, data) => {
-    if (err) throw err;
-  
+fs.readFile(process.env.DATA_PATH, (err, data) => {
+    if (err)
+        throw err;
+
     dataList = JSON.parse(data).list;
 })
 
@@ -43,7 +45,7 @@ const withBrowser = async (fn) => {
 
     const browser = await scrapeBrowser.GenerateBrowser(true, false);
     await login(browser)
-    await Scraper.PrintScrapeStart();
+    Scraper.PrintScrapeStart();
     timer.StartTimer();
 
     try {
@@ -72,66 +74,55 @@ const withPage = (browser) => async (fn) => {
 }
 
 var counter = 0;
-var results = []
-try {
-    results = await withBrowser(async (browser) => {
-        let observable = await rxjs.from(dataList).pipe(
-            await mergeMap(async (data) => {
-                try {
-                    let pagePromise = await withPage(browser)(async (page) => {
-                        var scraper = new Scraper()
-                        let result = await scraper.ScrapeWrapper(data, page, counter++)
-                        console.log(`ScrapeWrapper done id (${result?.id})`);
-                        return await result
-                    })
-                    let result = await pagePromise;
-                    console.log(`pagePromise done`);
-                    return await result
-                } catch (error) {
-                    console.log("ERROR");
-                    console.log(error);
-                    throw error
-                } finally {
-                    console.log("mergmap finally");
+// var results = []
+
+await withBrowser((browser) => {
+    let bbResult = bluebird.map(dataList, (data) => {
+        // try {
+        let pagePromise = withPage(browser)(async (page) => {
+            var scraper = new Scraper()
+            let scraperPromise = new Promise(function(resolve, reject){
+                resolve(scraper.ScrapeWrapper(data, page, counter++))
+            });
+            // console.log(`ScrapeWrapper done id (${result?.id})`);
+
+            return await Promise.resolve(scraperPromise).then(data => {
+                // console.log("First handler", data);
+                if(data?.result?.length > 0){
+                    console.log("First handler", data.result);
                 }
-            }, 4),
-            toArray(),
-            timeout(5 * 60 * 1000),
-            catchError(error => of(`Request timed out`)),
-            // takeUntil(() => { return counter > dataList.length }),
-            finalize(() => console.log('Sequence complete')) // Execute when the observable completes
-        )
-
-        // let firstRxjsVal
-        // let sub = await observable.subscribe(async () => {
-        //     if(counter >= dataList.length){
-        //         sub.unsubscribe()
-        //         firstRxjsVal = await rxjs.firstValueFrom(observable, { defaultValue: "" });
-        //     }
-        // })
-        // return await firstRxjsVal;
-
-        console.log("pipe done");
-        let firstRxjsVal = await rxjs.firstValueFrom(observable, { defaultValue: "" });
-        console.log("firstRxjsVal done");
-        return await firstRxjsVal;
-
-        //return await rxjs.lastValueFrom(promise);
-        // return await rxjs.firstValueFrom(promise, { defaultValue: 0 });
-        // ).toPromise();
+                return data;
+            })
+        })
+        console.log(`pagePromise done`);
+        return Promise.resolve(pagePromise)
+    }, { concurrency: 3 }).then((result) => {
+        console.log("bluebird.map then !!");
+        return result
+    }).catch((e) => {
+        console.log("bluebird.map ERROR");
+        console.log(e);
+        throw e;
+    }).finally(() => {
+        console.log("bluebird.map FINALLY");
     })
-        .catch((e) => {
-            console.log("ERROR");
-            console.log(e);
-            throw e;
-        });
-} catch (error) {
-    console.log("ERROR");
-    console.log(error);
-    console.log(results);
-    throw error
-} finally {
+
+    console.log("bbResult");
+    return bbResult;
+
+}).then((result) => {
+    console.log("withBrowser then !!");
+    console.log(result.map((e) => {
+        if (e.result.length > 0) {
+            return e.result
+        }
+    }));
+}).catch((e) => {
+    console.log("withBrowser ERROR");
+    console.log(e);
+    throw e;
+}).finally(() => {
+    console.log("withBrowser FINALLY");
     timer.EndTimer();
     console.log("-DONE-");
-    console.log(results);
-}
+})

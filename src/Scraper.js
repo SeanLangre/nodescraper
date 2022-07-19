@@ -16,9 +16,9 @@ export default class Scraper {
 
 			while (documentHeight > scrollPosition) {
 				window.scrollBy(0, documentHeight)
-				await new Promise(resolve => {
-					setTimeout(resolve, 1000)
-				})
+				// await new Promise(resolve => {
+				// 	setTimeout(resolve, 1000)
+				// })
 				scrollPosition = documentHeight
 				documentHeight = document.body.scrollHeight
 			}
@@ -42,7 +42,7 @@ export default class Scraper {
 			console.log(`Scrape IGNORE (${id}) ${url}`)
 			return { status: "Ignore", id:id, url: url, result: "" }
 		}
-		console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
+		await console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
 
 		await page.goto(url);
 		await page.waitForSelector('.site-pagename-SearchResults ');
@@ -98,14 +98,14 @@ export default class Scraper {
 					wish = wish.toLowerCase()
 					if (elementLC.includes(wish)) {
 						shouldClick = true
-						return shouldClick
+						break
 					}
 				}
 				for (let deny of data.blacklist) {
 					deny = deny.toLowerCase()
 					if (deny && deny.length != 0 && elementLC.includes(deny)) {
 						shouldClick = false
-						return shouldClick
+						break
 					}
 				}
 				return shouldClick
