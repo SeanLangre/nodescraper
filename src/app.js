@@ -8,14 +8,14 @@ import ScraperTimer from './ScraperTimer.js';
 import * as fs from 'fs';
 import bluebird from 'bluebird';
 
-// import rxjs, { catchError, finalize, identity, mergeMap, of, takeUntil, timeout, toArray } from 'rxjs';
-// import datas from './data/data-test.json' assert {type: 'json'};
-
 //read JSON
 var dataList = ""
 fs.readFile(process.env.DATA_PATH, (err, data) => {
-    if (err)
-        throw err;
+    if (err){
+        console.log("readFile ERROR");
+        console.log(err);
+        throw err
+    }
 
     dataList = JSON.parse(data).list;
 })
@@ -31,7 +31,9 @@ async function login(browser) {
         var slogin = new ScraperLogin(page)
         return await slogin.Login()
     } catch (error) {
-
+        console.log("login ERROR");
+        console.log(error);
+        throw error
     } finally {
         await ScraperUtils.setCookiesInBrowser(page)
         // await page.waitForTimeout(50)
@@ -50,9 +52,21 @@ const withBrowser = async (fn) => {
 
     try {
         return await fn(browser);
+    } catch (error) {
+        console.log("withBrowser ERROR");
+        console.log(error);
+        throw error
     } finally {
         console.log("BROWSER browser.close();");
-        await browser.close();
+        try {
+            await browser.close();
+        } catch (error) {
+            console.log("browser.close() ERROR");
+            console.log(error);
+            throw error
+        } finally {
+            
+        }
     }
 }
 
@@ -63,12 +77,10 @@ const withPage = (browser) => async (fn) => {
     try {
         return await fn(page);
     } catch (error) {
-        console.log("ERROR");
+        console.log("withPage ERROR");
         console.log(error);
         throw error
     } finally {
-        // console.log("PAGE page.close();");
-        // await page.waitForTimeout(10)
         await page.close();
     }
 }
@@ -81,20 +93,19 @@ await withBrowser((browser) => {
         // try {
         let pagePromise = withPage(browser)(async (page) => {
             var scraper = new Scraper()
-            let scraperPromise = new Promise(function(resolve, reject){
+            let scraperPromise = new Promise(function (resolve, reject) {
                 resolve(scraper.ScrapeWrapper(data, page, counter++))
             });
             // console.log(`ScrapeWrapper done id (${result?.id})`);
 
             return await Promise.resolve(scraperPromise).then(data => {
                 // console.log("First handler", data);
-                if(data?.result?.length > 0){
+                if (data?.result?.length > 0) {
                     console.log("First handler", data.result);
                 }
                 return data;
             })
         })
-        console.log(`pagePromise done`);
         return Promise.resolve(pagePromise)
     }, { concurrency: 3 }).then((result) => {
         console.log("bluebird.map then !!");
@@ -106,10 +117,7 @@ await withBrowser((browser) => {
     }).finally(() => {
         console.log("bluebird.map FINALLY");
     })
-
-    console.log("bbResult");
     return bbResult;
-
 }).then((result) => {
     console.log("withBrowser then !!");
     console.log(result.map((e) => {

@@ -5,9 +5,27 @@ const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
 const linkPrefix = 'www.tradera.com'
 
+const State = {
+	Start: 'Start',
+	GotoPage: 'GotoPage',
+	Scroll: 'Scroll',
+	ClickStart: 'ClickStart',
+	GetGrandParent: 'GetGrandParent',
+	GetPropertyJsonValue: 'GetPropertyJsonValue',
+	GetCurrentPrice: 'GetCurrentPrice',
+	StartShouldClick: 'StartShouldClick',
+	AwaitClick: 'AwaitClick',
+	GettingPrintInfo: 'GettingPrintInfo',
+	CreatingPrint: 'CreatingPrint',
+	ResolvePrintPromises: 'ResolvePrintPromises',
+	Return: 'Return'
+};
+
 export default class Scraper {
 	constructor() {
+		this._state = State.Start
 	}
+
 
 	async ScrollDown(page) {
 		await page.evaluate(async () => {
@@ -31,40 +49,60 @@ export default class Scraper {
 	}
 
 	async ScrapeWrapper(data, page, id) {
+		let intervalId = setInterval(this.TimerTick, 10000, id, this);
 		let response = await this.Scrape(data, page, id)
+		clearInterval(intervalId)
 		console.log(`End Scrape Status: ${response?.status} Id: (${response?.id}): [ ${data.searchterm} ] ${response?.url}`)
 		return await response;
+	}
+
+	TimerTick(id, scraper) {
+		console.log(`Working...  id:${id} State:${scraper.GetState()}`)
+	}
+
+	GetState() {
+		return this._state
 	}
 
 	async Scrape(data, page, id) {
 		let url = this.getURL(data.searchterm, actionType);
 		if (data.ignore === "true") {
 			console.log(`Scrape IGNORE (${id}) ${url}`)
-			return { status: "Ignore", id:id, url: url, result: "" }
+			return { status: "Ignore", id: id, url: url, result: "" }
 		}
 		await console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
-
+		await page.setDefaultNavigationTimeout(0)
+		this._state = State.GotoPage
 		await page.goto(url);
 		await page.waitForSelector('.site-pagename-SearchResults ');
 
 		await ScraperUtils.removeGDPRPopup(page)
 
 		// await page.waitForTimeout(10)
+		this._state = State.Scroll
 		await this.ScrollDown(page);
 		// await page.waitForTimeout(10)
 
 		//#region click wishbutton
 		let result = await page.$$('[aria-label="Spara i minneslistan"]');
 
+		this._state = State.ClickStart
+
 		for (const element of result) {
 			let shouldClick = false
 			// let parent = (await element.$x('..'))[0]; // get parent
 			// let parentParent = (await parent.$x('..'))[0]; // get parent
+			this._state = State.GetGrandParent
+
 			let grandParent = (await element.$x('../..'))[0]; // get grandparent
+			this._state = State.GetPropertyJsonValue
 			let innerHTML = await (await grandParent.getProperty('innerText')).jsonValue() //get property like innerhtml from puppeteer elementHandle
 			let elementLC = innerHTML.toLowerCase()
 
 			const splitText = elementLC.split("\n");
+
+			this._state = State.GetCurrentPrice
+
 			let currentPrice = await (() => {
 				let result = undefined;
 				let match = 'kr';
@@ -93,28 +131,19 @@ export default class Scraper {
 				continue;
 			}
 
-			shouldClick = await (()=>{
-				for (let wish of data.keywords) {
-					wish = wish.toLowerCase()
-					if (elementLC.includes(wish)) {
-						shouldClick = true
-						break
-					}
-				}
-				for (let deny of data.blacklist) {
-					deny = deny.toLowerCase()
-					if (deny && deny.length != 0 && elementLC.includes(deny)) {
-						shouldClick = false
-						break
-					}
-				}
-				return shouldClick
-			})()
+			this._state = State.StartShouldClick
 
-			if (shouldClick) {
-				element && await element?.click();
+			shouldClick = await this.ShouldClick(data, elementLC);
+
+			if (shouldClick && element) {
+				this._state = State.AwaitClick
+				await page.waitForTimeout(10)
+				element.click()
+				await page.waitForTimeout(10)
 			}
 		}
+
+		this._state = State.GettingPrintInfo
 
 		//#endregion
 
@@ -138,6 +167,8 @@ export default class Scraper {
 		}
 
 		let wishButtons = []
+
+		this._state = State.CreatingPrint
 
 		let infoPromises = await jsdoms.map(async element => {
 			//get info
@@ -169,12 +200,52 @@ export default class Scraper {
 			return new InfoElement(title, link, price, wish, date)
 		});
 
+		this._state = State.ResolvePrintPromises
+
 		let infos = await Promise.all(infoPromises);
 
 		infos = await infos.filter(x => x !== undefined);
 		//#endregion
 
+		this._state = State.Return
 		return { status: "Success", id: id, url: url, result: infos }
+	}
+
+	async ShouldClick(data, elementLC) {
+		let shouldClick = false
+		for (let wish of data.keywords) {
+			wish = wish.toLowerCase()
+			if (elementLC.includes(wish)) {
+				shouldClick = true
+				break
+			}
+		}
+		for (let deny of data.blacklist) {
+			deny = deny.toLowerCase()
+			if (deny && deny.length != 0 && elementLC.includes(deny)) {
+				shouldClick = false
+				break
+			}
+		}
+		return shouldClick
+
+		// shouldClick = await (()=>{
+		// 	for (let wish of data.keywords) {
+		// 		wish = wish.toLowerCase()
+		// 		if (elementLC.includes(wish)) {
+		// 			shouldClick = true
+		// 			break
+		// 		}
+		// 	}
+		// 	for (let deny of data.blacklist) {
+		// 		deny = deny.toLowerCase()
+		// 		if (deny && deny.length != 0 && elementLC.includes(deny)) {
+		// 			shouldClick = false
+		// 			break
+		// 		}
+		// 	}
+		// 	return shouldClick
+		// })()
 	}
 
 	static PrintScrapeStart() {
