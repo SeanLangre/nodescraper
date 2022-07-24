@@ -12,7 +12,8 @@ export default class ScraperLogin {
 	}
 
 	async Login() {
-		this.print();
+		ScraperUtils.PrintScrape("LOGIN");
+
 		var page = this.page
 		let url = this.getURL();
 		console.log(url)
@@ -30,23 +31,5 @@ export default class ScraperLogin {
 		} finally {
 			await ScraperUtils.saveCookiesToFile(page)
 		}
-	}
-
-	print() {
-		console.log("")
-		console.log("")
-		console.log("")
-		console.log("##############################  START  ###################################")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("#############################     LOGIN      #############################")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("################################  END  ###################################")
-		console.log("")
-		console.log("")
-		console.log("")
 	}
 }

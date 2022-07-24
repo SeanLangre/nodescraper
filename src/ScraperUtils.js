@@ -72,6 +72,24 @@ class ScraperUtils {
 	// 	return false;
 	// }
 
+	static PrintScrape(str) {
+		console.log("")
+		console.log("")
+		console.log("")
+		console.log("############################### START ####################################")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log(`############################# ${str} #############################`)
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("#                                                                        #")
+		console.log("################################# END ####################################")
+		console.log("")
+		console.log("")
+		console.log("")
+	}
+
 }
 
 export default ScraperUtils;

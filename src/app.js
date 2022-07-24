@@ -1,4 +1,3 @@
-
 import ScraperPage from './ScraperPage.js';
 import Scraper from './Scraper.js';
 import ScraperLogin from './ScraperLogin.js';
@@ -29,16 +28,15 @@ async function login(browser) {
     var page = await scraperPage.GeneratePage(browser)
     try {
         var slogin = new ScraperLogin(page)
-        return await slogin.Login()
+        await slogin.Login()
+        await ScraperUtils.setCookiesInBrowser(page)
+        await page.waitForSelector('.startpage-hero__content');
+        return await page.close()
     } catch (error) {
         console.log("login ERROR");
         console.log(error);
         throw error
     } finally {
-        await ScraperUtils.setCookiesInBrowser(page)
-        // await page.waitForTimeout(50)
-        await page.waitForSelector('.startpage-hero__content');
-        await page.close()
     }
 }
 
@@ -47,46 +45,43 @@ const withBrowser = async (fn) => {
 
     const browser = await scrapeBrowser.GenerateBrowser(true, false);
     await login(browser)
-    Scraper.PrintScrapeStart();
+    ScraperUtils.PrintScrape("START SCRAPING");
     timer.StartTimer();
 
     try {
-        return await fn(browser);
+        await fn(browser);
+        return await browser.close();
     } catch (error) {
-        console.log("withBrowser ERROR");
+        console.log("withBrowser ERROR");//{waitUntil: 'load'}
         console.log(error);
         throw error
     } finally {
-        console.log("BROWSER browser.close();");
-        try {
-            await browser.close();
-        } catch (error) {
-            console.log("browser.close() ERROR");
-            console.log(error);
-            throw error
-        } finally {
+        // console.log("BROWSER browser.close();");
+        // try {
+        // } catch (error) {
+        //     console.log("browser.close() ERROR");
+        //     console.log(error);
+        //     throw error
+        // } finally {
             
-        }
+        // }
     }
 }
 
 const withPage = (browser) => async (fn) => {
-    const page = await browser.newPage()//.catch(err => { console.log(err); throw err; });
-    // page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+    const page = await browser.newPage()
 
     try {
-        return await fn(page);
+        await fn(page);
+        return await page.close();
     } catch (error) {
         console.log("withPage ERROR");
         console.log(error);
         throw error
-    } finally {
-        await page.close();
     }
 }
 
 var counter = 0;
-// var results = []
 
 await withBrowser((browser) => {
     let bbResult = bluebird.map(dataList, (data) => {
@@ -116,13 +111,14 @@ await withBrowser((browser) => {
         throw e;
     }).finally(() => {
         console.log("bluebird.map FINALLY");
+        timer.EndTimer();
     })
     return bbResult;
 }).then((result) => {
     console.log("withBrowser then !!");
-    console.log(result.map((e) => {
-        if (e.result.length > 0) {
-            return e.result
+    console.log(result.map((el) => {
+        if (el.result.length > 0) {
+            return el.result
         }
     }));
 }).catch((e) => {
@@ -131,6 +127,5 @@ await withBrowser((browser) => {
     throw e;
 }).finally(() => {
     console.log("withBrowser FINALLY");
-    timer.EndTimer();
     console.log("-DONE-");
 })

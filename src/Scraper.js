@@ -78,12 +78,10 @@ export default class Scraper {
 
 		await ScraperUtils.removeGDPRPopup(page)
 
-		// await page.waitForTimeout(10)
 		this._state = State.Scroll
 		await this.ScrollDown(page);
-		// await page.waitForTimeout(10)
 
-		//#region click wishbutton
+		//wish button
 		let result = await page.$$('[aria-label="Spara i minneslistan"]');
 
 		this._state = State.ClickStart
@@ -137,17 +135,18 @@ export default class Scraper {
 
 			if (shouldClick && element) {
 				this._state = State.AwaitClick
-				await page.waitForTimeout(10)
-				element.click()
-				await page.waitForTimeout(10)
+				try {
+					element.click()
+				} catch (error) {
+					console.log("element.click() ERROR");
+					console.log(error);
+					throw error
+				}
 			}
 		}
-
 		this._state = State.GettingPrintInfo
 
-		//#endregion
-
-		//#region Gather and print elements
+		//Gather and print elements
 		let list = await page.$$('.item-card-container');
 
 		let htmlList = await list.map(async element => {
@@ -205,8 +204,6 @@ export default class Scraper {
 		let infos = await Promise.all(infoPromises);
 
 		infos = await infos.filter(x => x !== undefined);
-		//#endregion
-
 		this._state = State.Return
 		return { status: "Success", id: id, url: url, result: infos }
 	}
@@ -228,42 +225,6 @@ export default class Scraper {
 			}
 		}
 		return shouldClick
-
-		// shouldClick = await (()=>{
-		// 	for (let wish of data.keywords) {
-		// 		wish = wish.toLowerCase()
-		// 		if (elementLC.includes(wish)) {
-		// 			shouldClick = true
-		// 			break
-		// 		}
-		// 	}
-		// 	for (let deny of data.blacklist) {
-		// 		deny = deny.toLowerCase()
-		// 		if (deny && deny.length != 0 && elementLC.includes(deny)) {
-		// 			shouldClick = false
-		// 			break
-		// 		}
-		// 	}
-		// 	return shouldClick
-		// })()
-	}
-
-	static PrintScrapeStart() {
-		console.log("")
-		console.log("")
-		console.log("")
-		console.log("############################### START ####################################")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("############################# START SCRAPING #############################")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("#                                                                        #")
-		console.log("################################# END ####################################")
-		console.log("")
-		console.log("")
-		console.log("")
 	}
 }
 
