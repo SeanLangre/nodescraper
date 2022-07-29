@@ -11,8 +11,7 @@ export default class ScraperBrowser {
 		
 		this.browser = await puppeteer.launch({
 			headless: headless,
-			// userDataDir: './src/localStorage',
-			userDataDir: 'D:/WORK-RESEARCH/JavaScript/NodeScraper/src/localStorage',
+			userDataDir: process.env.LOCAL_STORAGE,
 			devtools: devtools,
 			args: ['--no-sandbox'],
 			product: "firefox"

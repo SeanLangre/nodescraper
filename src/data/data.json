@@ -524,6 +524,16 @@
                 "Härjat Hemland"
             ],
             "blacklist": []
+        },
+        {
+            "searchterm": "call of cthulhu",
+            "keywords": [
+                "call of cthulhu",
+                "investigator"
+            ],
+            "blacklist": [
+                "Pocket Madness"
+            ]
         }
     ],
     "comments": [

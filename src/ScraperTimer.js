@@ -5,17 +5,25 @@ export default class ScraperTimer {
 		this._diff;
 	}
 
-	StartTimer(){
+	StartTimer() {
 		this._startDate = new Date();
 	}
 
-	EndTimer(){
+	EndTimer() {
 		this._endDate = new Date();
-		this._diff = this._endDate.getTime() - this._startDate.getTime();
-		this.PrintTime();
+		this._diff = this.GetDiff()
 	}
 
-	PrintTime(){
+	GetDiff() {
+		let now = new Date();
+		return now.getTime() - this._startDate.getTime();
+	}
+
+	PrintTime() {
 		console.log(`-TIME- : ${this._diff / 1000} Seconds`)
+	}
+
+	GetTime() {
+		return this.GetDiff() / 1000
 	}
 }

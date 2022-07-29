@@ -9,8 +9,9 @@ import bluebird from 'bluebird';
 
 //read JSON
 var dataList = ""
-fs.readFile(process.env.DATA_PATH, (err, data) => {
-    if (err){
+let path = process.env.DATA_PATH
+fs.readFile(path, (err, data) => {
+    if (err) {
         console.log("readFile ERROR");
         console.log(err);
         throw err
@@ -43,7 +44,7 @@ async function login(browser) {
 const withBrowser = async (fn) => {
     var scrapeBrowser = new ScraperBrowser();
 
-    const browser = await scrapeBrowser.GenerateBrowser(true, false);
+    const browser = await scrapeBrowser.GenerateBrowser(process.env.HEADLESS === 'true', process.env.DEVTOOLS === 'true');
     await login(browser)
     ScraperUtils.PrintScrape("START SCRAPING");
     timer.StartTimer();
@@ -63,7 +64,7 @@ const withBrowser = async (fn) => {
         //     console.log(error);
         //     throw error
         // } finally {
-            
+
         // }
     }
 }
@@ -96,7 +97,10 @@ await withBrowser((browser) => {
             return await Promise.resolve(scraperPromise).then(data => {
                 // console.log("First handler", data);
                 if (data?.result?.length > 0) {
-                    console.log("First handler", data.result);
+                    console.log("First handler");
+                    for (const element of data.result) {
+                        console.log(element.toString());
+                    }
                 }
                 return data;
             })
@@ -112,15 +116,11 @@ await withBrowser((browser) => {
     }).finally(() => {
         console.log("bluebird.map FINALLY");
         timer.EndTimer();
+        timer.PrintTime();
     })
     return bbResult;
 }).then((result) => {
     console.log("withBrowser then !!");
-    console.log(result.map((el) => {
-        if (el.result.length > 0) {
-            return el.result
-        }
-    }));
 }).catch((e) => {
     console.log("withBrowser ERROR");
     console.log(e);

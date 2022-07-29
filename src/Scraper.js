@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom';
+import ScraperTimer from './ScraperTimer.js';
 import ScraperUtils from './ScraperUtils.js';
 
 const actionType = 'Auction'
@@ -15,6 +16,7 @@ const State = {
 	GetCurrentPrice: 'GetCurrentPrice',
 	StartShouldClick: 'StartShouldClick',
 	AwaitClick: 'AwaitClick',
+	AwaitClickDone: 'AwaitClickDone',
 	GettingPrintInfo: 'GettingPrintInfo',
 	CreatingPrint: 'CreatingPrint',
 	ResolvePrintPromises: 'ResolvePrintPromises',
@@ -24,6 +26,8 @@ const State = {
 export default class Scraper {
 	constructor() {
 		this._state = State.Start
+		this._timer = new ScraperTimer();
+		this._timer.StartTimer()
 	}
 
 
@@ -34,9 +38,9 @@ export default class Scraper {
 
 			while (documentHeight > scrollPosition) {
 				window.scrollBy(0, documentHeight)
-				// await new Promise(resolve => {
-				// 	setTimeout(resolve, 1000)
-				// })
+				await new Promise(resolve => {
+					setTimeout(resolve, 1000)
+				})
 				scrollPosition = documentHeight
 				documentHeight = document.body.scrollHeight
 			}
@@ -51,13 +55,19 @@ export default class Scraper {
 	async ScrapeWrapper(data, page, id) {
 		let intervalId = setInterval(this.TimerTick, 10000, id, this);
 		let response = await this.Scrape(data, page, id)
+		this._timer.EndTimer()
 		clearInterval(intervalId)
 		console.log(`End Scrape Status: ${response?.status} Id: (${response?.id}): [ ${data.searchterm} ] ${response?.url}`)
 		return await response;
 	}
 
 	TimerTick(id, scraper) {
-		console.log(`Working...  id:${id} State:${scraper.GetState()}`)
+		let time = scraper._timer.GetTime()
+		console.log(`Working...  id:${id} State:${scraper.GetState()} ${time}`)
+		if (time > 40) {
+			scraper._timer.EndTimer()
+			console.log("To Long Time")
+		}
 	}
 
 	GetState() {
@@ -70,29 +80,32 @@ export default class Scraper {
 			console.log(`Scrape IGNORE (${id}) ${url}`)
 			return { status: "Ignore", id: id, url: url, result: "" }
 		}
-		await console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ]`)
+		await console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
 		await page.setDefaultNavigationTimeout(0)
 		this._state = State.GotoPage
-		await page.goto(url);
+		await page.goto(url, { 'waitUntil': 'domcontentloaded' });
 		await page.waitForSelector('.site-pagename-SearchResults ');
 
 		await ScraperUtils.removeGDPRPopup(page)
 
+		// await page.waitForNavigation({waitUntil: 'networkidle0'})
+
 		this._state = State.Scroll
 		await this.ScrollDown(page);
+		await page.waitForTimeout(200)
 
 		//wish button
-		let result = await page.$$('[aria-label="Spara i minneslistan"]');
+		const wishJSHandles = await page.$$('[aria-label="Spara i minneslistan"]')
 
 		this._state = State.ClickStart
 
-		for (const element of result) {
+		for (const handle of wishJSHandles) {
 			let shouldClick = false
 			// let parent = (await element.$x('..'))[0]; // get parent
 			// let parentParent = (await parent.$x('..'))[0]; // get parent
 			this._state = State.GetGrandParent
 
-			let grandParent = (await element.$x('../..'))[0]; // get grandparent
+			let grandParent = (await handle.$x('../..'))[0]; // get grandparent
 			this._state = State.GetPropertyJsonValue
 			let innerHTML = await (await grandParent.getProperty('innerText')).jsonValue() //get property like innerhtml from puppeteer elementHandle
 			let elementLC = innerHTML.toLowerCase()
@@ -101,29 +114,7 @@ export default class Scraper {
 
 			this._state = State.GetCurrentPrice
 
-			let currentPrice = await (() => {
-				let result = undefined;
-				let match = 'kr';
-
-				return (() => {
-					for (const e of splitText) {
-						let eString = e.toString();
-						if (eString.includes(match)) {
-							let regex = /\D/g;
-							let price = eString.replace(regex, "");
-							if (data.maxPrice !== undefined) {
-								if (parseInt(price) < parseInt(data.maxPrice)) {
-									result = price;
-								}
-							} else if (data.maxPrice === undefined) {
-								result = price;
-							}
-							return result;
-						}
-					}
-					return result;
-				})();
-			})();
+			let currentPrice = await this.GetPrice(splitText, data);
 
 			if (currentPrice === undefined) {
 				continue;
@@ -133,17 +124,15 @@ export default class Scraper {
 
 			shouldClick = await this.ShouldClick(data, elementLC);
 
-			if (shouldClick && element) {
+			if (shouldClick && handle) {
 				this._state = State.AwaitClick
-				try {
-					element.click()
-				} catch (error) {
-					console.log("element.click() ERROR");
-					console.log(error);
-					throw error
-				}
+
+				await handle.asElement().click()
+
+				this._state = State.AwaitClickDone
 			}
 		}
+
 		this._state = State.GettingPrintInfo
 
 		//Gather and print elements
@@ -169,35 +158,7 @@ export default class Scraper {
 
 		this._state = State.CreatingPrint
 
-		let infoPromises = await jsdoms.map(async element => {
-			//get info
-			let title = await element.window.document.body.querySelector('a')?.title
-
-			if (ScraperFilter(data, title)) {
-
-			} else {
-				return
-			}
-
-			let link = linkPrefix + await element.window.document.body.querySelector('a')?.href
-			let price = await element.window.document.body.querySelector('.item-card-details-price')?.textContent
-			let date = await element.window.document.body.querySelector('.item-card-animate-time')?.textContent
-			let wish = ""
-
-			let contentButton = await element.window.document.body.querySelector('.mb-1')
-			let contentInnerHtml = contentButton?.innerHTML
-			if (contentInnerHtml?.includes("Sparad i minneslistan")) {
-				wish = "YES"
-			} else if (contentInnerHtml?.includes("Spara i minneslistan")) {
-				wish = "NO"
-				let buttonJSDOMElement = new JSDOM(contentInnerHtml)
-				let button = await buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]')
-
-				wishButtons.push(button)
-			}
-
-			return new InfoElement(title, link, price, wish, date)
-		});
+		let infoPromises = await this.MapInfoPromises(jsdoms, data, wishButtons);
 
 		this._state = State.ResolvePrintPromises
 
@@ -226,7 +187,65 @@ export default class Scraper {
 		}
 		return shouldClick
 	}
+
+	async MapInfoPromises(jsdoms, data, wishButtons) {
+		return await jsdoms.map(async (element) => {
+			//get info
+			let title = await element.window.document.body.querySelector('a')?.title;
+
+			if (ScraperFilter(data, title)) {
+			} else {
+				return;
+			}
+
+			let link = linkPrefix + await element.window.document.body.querySelector('a')?.href;
+			let price = await element.window.document.body.querySelector('.item-card-details-price')?.textContent;
+			let date = await element.window.document.body.querySelector('.item-card-animate-time')?.textContent;
+			let wish = "";
+
+			let contentButton = await element.window.document.body.querySelector('.mb-1');
+			let contentInnerHtml = contentButton?.innerHTML;
+			if (contentInnerHtml?.includes("Sparad i minneslistan")) {
+				wish = "YES";
+			} else if (contentInnerHtml?.includes("Spara i minneslistan")) {
+				wish = "NO";
+				let buttonJSDOMElement = new JSDOM(contentInnerHtml);
+				let button = await buttonJSDOMElement.window.document.body.querySelector('[aria-label="Spara i minneslistan"]');
+
+				wishButtons.push(button);
+			}
+
+			return new InfoElement(title, link, price, wish, date);
+		});
+	}
+
+	async GetPrice(splitText, data) {
+		return await (() => {
+			let result = undefined;
+			let match = 'kr';
+
+			return (() => {
+				for (const e of splitText) {
+					let eString = e.toString();
+					if (eString.includes(match)) {
+						let regex = /\D/g;
+						let price = eString.replace(regex, "");
+						if (data.maxPrice !== undefined) {
+							if (parseInt(price) < parseInt(data.maxPrice)) {
+								result = price;
+							}
+						} else if (data.maxPrice === undefined) {
+							result = price;
+						}
+						return result;
+					}
+				}
+				return result;
+			})();
+		})();
+	}
 }
+
 
 
 export function ScraperFilter(data, title) {
@@ -258,6 +277,14 @@ export class InfoElement {
 	}
 
 	toString() {
-		return this.title + "\n" + this.link + "\n" + this.price + "\n" + this.date + "\n" + this.wish + "\n"
+		const formattedText = "\n\t.--" +
+			"\n\t| " + this.title +
+			"\n\t| " + this.link +
+			"\n\t| " + this.price +
+			"\n\t| " + this.date +
+			"\n\t| " + this.wish +
+			"\n\t'--"
+
+		return formattedText
 	}
 }
