@@ -252,7 +252,7 @@
             "blacklist": []
         },
         {
-            "searchterm": "Volo's Guide to Monsters",
+            "searchterm": "Volos Guide to Monsters",
             "maxPrice":"600",
             "keywords": [
                 "Guide to Monsters",
@@ -285,11 +285,11 @@
             "blacklist": []
         },
         {
-            "searchterm": "Xanathar's Guide to Everything",
+            "searchterm": "Xanathars Guide to Everything",
             "maxPrice":"600",
             "keywords": [
                 "Xanathar's Guide to Everything",
-                "Xanathars Guide to Everything"
+                "Guide to Everything"
             ],
             "blacklist": []
         },

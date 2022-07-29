@@ -53,7 +53,7 @@ export default class Scraper {
 	}
 
 	async ScrapeWrapper(data, page, id) {
-		let intervalId = setInterval(this.TimerTick, 10000, id, this);
+		let intervalId = setInterval(this.TimerTick, 10000, id, this, data);
 		let response = await this.Scrape(data, page, id)
 		this._timer.EndTimer()
 		clearInterval(intervalId)
@@ -61,9 +61,10 @@ export default class Scraper {
 		return await response;
 	}
 
-	TimerTick(id, scraper) {
+	TimerTick(id, scraper, data) {
 		let time = scraper._timer.GetTime()
-		console.log(`Working...  id:${id} State:${scraper.GetState()} ${time}`)
+		let url = scraper.getURL(data.searchterm, actionType);
+		console.log(`Working...  id:${id} State:${scraper.GetState()} ${time} ${url}`)
 		if (time > 40) {
 			scraper._timer.EndTimer()
 			console.log("To Long Time")
