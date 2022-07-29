@@ -57,15 +57,7 @@ const withBrowser = async (fn) => {
         console.log(error);
         throw error
     } finally {
-        // console.log("BROWSER browser.close();");
-        // try {
-        // } catch (error) {
-        //     console.log("browser.close() ERROR");
-        //     console.log(error);
-        //     throw error
-        // } finally {
 
-        // }
     }
 }
 
@@ -92,10 +84,8 @@ await withBrowser((browser) => {
             let scraperPromise = new Promise(function (resolve, reject) {
                 resolve(scraper.ScrapeWrapper(data, page, counter++))
             });
-            // console.log(`ScrapeWrapper done id (${result?.id})`);
-
+            
             return await Promise.resolve(scraperPromise).then(data => {
-                // console.log("First handler", data);
                 if (data?.result?.length > 0) {
                     console.log("First handler");
                     for (const element of data.result) {

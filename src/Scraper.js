@@ -4,7 +4,7 @@ import ScraperUtils from './ScraperUtils.js';
 
 const actionType = 'Auction'
 const sortBy = 'sortBy=TimeLeft'
-const linkPrefix = 'www.tradera.com'
+const linkPrefix = 'https://www.tradera.com'
 
 const State = {
 	Start: 'Start',
@@ -81,14 +81,13 @@ export default class Scraper {
 			return { status: "Ignore", id: id, url: url, result: "" }
 		}
 		await console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
-		await page.setDefaultNavigationTimeout(0)
+		await page.setDefaultNavigationTimeout(30000)
+		await page.setDefaultTimeout(30000)
 		this._state = State.GotoPage
 		await page.goto(url, { 'waitUntil': 'domcontentloaded' });
 		await page.waitForSelector('.site-pagename-SearchResults ');
 
 		await ScraperUtils.removeGDPRPopup(page)
-
-		// await page.waitForNavigation({waitUntil: 'networkidle0'})
 
 		this._state = State.Scroll
 		await this.ScrollDown(page);
