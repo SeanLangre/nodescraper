@@ -28,6 +28,7 @@ export default class Scraper {
 		this._state = State.Start
 		this._timer = new ScraperTimer();
 		this._timer.StartTimer()
+		this._page
 	}
 
 
@@ -47,13 +48,20 @@ export default class Scraper {
 		})
 	}
 
+	async ScrollUp(page) {
+		await page.evaluate(() => { window.scroll(0,document.body.scrollHeight/2); });
+		// await page.evaluate(async () => {
+		// 	let scrollPosition = document.body.scrollHeight
+	}
+
 	getURL(name, auctionType) {
 		name = name.replaceAll(" ", "%20");
 		return `https://www.tradera.com/search?q=${name}&itemType=${auctionType}&${sortBy}`;
 	}
 
 	async ScrapeWrapper(data, page, id) {
-		let intervalId = setInterval(this.TimerTick, 10000, id, this, data);
+		this._page = page
+		let intervalId = setInterval(this.TimerTick, 10000, id, this, data, page);
 		let response = await this.Scrape(data, page, id)
 		this._timer.EndTimer()
 		clearInterval(intervalId)
@@ -61,11 +69,12 @@ export default class Scraper {
 		return await response;
 	}
 
-	TimerTick(id, scraper, data) {
+	TimerTick(id, scraper, data, page) {
 		let time = scraper._timer.GetTime()
 		let url = scraper.getURL(data.searchterm, actionType);
 		console.log(`Working...  id:${id} State:${scraper.GetState()} ${time} ${url}`)
 		if (time > 40) {
+			page.reload(url)
 			scraper._timer.EndTimer()
 			console.log("To Long Time")
 		}
@@ -93,6 +102,7 @@ export default class Scraper {
 		this._state = State.Scroll
 		await this.ScrollDown(page);
 		await page.waitForTimeout(200)
+		await this.ScrollUp(page)
 
 		//wish button
 		const wishJSHandles = await page.$$('[aria-label="Spara i minneslistan"]')

@@ -4,6 +4,21 @@ const localStoragePath = 'localstorage.txt'
 
 class ScraperUtils {
 
+	static async clickLoginGDPRPopup(page) {
+		try {
+			let btn = '.css-1hy2vtq'
+			let btn2 = '.qc-cmp2-buttons-desktop'
+			await page.waitForSelector(btn);
+			await page.click(btn)
+			await page.waitForTimeout(1000)
+			return await page.click(btn2)
+		} catch (error) {
+
+		} finally {
+			return
+		}
+	}
+
 	static async removeGDPRPopup(page) {
 		let div_selector_to_remove = ".qc-cmp2-container";
 		return await page.evaluate((sel) => {
@@ -52,7 +67,7 @@ class ScraperUtils {
 		// 	}
 		// 	return textFile;
 		// });
-		var localStorageData = await page.evaluate(() =>  Object.assign({}, window.localStorage));
+		var localStorageData = await page.evaluate(() => Object.assign({}, window.localStorage));
 		return await fs.writeFileSync(localStoragePath, JSON.stringify(localStorageData));
 	}
 

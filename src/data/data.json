@@ -532,7 +532,34 @@
                 "investigator"
             ],
             "blacklist": [
-                "Pocket Madness"
+                "Pocket Madness",
+                "playstation",
+                "xbox",
+                "ps4"
+            ]
+        },
+        {
+            "searchterm": "numenera",
+            "keywords": [
+                "numenera"
+            ],
+            "blacklist": [
+                "playstation",
+                "xbox",
+                "ps4"
+            ]
+        },
+        {
+            "searchterm": "pathfinder",
+            "keywords": [
+                "core",
+                "beastiary",
+                "roleplaying"
+            ],
+            "blacklist": [
+                "playstation",
+                "xbox",
+                "ps4"
             ]
         }
     ],

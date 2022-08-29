@@ -19,7 +19,7 @@ export default class ScraperLogin {
 		console.log(url)
 		await page.goto(url);
 		await page.waitForTimeout(2000)
-		await ScraperUtils.removeGDPRPopup(page)
+		await ScraperUtils.clickLoginGDPRPopup(page)
 		await page.waitForTimeout(2000)
 
 		try {
