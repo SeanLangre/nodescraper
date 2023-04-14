@@ -1,0 +1,211 @@
+{
+    "list": [
+        {
+            "searchterm": "Elder%20Sign",
+            "keywords": [
+                "elder sign"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Gloomhaven",
+            "keywords": [
+                "gloomhaven"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "a6000",
+            "maxPrice": "2000",
+            "keywords": [
+                "a6000"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Logitech%20mx%20master",
+            "keywords": [
+                "logitech mx master"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "pandemic",
+            "maxPrice": "800",
+            "keywords": [
+                "pandemic"
+            ],
+            "blacklist": [
+                "covid",
+                "sundström",
+                "Bulgaria"
+            ]
+        },
+        {
+            "searchterm": "Google%20nest",
+            "keywords": [
+                "google nest mini",
+                "nest mini"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Samsung%20Galaxy%20Watch",
+            "maxPrice": "800",
+            "ignore": "true",
+            "keywords": [
+                "samsung galaxy watch"
+            ],
+            "blacklist": [
+                "skyddsfodral",
+                "skärmskydd",
+                "nylonrem",
+                "hållare"
+            ]
+        },
+        {
+            "searchterm": "fitbit",
+            "maxPrice": "800",
+            "ignore": "true",
+            "keywords": [
+                "fitbit charge",
+                "fitbit inspire",
+                "fitbit versa",
+                "fitbit charge 4",
+                "fitbit inspire 2",
+                "fitbit versa 3",
+                "fitbit sense",
+                "fitbit luxe"
+            ],
+            "blacklist": [
+                "ersättningsband",
+                "2-pack",
+                "laddningsbox",
+                " band",
+                "skärmskydd",
+                "2x",
+                "hängsmycke",
+                "silikonklämma"
+            ]
+        },
+        {
+            "searchterm": "garmin",
+            "maxPrice": "800",
+            "ignore": "true",
+            "keywords": [
+                "garmin vivo",
+                "garmin venu",
+                "garmin forerunner",
+                "garmin fenix",
+                "garmin lily"
+            ],
+            "blacklist": [
+                "ersättningsband",
+                "2-pack",
+                "laddningsbox",
+                " band",
+                "skärmskydd",
+                "2x",
+                "hängsmycke"
+            ]
+        },
+        {
+            "searchterm": "trådfri",
+            "keywords": [
+                "trådfri"
+            ],
+            "blacklist": [
+                "retroknappen"
+            ]
+        },
+        {
+            "searchterm": "codenames",
+            "keywords": [
+                "codenames"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Betrayal%20at",
+            "keywords": [
+                "betrayal at"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "azul",
+            "keywords": [
+                "azul"
+            ],
+            "blacklist": [
+                "linser",
+                "byxor",
+                "tomat"
+            ]
+        },
+        {
+            "searchterm": "mutant år noll",
+            "keywords": [
+                "mutant år noll"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Eldritch%20Horror",
+            "keywords": [
+                "eldritch horror"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "mutant%20year%20zero",
+            "keywords": [
+                "mutant year zero"
+            ],
+            "blacklist": [
+                "xbox"
+            ]
+        },
+        {
+            "searchterm": "pathfinder",
+            "keywords": [
+                "core",
+                "beastiary",
+                "roleplaying"
+            ],
+            "blacklist": [
+                "playstation",
+                "xbox",
+                "ps4"
+            ]
+        },
+        {
+            "searchterm": "stormkök",
+            "keywords": [
+                "trangia"
+            ],
+            "blacklist": []
+        }
+    ],
+    "comments": [
+        {
+            "searchterm": "rode",
+            "keywords": [
+                "rode",
+                "røde"
+            ]
+        },
+        {
+            "searchterm": "shure",
+            "keywords": [
+                "shure"
+            ]
+        },
+        {
+            "searchterm": "Aftermath",
+            "keywords": [
+                "aftermath"
+            ]
+        }
+    ]
+}

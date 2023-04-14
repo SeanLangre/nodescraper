@@ -6,7 +6,7 @@ class ScraperUtils {
 
 	static async clickLoginGDPRPopup(page) {
 		try {
-			let btn = '.css-1hy2vtq'
+			let btn = '.css-14ubilm'
 			let btn2 = '.qc-cmp2-buttons-desktop'
 			await page.waitForSelector(btn);
 			await page.click(btn)

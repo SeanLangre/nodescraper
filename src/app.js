@@ -75,6 +75,7 @@ const withPage = (browser) => async (fn) => {
 }
 
 var counter = 0;
+var envConcurrency = parseInt(process.env.CONCURRENCY)
 
 await withBrowser((browser) => {
     let bbResult = bluebird.map(dataList, (data) => {
@@ -96,7 +97,7 @@ await withBrowser((browser) => {
             })
         })
         return Promise.resolve(pagePromise)
-    }, { concurrency: 3 }).then((result) => {
+    }, { concurrency: envConcurrency}).then((result) => {
         console.log("bluebird.map then !!");
         return result
     }).catch((e) => {

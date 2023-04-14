@@ -2,21 +2,17 @@
     "list": [
         {
             "searchterm": "arkham%20horror",
+            "maxPrice": "300",
             "keywords": [
                 "arkham horror",
                 "arkham horor"
             ],
             "blacklist": []
         },
-        {
-            "searchterm": "Betrayal%20at",
-            "keywords": [
-                "betrayal at"
-            ],
-            "blacklist": []
-        },
+
         {
             "searchterm": "Shadows%20of%20Brimstone",
+            "maxPrice": "300",
             "keywords": [
                 "shadows of brimstone"
             ],
@@ -27,27 +23,15 @@
         },
         {
             "searchterm": "Mansions%20of%20Madness",
+            "maxPrice": "300",
             "keywords": [
                 "mansions of madness"
             ],
             "blacklist": []
         },
         {
-            "searchterm": "Eldritch%20Horror",
-            "keywords": [
-                "eldritch horror"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Elder%20Sign",
-            "keywords": [
-                "elder sign"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "Wingspan",
+            "maxPrice": "300",
             "keywords": [
                 "wingspan"
             ],
@@ -56,25 +40,8 @@
             ]
         },
         {
-            "searchterm": "Gloomhaven",
-            "keywords": [
-                "gloomhaven"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "a6000",
-            "maxPrice":"2000",
-            "keywords": [
-                "a6000"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "The%20Crew",
             "keywords": [
-                "the crew: the quest for planet nine",
-                "the crew the quest for planet nine",
                 "the crew: mission deep sea",
                 "the crew mission deep sea"
             ],
@@ -82,6 +49,7 @@
         },
         {
             "searchterm": "Destinies",
+            "maxPrice": "300",
             "keywords": [
                 "destinies"
             ],
@@ -92,7 +60,7 @@
         },
         {
             "searchterm": "Dungeons Dragons",
-            "maxPrice":"1100",
+            "maxPrice": "300",
             "keywords": [
                 "dungeons & dragons 5e",
                 "dungeons and dragons 5e",
@@ -134,7 +102,7 @@
         },
         {
             "searchterm": "tomb%20of%20annihilation",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "tomb of annihilation"
             ],
@@ -142,7 +110,7 @@
         },
         {
             "searchterm": "odysseys%20of%20theros",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "odysseys of theros"
             ],
@@ -150,7 +118,7 @@
         },
         {
             "searchterm": "Descent%20into%20Avernus",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Descent into Avernus"
             ],
@@ -158,7 +126,7 @@
         },
         {
             "searchterm": "Curse%20of%20Strahd",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Curse of Strahd"
             ],
@@ -166,7 +134,7 @@
         },
         {
             "searchterm": "Waterdeep%20Dragon%20Heist",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Waterdeep Dragon Heist"
             ],
@@ -174,7 +142,7 @@
         },
         {
             "searchterm": "Icewind Dale Rime of the Frostmaiden",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Icewind Dale",
                 "Rime of the Frostmaiden"
@@ -185,7 +153,7 @@
         },
         {
             "searchterm": "dungeon%20of%20the%20Mad%20Mage",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "dungeon of the Mad Mage"
             ],
@@ -193,7 +161,7 @@
         },
         {
             "searchterm": "out%20of%20the%20Abyss",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "out of the Abyss"
             ],
@@ -201,7 +169,7 @@
         },
         {
             "searchterm": "Princes%20of%20the%20Apocalypse",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Princes of the Apocalypse"
             ],
@@ -209,7 +177,7 @@
         },
         {
             "searchterm": "Hoard%20of%20the%20Dragon%20Queen",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Hoard of the Dragon Queen",
                 "Ravenloft",
@@ -221,7 +189,7 @@
         },
         {
             "searchterm": "The%20Rise%20of%20Tiamat",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "The Rise of Tiamat"
             ],
@@ -229,7 +197,7 @@
         },
         {
             "searchterm": "Storm%20Kings%20Thunder",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Storm Kings Thunder"
             ],
@@ -237,7 +205,7 @@
         },
         {
             "searchterm": "Tales%20from%20the%20Yawning%20Portal",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Tales from the Yawning Portal"
             ],
@@ -245,7 +213,7 @@
         },
         {
             "searchterm": "Ghosts of Saltmarsh",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Ghosts of Saltmarsh"
             ],
@@ -253,7 +221,7 @@
         },
         {
             "searchterm": "Volos Guide to Monsters",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Guide to Monsters",
                 "Volo's Guide to Monsters"
@@ -262,7 +230,7 @@
         },
         {
             "searchterm": "Tome of Foes",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Tome of Foes"
             ],
@@ -270,7 +238,7 @@
         },
         {
             "searchterm": "Sword Coast Adventurers Guide",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Sword Coast Adventurers Guide"
             ],
@@ -278,7 +246,7 @@
         },
         {
             "searchterm": "Candlekeep Mysteries",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Candlekeep Mysteries"
             ],
@@ -286,7 +254,7 @@
         },
         {
             "searchterm": "Xanathars Guide to Everything",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Xanathar's Guide to Everything",
                 "Guide to Everything"
@@ -295,7 +263,7 @@
         },
         {
             "searchterm": "The Wild Beyond the Witchlight",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "The Wild Beyond the Witchlight"
             ],
@@ -303,22 +271,15 @@
         },
         {
             "searchterm": "Mordenkainen Presents Monsters of the Multiverse",
-            "maxPrice":"600",
+            "maxPrice": "300",
             "keywords": [
                 "Mordenkainen Presents Monsters of the Multiverse"
             ],
             "blacklist": []
         },
         {
-            "searchterm": "Logitech%20mx%20master",
-            "keywords": [
-                "logitech mx master"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "SM58%20Shure",
-            "maxPrice":"800",
+            "maxPrice": "300",
             "keywords": [
                 "sm58 shure",
                 "shure sm58"
@@ -328,19 +289,8 @@
             ]
         },
         {
-            "searchterm": "pandemic",
-            "maxPrice":"800",
-            "keywords": [
-                "pandemic"
-            ],
-            "blacklist": [
-                "covid",
-                "sundström",
-                "Bulgaria"
-            ]
-        },
-        {
             "searchterm": "RØDE%20Mikrofon",
+            "maxPrice": "300",
             "keywords": [
                 "nt-usb",
                 "nt usb",
@@ -350,6 +300,7 @@
         },
         {
             "searchterm": "Too%20Many%20Bones",
+            "maxPrice": "300",
             "keywords": [
                 "too many bones"
             ],
@@ -357,97 +308,15 @@
         },
         {
             "searchterm": "Descent%20Legends%20of%20the%20Dark",
+            "maxPrice": "300",
             "keywords": [
                 "descent legends of the dark"
             ],
             "blacklist": []
         },
         {
-            "searchterm": "Google%20nest",
-            "keywords": [
-                "google nest mini",
-                "nest mini"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Samsung%20Galaxy%20Watch",
-            "maxPrice":"800",
-            "ignore": "true",
-            "keywords": [
-                "samsung galaxy watch"
-            ],
-            "blacklist": [
-                "skyddsfodral",
-                "skärmskydd",
-                "nylonrem",
-                "hållare"
-            ]
-        },
-        {
-            "searchterm": "fitbit",
-            "maxPrice":"800",
-            "ignore": "true",
-            "keywords": [
-                "fitbit charge",
-                "fitbit inspire",
-                "fitbit versa",
-                "fitbit charge 4",
-                "fitbit inspire 2",
-                "fitbit versa 3",
-                "fitbit sense",
-                "fitbit luxe"
-            ],
-            "blacklist": [
-                "ersättningsband",
-                "2-pack",
-                "laddningsbox",
-                " band",
-                "skärmskydd",
-                "2x",
-                "hängsmycke",
-                "silikonklämma"
-            ]
-        },
-        {
-            "searchterm": "garmin",
-            "maxPrice":"800",
-            "ignore": "true",
-            "keywords": [
-                "garmin vivo",
-                "garmin venu",
-                "garmin forerunner",
-                "garmin fenix",
-                "garmin lily"
-            ],
-            "blacklist": [
-                "ersättningsband",
-                "2-pack",
-                "laddningsbox",
-                " band",
-                "skärmskydd",
-                "2x",
-                "hängsmycke"
-            ]
-        },
-        {
-            "searchterm": "trådfri",
-            "keywords": [
-                "trådfri"
-            ],
-            "blacklist": [
-                "retroknappen"
-            ]
-        },
-        {
-            "searchterm": "codenames",
-            "keywords": [
-                "codenames"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "blood%20rage",
+            "maxPrice": "300",
             "keywords": [
                 "blood rage"
             ],
@@ -456,18 +325,8 @@
             ]
         },
         {
-            "searchterm": "azul",
-            "keywords": [
-                "azul"
-            ],
-            "blacklist": [
-                "linser",
-                "byxor",
-                "tomat"
-            ]
-        },
-        {
             "searchterm": "horrified",
+            "maxPrice": "300",
             "keywords": [
                 "horrified"
             ],
@@ -475,6 +334,7 @@
         },
         {
             "searchterm": "unfathomable",
+            "maxPrice": "300",
             "keywords": [
                 "unfathomable"
             ],
@@ -482,22 +342,15 @@
         },
         {
             "searchterm": "Kult%20Divinity%20Lost",
+            "maxPrice": "300",
             "keywords": [
                 "Kult Divinity Lost"
             ],
             "blacklist": []
         },
         {
-            "searchterm": "mutant%20year%20zero",
-            "keywords": [
-                "mutant year zero"
-            ],
-            "blacklist": [
-                "xbox"
-            ]
-        },
-        {
             "searchterm": "Tales from the Loop",
+            "maxPrice": "300",
             "keywords": [
                 "Tales from the Loop"
             ],
@@ -506,14 +359,8 @@
             ]
         },
         {
-            "searchterm": "mutant år noll",
-            "keywords": [
-                "mutant år noll"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "Symbaroum",
+            "maxPrice": "300",
             "keywords": [
                 "Symbaroum",
                 "Monsterkodex",
@@ -527,6 +374,7 @@
         },
         {
             "searchterm": "call of cthulhu",
+            "maxPrice": "300",
             "keywords": [
                 "call of cthulhu",
                 "investigator"
@@ -539,22 +387,54 @@
             ]
         },
         {
-            "searchterm": "numenera",
+            "searchterm": "switch nintendo zelda breath",
+            "maxPrice": "300",
             "keywords": [
-                "numenera"
+                "switch",
+                "nintendo",
+                "zelda",
+                "breath"
             ],
-            "blacklist": [
-                "playstation",
-                "xbox",
-                "ps4"
-            ]
+            "blacklist": []
         },
         {
-            "searchterm": "pathfinder",
+            "searchterm": "switch nintendo mario rabbids",
+            "maxPrice": "300",
             "keywords": [
-                "core",
-                "beastiary",
-                "roleplaying"
+                "switch",
+                "nintendo",
+                "mario",
+                "rabbids"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "switch nintendo animal crossing new horizons",
+            "maxPrice": "300",
+            "keywords": [
+                "switch",
+                "nintendo",
+                "animal",
+                "crossing"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "switch nintendo hollow knight",
+            "maxPrice": "300",
+            "keywords": [
+                "switch",
+                "nintendo",
+                "hollow",
+                "knight"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "numenera",
+            "maxPrice": "300",
+            "keywords": [
+                "numenera"
             ],
             "blacklist": [
                 "playstation",
