@@ -417,7 +417,10 @@
                 "animal",
                 "crossing"
             ],
-            "blacklist": []
+            "blacklist": [
+                "joy con",
+                "amiibo"
+            ]
         },
         {
             "searchterm": "switch nintendo hollow knight",
