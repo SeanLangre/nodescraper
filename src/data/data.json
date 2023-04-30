@@ -117,39 +117,12 @@
             "blacklist": []
         },
         {
-            "searchterm": "Descent%20into%20Avernus",
-            "maxPrice": "300",
-            "keywords": [
-                "Descent into Avernus"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Curse%20of%20Strahd",
-            "maxPrice": "300",
-            "keywords": [
-                "Curse of Strahd"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "Waterdeep%20Dragon%20Heist",
             "maxPrice": "300",
             "keywords": [
                 "Waterdeep Dragon Heist"
             ],
             "blacklist": []
-        },
-        {
-            "searchterm": "Icewind Dale Rime of the Frostmaiden",
-            "maxPrice": "300",
-            "keywords": [
-                "Icewind Dale",
-                "Rime of the Frostmaiden"
-            ],
-            "blacklist": [
-                "nintendo"
-            ]
         },
         {
             "searchterm": "dungeon%20of%20the%20Mad%20Mage",
@@ -160,46 +133,10 @@
             "blacklist": []
         },
         {
-            "searchterm": "out%20of%20the%20Abyss",
-            "maxPrice": "300",
-            "keywords": [
-                "out of the Abyss"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "Princes%20of%20the%20Apocalypse",
             "maxPrice": "300",
             "keywords": [
                 "Princes of the Apocalypse"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Hoard%20of%20the%20Dragon%20Queen",
-            "maxPrice": "300",
-            "keywords": [
-                "Hoard of the Dragon Queen",
-                "Ravenloft",
-                "City of Mezro",
-                "Treasury of Dragons",
-                "Strixhaven"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "The%20Rise%20of%20Tiamat",
-            "maxPrice": "300",
-            "keywords": [
-                "The Rise of Tiamat"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Storm%20Kings%20Thunder",
-            "maxPrice": "300",
-            "keywords": [
-                "Storm Kings Thunder"
             ],
             "blacklist": []
         },
@@ -220,6 +157,14 @@
             "blacklist": []
         },
         {
+            "searchterm": "Tome of Foes",
+            "maxPrice": "300",
+            "keywords": [
+                "Tome of Foes"
+            ],
+            "blacklist": []
+        },
+        {
             "searchterm": "Volos Guide to Monsters",
             "maxPrice": "300",
             "keywords": [
@@ -229,35 +174,10 @@
             "blacklist": []
         },
         {
-            "searchterm": "Tome of Foes",
-            "maxPrice": "300",
-            "keywords": [
-                "Tome of Foes"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Sword Coast Adventurers Guide",
-            "maxPrice": "300",
-            "keywords": [
-                "Sword Coast Adventurers Guide"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "Candlekeep Mysteries",
             "maxPrice": "300",
             "keywords": [
                 "Candlekeep Mysteries"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Xanathars Guide to Everything",
-            "maxPrice": "300",
-            "keywords": [
-                "Xanathar's Guide to Everything",
-                "Guide to Everything"
             ],
             "blacklist": []
         },
@@ -459,6 +379,86 @@
             "keywords": [
                 "shure"
             ]
+        },
+        {
+            "searchterm": "Xanathars Guide to Everything",
+            "maxPrice": "300",
+            "keywords": [
+                "Xanathar's Guide to Everything",
+                "Guide to Everything"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Sword Coast Adventurers Guide",
+            "maxPrice": "300",
+            "keywords": [
+                "Sword Coast Adventurers Guide"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Hoard%20of%20the%20Dragon%20Queen",
+            "maxPrice": "300",
+            "keywords": [
+                "Hoard of the Dragon Queen",
+                "Ravenloft",
+                "City of Mezro",
+                "Treasury of Dragons",
+                "Strixhaven"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "The%20Rise%20of%20Tiamat",
+            "maxPrice": "300",
+            "keywords": [
+                "The Rise of Tiamat"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Storm%20Kings%20Thunder",
+            "maxPrice": "300",
+            "keywords": [
+                "Storm Kings Thunder"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "out%20of%20the%20Abyss",
+            "maxPrice": "300",
+            "keywords": [
+                "out of the Abyss"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Icewind Dale Rime of the Frostmaiden",
+            "maxPrice": "300",
+            "keywords": [
+                "Icewind Dale",
+                "Rime of the Frostmaiden"
+            ],
+            "blacklist": [
+                "nintendo"
+            ]
+        },
+        {
+            "searchterm": "Descent%20into%20Avernus",
+            "maxPrice": "300",
+            "keywords": [
+                "Descent into Avernus"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Curse%20of%20Strahd",
+            "maxPrice": "300",
+            "keywords": [
+                "Curse of Strahd"
+            ],
+            "blacklist": []
         },
         {
             "searchterm": "Aftermath",
