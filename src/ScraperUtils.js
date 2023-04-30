@@ -8,12 +8,12 @@ class ScraperUtils {
 		try {
 			let btn = '.css-14ubilm'
 			let btn2 = '.qc-cmp2-buttons-desktop'
-			await page.waitForSelector(btn);
-			await page.click(btn)
+			// await page.waitForSelector(btn);
+			await page.click(btn, { timeout: 2000 });
 			await page.waitForTimeout(1000)
-			return await page.click(btn2)
+			return await page.click(btn, { timeout: 2000 });
 		} catch (error) {
-
+			return
 		} finally {
 			return
 		}
