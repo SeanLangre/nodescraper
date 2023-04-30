@@ -65,7 +65,8 @@ export default class Scraper {
 		let response = await this.Scrape(data, page, id)
 		this._timer.EndTimer()
 		clearInterval(intervalId)
-		console.log(`End Scrape Status: ${response?.status} Id: (${response?.id}): [ ${data.searchterm} ] ${response?.url}`)
+		console.log(`End Sc: (${response?.id}): [ ${data.searchterm} ] ${response?.url} ${response?.status}`)
+		console.log(` `)
 		return await response;
 	}
 
@@ -90,7 +91,7 @@ export default class Scraper {
 			console.log(`Scrape IGNORE (${id}) ${url}`)
 			return { status: "Ignore", id: id, url: url, result: "" }
 		}
-		await console.log(`Scrape SearchTerm (${id}): [ ${data.searchterm} ] ${url}`)
+		await console.log(`Sc(${id}): [ ${data.searchterm} ] ${url}`)
 		await page.setDefaultNavigationTimeout(30000)
 		await page.setDefaultTimeout(30000)
 		this._state = State.GotoPage
