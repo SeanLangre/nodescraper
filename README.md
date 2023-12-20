@@ -5,7 +5,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/SeanLangre/nodescraper?style=social)
 
 ## Overview
-❗NOTICE: Not Currently Working❗ 
+❗NOTICE: Outdated and not currently working❗ 
 
 NodeScraper is a JavaScript-based web scraping tool designed for efficient data extraction from websites. Utilizing Node.js, it offers a fast and streamlined approach to gather information from the web.
 
