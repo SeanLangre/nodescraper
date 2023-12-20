@@ -1,5 +1,9 @@
 # NodeScraper
 
+![GitHub repo size](https://img.shields.io/github/repo-size/SeanLangre/py-stock-tracker)
+![GitHub stars](https://img.shields.io/github/stars/SeanLangre/py-stock-tracker?style=social)
+![GitHub forks](https://img.shields.io/github/forks/SeanLangre/py-stock-tracker?style=social)
+
 ## Overview
 NodeScraper is a JavaScript-based web scraping tool designed for efficient data extraction from websites. Utilizing Node.js, it offers a fast and streamlined approach to gather information from the web.
 
