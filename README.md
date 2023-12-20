@@ -1,4 +1,4 @@
-# NodeScraper
+# Not Currently Working, NodeScraper
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/SeanLangre/nodescraper)
 ![GitHub stars](https://img.shields.io/github/stars/SeanLangre/nodescraper?style=social)
