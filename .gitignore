@@ -1,1 +1,7 @@
 /node_modules
+/vite-project/node_modules
+.env
+cookies.txt
+/src/localStorage
+/src/data-test.json
+/src/data.json

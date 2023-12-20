@@ -1,0 +1,27 @@
+{
+  "name": "scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "myserv": "node ./server.js",
+    "debug": "node ./src/scraper.js",
+    "delete2": "node ./src/clearLocalStorage.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "got": "^11.0.2",
+    "jsdom": "^19.0.0",
+    "node-fetch": "^3.2.9",
+    "puppeteer": "^14.4.1",
+    "rxjs": "^7.5.6"
+  },
+  "description": ""
+}
