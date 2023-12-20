@@ -1,64 +1,6 @@
 {
     "list": [
         {
-            "searchterm": "arkham%20horror",
-            "maxPrice": "300",
-            "keywords": [
-                "arkham horror",
-                "arkham horor"
-            ],
-            "blacklist": []
-        },
-
-        {
-            "searchterm": "Shadows%20of%20Brimstone",
-            "maxPrice": "300",
-            "keywords": [
-                "shadows of brimstone"
-            ],
-            "blacklist": [
-                "enemy pack",
-                "dicefest"
-            ]
-        },
-        {
-            "searchterm": "Mansions%20of%20Madness",
-            "maxPrice": "300",
-            "keywords": [
-                "mansions of madness"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Wingspan",
-            "maxPrice": "300",
-            "keywords": [
-                "wingspan"
-            ],
-            "blacklist": [
-                "mccartney"
-            ]
-        },
-        {
-            "searchterm": "The%20Crew",
-            "keywords": [
-                "the crew: mission deep sea",
-                "the crew mission deep sea"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Destinies",
-            "maxPrice": "300",
-            "keywords": [
-                "destinies"
-            ],
-            "blacklist": [
-                "next destinies",
-                "nine destinies"
-            ]
-        },
-        {
             "searchterm": "Dungeons Dragons",
             "maxPrice": "300",
             "keywords": [
@@ -198,85 +140,12 @@
             "blacklist": []
         },
         {
-            "searchterm": "SM58%20Shure",
-            "maxPrice": "300",
-            "keywords": [
-                "sm58 shure",
-                "shure sm58"
-            ],
-            "blacklist": [
-                "kartong"
-            ]
-        },
-        {
-            "searchterm": "RØDE%20Mikrofon",
-            "maxPrice": "300",
-            "keywords": [
-                "nt-usb",
-                "nt usb",
-                "podmic"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Too%20Many%20Bones",
-            "maxPrice": "300",
-            "keywords": [
-                "too many bones"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "Descent%20Legends%20of%20the%20Dark",
-            "maxPrice": "300",
-            "keywords": [
-                "descent legends of the dark"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "blood%20rage",
-            "maxPrice": "300",
-            "keywords": [
-                "blood rage"
-            ],
-            "blacklist": [
-                "blu-ray"
-            ]
-        },
-        {
-            "searchterm": "horrified",
-            "maxPrice": "300",
-            "keywords": [
-                "horrified"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "unfathomable",
-            "maxPrice": "300",
-            "keywords": [
-                "unfathomable"
-            ],
-            "blacklist": []
-        },
-        {
             "searchterm": "Kult%20Divinity%20Lost",
             "maxPrice": "300",
             "keywords": [
                 "Kult Divinity Lost"
             ],
             "blacklist": []
-        },
-        {
-            "searchterm": "Tales from the Loop",
-            "maxPrice": "300",
-            "keywords": [
-                "Tales from the Loop"
-            ],
-            "blacklist": [
-                "Fenix"
-            ]
         },
         {
             "searchterm": "Symbaroum",
@@ -291,6 +160,15 @@
                 "Härjat Hemland"
             ],
             "blacklist": []
+        },
+        {
+            "searchterm": "Steam%20Deck",
+            "maxPrice": "4800",
+            "keywords": [
+                "steam deck"
+            ],
+            "blacklist": [
+            ]
         },
         {
             "searchterm": "call of cthulhu",
@@ -316,31 +194,6 @@
                 "breath"
             ],
             "blacklist": []
-        },
-        {
-            "searchterm": "switch nintendo mario rabbids",
-            "maxPrice": "300",
-            "keywords": [
-                "switch",
-                "nintendo",
-                "mario",
-                "rabbids"
-            ],
-            "blacklist": []
-        },
-        {
-            "searchterm": "switch nintendo animal crossing new horizons",
-            "maxPrice": "300",
-            "keywords": [
-                "switch",
-                "nintendo",
-                "animal",
-                "crossing"
-            ],
-            "blacklist": [
-                "joy con",
-                "amiibo"
-            ]
         },
         {
             "searchterm": "switch nintendo hollow knight",
@@ -372,6 +225,25 @@
             "keywords": [
                 "rode",
                 "røde"
+            ]
+        },
+        {
+            "searchterm": "Mansions%20of%20Madness",
+            "maxPrice": "300",
+            "keywords": [
+                "mansions of madness"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Destinies",
+            "maxPrice": "300",
+            "keywords": [
+                "destinies"
+            ],
+            "blacklist": [
+                "next destinies",
+                "nine destinies"
             ]
         },
         {
@@ -459,6 +331,88 @@
                 "Curse of Strahd"
             ],
             "blacklist": []
+        },
+        {
+            "searchterm": "Tales from the Loop",
+            "maxPrice": "300",
+            "keywords": [
+                "Tales from the Loop"
+            ],
+            "blacklist": [
+                "Fenix"
+            ]
+        },
+        {
+            "searchterm": "blood%20rage",
+            "maxPrice": "300",
+            "keywords": [
+                "blood rage"
+            ],
+            "blacklist": [
+                "blu-ray"
+            ]
+        },
+        {
+            "searchterm": "Too%20Many%20Bones",
+            "maxPrice": "300",
+            "keywords": [
+                "too many bones"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Descent%20Legends%20of%20the%20Dark",
+            "maxPrice": "300",
+            "keywords": [
+                "descent legends of the dark"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "horrified",
+            "maxPrice": "300",
+            "keywords": [
+                "horrified"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Wingspan",
+            "maxPrice": "300",
+            "keywords": [
+                "wingspan"
+            ],
+            "blacklist": [
+                "mccartney"
+            ]
+        },
+        {
+            "searchterm": "The%20Crew",
+            "keywords": [
+                "the crew: mission deep sea",
+                "the crew mission deep sea"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "arkham%20horror",
+            "maxPrice": "300",
+            "keywords": [
+                "arkham horror",
+                "arkham horor"
+            ],
+            "blacklist": []
+        },
+        {
+            "searchterm": "Shadows%20of%20Brimstone",
+            "maxPrice": "300",
+            "keywords": [
+                "shadows of brimstone"
+            ],
+            "blacklist": [
+                "enemy pack",
+                "dicefest"
+            ]
         },
         {
             "searchterm": "Aftermath",

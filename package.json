@@ -6,7 +6,7 @@
     "start": "node ./src/app.js",
     "myserv": "node ./server.js",
     "debug": "node ./src/scraper.js",
-    "delete": "node ./src/clearLocalStorage.js",
+    "delete2": "node ./src/clearLocalStorage.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

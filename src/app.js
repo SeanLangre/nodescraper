@@ -31,7 +31,7 @@ async function login(browser) {
         var slogin = new ScraperLogin(page)
         await slogin.Login()
         await ScraperUtils.setCookiesInBrowser(page)
-        await page.waitForSelector('.startpage-hero__content');
+        await page.waitForSelector('.start-page-section-title_link__JgC2R');
         return await page.close()
     } catch (error) {
         console.log("login ERROR");
